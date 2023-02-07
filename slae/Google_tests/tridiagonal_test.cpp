@@ -43,14 +43,6 @@ TEST(tridiagonal_tests, tridiagonal_test)
             x1[i] = round(x1[i]*1000)/1000;
             ASSERT_DOUBLE_EQ(x1[i], x[i])<<x1[i]<<" "<<x[i]<<" "<<j<<" "<<i<<"\n";
         }
-        /*
-        a.clear();
-        b.clear();
-        c.clear();
-        x.clear();
-        x1.clear();
-        d.clear();
-        */
     }
     fileA.close();
     filed.close();
