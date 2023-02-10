@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
-#include "../slae_solver.hpp"
+#include "../src/slae_solver.hpp"
 
 TEST(tridiagonal_tests, tridiagonal_test)
 {
@@ -21,6 +21,8 @@ TEST(tridiagonal_tests, tridiagonal_test)
     fileA.open("/home/ilya/slae_lab/py_tests/tridiagonal_test/testA.txt");
     filed.open("/home/ilya/slae_lab/py_tests/tridiagonal_test/testd.txt");
     filex.open("/home/ilya/slae_lab/py_tests/tridiagonal_test/testx.txt");
+//    filed.open("../../py_tests/tridiagonal_test/testd.txt");
+//    filex.open("../../py_tests/tridiagonal_test/testx.txt");
     for (int j = 0; j < 10; j++){
         for(int i = 0; i < N; i++){
             fileA>>a[i];

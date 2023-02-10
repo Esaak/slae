@@ -3,5 +3,5 @@ project(slae)
 
 
 set(CMAKE_CXX_STANDARD 23)
-add_subdirectory(tests)
-add_subdirectory(src)
+add_library(slae INTERFACE tridiagonal_matrix.hpp slae_solver.hpp )
+
