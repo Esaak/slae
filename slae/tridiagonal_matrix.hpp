@@ -6,14 +6,22 @@
 
 #include <vector>
 #include <utility>
-
+#include <algorithm>
 namespace {
     template <typename T>
     struct Triads{
-    public:
         T a;
         T b;
         T c;
+        Triads(const T _a,const T _b,const T _c):a(_a), b(_b), c(_c){};
+        Triads(const Triads<T> &Tr):a(Tr.a), b(Tr.b), c(Tr.c){};
+        Triads() = default;
+        Triads& operator = (const Triads<T> &Tr) {
+            a = Tr.a;
+            b = Tr.b;
+            c = Tr.c;
+        }
+        ~Triads() = default;
     };
 };
 template <typename T>
@@ -21,6 +29,37 @@ class Tridiagonal_matrix{
 private:
     std::vector<Triads<T>> data;
 public:
+    Tridiagonal_matrix() = default;
+    Tridiagonal_matrix(const std::vector<T> &a,const std::vector<T> &b,const std::vector<T> &c){
+        //data.reserve(a.size());
+        for(std::size_t i = 0; i<a.size(); i++){
+            data.emplace_back(a[i], b[i],c[i]);
+        }
+    }
+    Tridiagonal_matrix(std::initializer_list<T> A):data(A){};
+
+    Tridiagonal_matrix(const Tridiagonal_matrix<T>& A){
+        data.reserve(A.size());
+        for(std::size_t i = 0; i < A.size(); i++){
+            data[i] = A(i);
+        }
+    }
+    Tridiagonal_matrix& operator = (const Tridiagonal_matrix<T> &A){
+        data.reserve(A.size());
+        for(std::size_t i = 0; i < A.size(); i++){
+            data[i] = A(i);
+        }
+    }
+    Tridiagonal_matrix(const Tridiagonal_matrix<T>&& A) noexcept :  Tridiagonal_matrix(std::exchange(A.data, nullptr)){}
+
+    Tridiagonal_matrix& operator = (Tridiagonal_matrix<T>&& A) noexcept{
+        std::swap(data, A);
+    }
+
+    ~Tridiagonal_matrix() = default;
+    std::size_t size() const{
+        return data.size();
+    }
     void create_matrix(const std::vector<T> &a, const std::vector<T> &b, const std::vector<T> &c)  {
         data.clear();
         data.reserve(a.size());
@@ -37,6 +76,7 @@ public:
     Triads<T>& operator()(std::size_t i){
         return data[i];
     }
+
 };
 
 

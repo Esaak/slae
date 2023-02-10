@@ -48,4 +48,3 @@ TEST(tridiagonal_tests, tridiagonal_test)
     filed.close();
     filex.close();
 }
-
