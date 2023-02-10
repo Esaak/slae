@@ -39,7 +39,7 @@ TEST(tridiagonal_tests, tridiagonal_test)
         for(int i = 0; i < N; i++){
             filex>>x[i];
         }
-        temp.create_matrix(a,b,c);
+        temp.change_matrix(a,b,c);
         x1 = tridiagonal_matrix_algorithm(temp, d);
         for(std::size_t i = 0; i<x1.size(); i++){
             x1[i] = round(x1[i]*1000)/1000;
@@ -49,4 +49,13 @@ TEST(tridiagonal_tests, tridiagonal_test)
     fileA.close();
     filed.close();
     filex.close();
+}
+
+TEST(constructor_test,copy_constructor_test){
+    std::vector<double>a(10);
+    std::vector<double>b(10);
+    std::vector<double>c(10);
+    Tridiagonal_matrix<double> A(a,b,c);
+    Tridiagonal_matrix<double> B = A;
+    std::cout<<B.size();
 }
