@@ -7,26 +7,26 @@
 #include <vector>
 #include <utility>
 #include <algorithm>
-namespace {
-    template <typename T>
+
+template <typename T>
+class Tridiagonal_matrix{
+private:
+    template<typename M>
     struct Triads{
         T a;
         T b;
         T c;
         Triads(const T _a,const T _b,const T _c):a(_a), b(_b), c(_c){};
-        Triads(const Triads<T> &Tr):a(Tr.a), b(Tr.b), c(Tr.c){};
+        Triads(const Triads<M> &Tr):a(Tr.a), b(Tr.b), c(Tr.c){};
         Triads() = default;
-        Triads& operator = (const Triads<T> &Tr) {
+        Triads& operator = (const Triads<M> &Tr) {
             a = Tr.a;
             b = Tr.b;
             c = Tr.c;
         }
         ~Triads() = default;
     };
-};
-template <typename T>
-class Tridiagonal_matrix{
-private:
+
     std::vector<Triads<T>> data;
     std::size_t N;
 public:
@@ -47,14 +47,14 @@ public:
         data.resize(A.size());
         N = A.size();
         for(std::size_t i = 0; i < A.size(); i++){
-            data[i] = A(i);
+            data[i] = A[i];
         }
      }
     Tridiagonal_matrix& operator = (const Tridiagonal_matrix<T> &A){
         data.resize(A.size());
         N = A.size();
         for(std::size_t i = 0; i < A.size(); i++){
-            data[i] = A(i);
+            data[i] = A[i];
         }
     }
     Tridiagonal_matrix(const Tridiagonal_matrix<T>&& A) noexcept :  Tridiagonal_matrix(std::exchange(A.data, nullptr)){
@@ -79,12 +79,37 @@ public:
             data[i].c = c[i];
         }
     }
-    Triads<T> operator()(std::size_t i) const {
-
+    Triads<T>& operator [](const std::size_t i) {
         return data[i];
     }
-    Triads<T>& operator()(std::size_t i){
+    Triads<T> operator [](const std::size_t i) const{
         return data[i];
+    }
+
+
+    T operator()(const std::size_t i,const std::size_t j) const {
+        if(j + 1 == i){
+            return data[i].a;
+        }
+        else if(j == i){
+            return data[i].b;
+        }
+        else if(j == i+1){
+            return data[i].c;
+        }
+        throw std::invalid_argument("invalid argument");
+    }
+    T& operator()(std::size_t i, std::size_t j){
+        if(j + 1 == i){
+            return data[i].a;
+        }
+        else if(j == i){
+            return data[i].b;
+        }
+        else if(j == i+1){
+            return data[i].c;
+        }
+        throw std::invalid_argument("invalid argument");
     }
 
 };

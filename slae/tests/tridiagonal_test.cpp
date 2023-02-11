@@ -40,7 +40,7 @@ TEST(tridiagonal_tests, tridiagonal_test)
             filex>>x[i];
         }
         temp.change_matrix(a,b,c);
-        x1 = tridiagonal_matrix_algorithm(temp, d);
+        x1 = solvers::tridiagonal_matrix_algorithm(temp, d);
         for(std::size_t i = 0; i<x1.size(); i++){
             x1[i] = round(x1[i]*1000)/1000;
             ASSERT_DOUBLE_EQ(x1[i], x[i])<<x1[i]<<" "<<x[i]<<" "<<j<<" "<<i<<"\n";
