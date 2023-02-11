@@ -10,7 +10,7 @@ namespace solvers {
     std::vector<T> tridiagonal_matrix_algorithm(const Tridiagonal_matrix<T> &A, const std::vector<T> &D) {
         std::vector<T> X = D;
         std::vector<T> Temp(D.size());
-        
+
         int N = static_cast<int>(D.size()) - 1;
 
         Temp[0] = A(0, 0 + 1) / A(0, 0);

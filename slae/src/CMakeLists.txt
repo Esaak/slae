@@ -3,5 +3,6 @@ project(slae)
 
 
 set(CMAKE_CXX_STANDARD 23)
-add_library(slae INTERFACE tridiagonal_matrix.hpp slae_solver.hpp )
+file(GLOB_RECURSE source *.hpp *.h *.cpp)
+add_library(slae INTERFACE ${source})
 
