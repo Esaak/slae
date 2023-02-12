@@ -7,8 +7,13 @@
 #include <vector>
 #include <utility>
 #include <algorithm>
+#include <concepts>
 
 template <typename T>
+concept aritmetical = std::is_floating_point<T>::value || std::is_integral<T>::value;
+
+
+template <aritmetical T>
 class Tridiagonal_matrix{
 private:
     template<typename M>

@@ -6,7 +6,7 @@
 #include "tridiagonal_matrix.hpp"
 
 namespace solvers {
-    template<typename T>
+    template<std::floating_point T>
     std::vector<T> tridiagonal_matrix_algorithm(const Tridiagonal_matrix<T> &A, const std::vector<T> &D) {
         std::vector<T> X = D;
         std::vector<T> Temp(D.size());
