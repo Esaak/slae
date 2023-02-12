@@ -68,7 +68,7 @@ public:
 
     Tridiagonal_matrix& operator = (Tridiagonal_matrix<T>&& A) noexcept{
         N = A.size();
-        std::swap(data, A);
+        std::swap(data, A.data);
     }
 
     ~Tridiagonal_matrix() = default;
