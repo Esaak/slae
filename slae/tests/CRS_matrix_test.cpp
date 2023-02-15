@@ -28,6 +28,15 @@ TEST(CRS_matrix_test, matrix_filling_test){
     indptr = {0, 1, 2, 5, 6, 7, 10, 12, 14, 14, 16};
     i = {0, 1, 2, 2, 2, 3, 4, 5, 5, 5, 6, 6, 7, 7, 9, 9};
     j = {3, 6, 0, 8, 9, 6, 0, 0, 2, 8, 2, 3, 0, 6, 4, 9 };
+    while(true){
+        double f;
+        char c;
+        fileA>>f;
+        data.push_back(f);
+        std::cin.get(c);
+        if(c == '\n') break;
+    }
+
     std::reverse(i.begin(), i.end());
     std::reverse(j.begin(), j.end());
     std::reverse(data.begin(), data.end());

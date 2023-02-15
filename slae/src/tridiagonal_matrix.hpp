@@ -35,41 +35,41 @@ private:
     std::vector<Triads<T>> data;
     std::size_t N;
 public:
-    Tridiagonal_matrix(){
-        data.clear();
-        N = 0;
-    };
-    Tridiagonal_matrix(const std::vector<T> &a,const std::vector<T> &b,const std::vector<T> &c){
-        data.clear();
-        N = a.size();
-        for(std::size_t i = 0; i<a.size(); i++){
-            data.emplace_back(a[i], b[i],c[i]);
-        }
-    }
-    Tridiagonal_matrix(std::initializer_list<T> A):data(A){};
-
-    Tridiagonal_matrix(const Tridiagonal_matrix<T>& A){
-        data.resize(A.size());
-        N = A.size();
-        for(std::size_t i = 0; i < A.size(); i++){
-            data[i] = A[i];
-        }
-     }
-    Tridiagonal_matrix& operator = (const Tridiagonal_matrix<T> &A){
-        data.resize(A.size());
-        N = A.size();
-        for(std::size_t i = 0; i < A.size(); i++){
-            data[i] = A[i];
-        }
-    }
-    Tridiagonal_matrix(const Tridiagonal_matrix<T>&& A) noexcept :  Tridiagonal_matrix(std::exchange(A.data, nullptr)){
-        N = A.size();
-    }
-
-    Tridiagonal_matrix& operator = (Tridiagonal_matrix<T>&& A) noexcept{
-        N = A.size();
-        std::swap(data, A.data);
-    }
+//    Tridiagonal_matrix(){
+//        data.clear();
+//        N = 0;
+//    };
+//    Tridiagonal_matrix(const std::vector<T> &a,const std::vector<T> &b,const std::vector<T> &c){
+//        data.clear();
+//        N = a.size();
+//        for(std::size_t i = 0; i<a.size(); i++){
+//            data.emplace_back(a[i], b[i],c[i]);
+//        }
+//    }
+//    Tridiagonal_matrix(std::initializer_list<T> A):data(A){};
+//
+//    Tridiagonal_matrix(const Tridiagonal_matrix<T>& A){
+//        data.resize(A.size());
+//        N = A.size();
+//        for(std::size_t i = 0; i < A.size(); i++){
+//            data[i] = A[i];
+//        }
+//     }
+//    Tridiagonal_matrix& operator = (const Tridiagonal_matrix<T> &A){
+//        data.resize(A.size());
+//        N = A.size();
+//        for(std::size_t i = 0; i < A.size(); i++){
+//            data[i] = A[i];
+//        }
+//    }
+//    Tridiagonal_matrix(const Tridiagonal_matrix<T>&& A) noexcept :  Tridiagonal_matrix(std::exchange(A.data, nullptr)){
+//        N = A.size();
+//    }
+//
+//    Tridiagonal_matrix& operator = (Tridiagonal_matrix<T>&& A) noexcept{
+//        N = A.size();
+//        std::swap(data, A.data);
+//    }
 
     ~Tridiagonal_matrix() = default;
     std::size_t size() const{

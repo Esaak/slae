@@ -55,7 +55,8 @@ TEST(constructor_test,copy_constructor_test){
     std::vector<double>a(10);
     std::vector<double>b(10);
     std::vector<double>c(10);
-    Tridiagonal_matrix<double> A(a,b,c);
+    Tridiagonal_matrix<double> A;
+    A.change_matrix(a,b,c);
     Tridiagonal_matrix<double> B = A;
     std::cout<<B.size();
 }
