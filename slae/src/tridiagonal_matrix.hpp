@@ -8,7 +8,7 @@
 #include <utility>
 #include <algorithm>
 #include <concepts>
-
+#include <ranges>
 template <typename T>
 concept aritmetical = std::is_floating_point<T>::value || std::is_integral<T>::value;
 
@@ -16,62 +16,15 @@ concept aritmetical = std::is_floating_point<T>::value || std::is_integral<T>::v
 template <aritmetical T>
 class Tridiagonal_matrix{
 private:
-    template<typename M>
     struct Triads{
         T a;
         T b;
         T c;
-        Triads(const T _a,const T _b,const T _c):a(_a), b(_b), c(_c){};
-        Triads(const Triads<M> &Tr):a(Tr.a), b(Tr.b), c(Tr.c){};
-        Triads() = default;
-        Triads& operator = (const Triads<M> &Tr) {
-            a = Tr.a;
-            b = Tr.b;
-            c = Tr.c;
-        }
-        ~Triads() = default;
     };
 
-    std::vector<Triads<T>> data;
+    std::vector<Triads> data;
     std::size_t N;
 public:
-//    Tridiagonal_matrix(){
-//        data.clear();
-//        N = 0;
-//    };
-//    Tridiagonal_matrix(const std::vector<T> &a,const std::vector<T> &b,const std::vector<T> &c){
-//        data.clear();
-//        N = a.size();
-//        for(std::size_t i = 0; i<a.size(); i++){
-//            data.emplace_back(a[i], b[i],c[i]);
-//        }
-//    }
-//    Tridiagonal_matrix(std::initializer_list<T> A):data(A){};
-//
-//    Tridiagonal_matrix(const Tridiagonal_matrix<T>& A){
-//        data.resize(A.size());
-//        N = A.size();
-//        for(std::size_t i = 0; i < A.size(); i++){
-//            data[i] = A[i];
-//        }
-//     }
-//    Tridiagonal_matrix& operator = (const Tridiagonal_matrix<T> &A){
-//        data.resize(A.size());
-//        N = A.size();
-//        for(std::size_t i = 0; i < A.size(); i++){
-//            data[i] = A[i];
-//        }
-//    }
-//    Tridiagonal_matrix(const Tridiagonal_matrix<T>&& A) noexcept :  Tridiagonal_matrix(std::exchange(A.data, nullptr)){
-//        N = A.size();
-//    }
-//
-//    Tridiagonal_matrix& operator = (Tridiagonal_matrix<T>&& A) noexcept{
-//        N = A.size();
-//        std::swap(data, A.data);
-//    }
-
-    ~Tridiagonal_matrix() = default;
     std::size_t size() const{
         return N;
     }
@@ -84,15 +37,15 @@ public:
             data[i].c = c[i];
         }
     }
-    Triads<T>& operator [](const std::size_t i) {
+    Triads & operator [](const std::size_t i) {
         return data[i];
     }
-    Triads<T> operator [](const std::size_t i) const{
+    const Triads & operator [](const std::size_t i) const{
         return data[i];
     }
 
 
-    T operator()(const std::size_t i,const std::size_t j) const {
+    const T& operator()(const std::size_t i,const std::size_t j) const {
         if(j + 1 == i){
             return data[i].a;
         }
