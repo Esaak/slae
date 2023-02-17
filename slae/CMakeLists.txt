@@ -3,5 +3,6 @@ project(slae)
 
 
 set(CMAKE_CXX_STANDARD 23)
+add_compile_options(-Wall -Werror)
 add_subdirectory(tests)
 add_subdirectory(src)

@@ -31,6 +31,9 @@ public:
     void change_matrix(const std::vector<T> &a, const std::vector<T> &b, const std::vector<T> &c)  {
         data.reserve(a.size());
         N = a.size();
+        //std::ranges::copy(a.begin(), a.end(), );
+        //for(auto& it: std::views::zip(a,b, c)){
+
         for (std::size_t i = 0; i < a.size(); i++) {
             data[i].a = a[i];
             data[i].b = b[i];

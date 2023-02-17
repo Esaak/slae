@@ -3,10 +3,57 @@
 #include <fstream>
 #include <cmath>
 #include <string>
+#include <random>
+#include <sstream>
 #include "../src/CSR_matrix.hpp"
 
-TEST(CRS_matrix_test, matrix_filling_test){
-    std::size_t N = 10;
+
+TEST(CRS_matrix_tests, DOK_sort){
+    constexpr int N = 10;
+    constexpr int minn = 1;
+    constexpr int maxx = 1000;
+    std::vector<int> i(N);
+    std::vector<int> j(N);
+    std::vector<int> data(N);
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::uniform_int_distribution<int>distrib(minn, maxx);
+    std::vector<DOK<int>> D;
+
+    std::ranges::generate(i, [&](){ return distrib(gen);});
+    std::ranges::generate(j, [&](){ return distrib(gen);});
+    std::ranges::generate(data, [&](){ return distrib(gen);});
+    for(int z = 0; z<N; z++){
+        D.emplace_back(DOK<int>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
+    }
+    std::sort(D.begin(), D.end());
+    std::ranges::sort(i);
+    std::vector<std::size_t> temp;
+    std::ranges::transform(D.begin(), D.end(),std::back_inserter(temp), [](auto& a){return a.i;});
+
+    ASSERT_EQ(temp.size(), i.size()) << "Vectors x and y are of unequal length";
+
+    for (std::size_t p = 0; p < temp.size(); ++p) {
+        EXPECT_EQ(i[p], temp[p]) << "Vectors x and y differ at index " << p;
+    }
+
+}
+
+template<typename T>
+void apply_vector(auto& file, std::vector<T>& data){
+    std::string s, temp;
+    getline(file, s);
+    std::stringstream ss(s);
+    while(ss>>temp){
+        std::stringstream str;
+        str<<temp;
+        T f;
+        str>>f;
+        data.push_back(f);
+    }
+}
+
+TEST(CRS_matrix_tests, index_operator_test){
     std::vector<double>data;
     std::vector<std::size_t>indices;
     std::vector<std::size_t>indptr;
@@ -21,38 +68,64 @@ TEST(CRS_matrix_test, matrix_filling_test){
     filed.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_indices.txt");
     filex.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_indptr.txt");
     filei.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/tridiagonal_test/test_j.txt");
-    std::string str;
-    data = {8.943, 4.212, 6.965, 3.956, 6.448, 8.476, 1.279, 3.074, 2.49, 2.31, 3.842, 1.086, 3.214, 1.574, 3.556, 3.948 };
-    indices = {3, 6, 0, 8, 9, 6, 0, 0, 2, 8, 2, 3, 0, 6, 4, 9};
-    indptr = {0, 1, 2, 5, 6, 7, 10, 12, 14, 14, 16};
-    i = {0, 1, 2, 2, 2, 3, 4, 5, 5, 5, 6, 6, 7, 7, 9, 9};
-    j = {3, 6, 0, 8, 9, 6, 0, 0, 2, 8, 2, 3, 0, 6, 4, 9 };
-    while(true){
-        double f;
-        char c;
-        fileA>>f;
-        data.push_back(f);
-        std::cin.get(c);
-        if(c == '\n') break;
-    }
-
-    std::reverse(i.begin(), i.end());
-    std::reverse(j.begin(), j.end());
-    std::reverse(data.begin(), data.end());
+    filej.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_j.txt");
+    apply_vector<double>(fileA, data);
+    apply_vector<std::size_t>(filed, indices);
+    apply_vector<std::size_t>(filex, indptr);
+    apply_vector<std::size_t>(filei, i);
+    apply_vector<std::size_t>(filej, j);
     std::vector<DOK<double>>D;
-    for(int z =0; z<data.size(); z++){
-        D.emplace_back(DOK<double>{i[z], j[z], data[z]});
+    for(std::size_t z = 0; z<data.size(); z++){
+        D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
     }
-    std::sort(D.begin(),D.end());
-    CSR_matrix<double> M(D);
-    std::reverse(data.begin(), data.end());
-    //std::cout<<M.compare(data, indices, indptr);
-//    for(std::size_t x = 0; x<i.size(); x++){
-//            std::cout<<M(i[x], j[x])<<" ";
-//    }
-    std::vector<double> d{1,1,1,1,1,1,1,1,1,1};
-    std::vector<double> w = M*d;
-    std::copy(w.begin(), w.end(), std::ostream_iterator<double>(std::cout, " "));
+    std::sort(D.begin(), D.end());
+    CSR_matrix<double> M; 
+    M.change_matrix(D);
+    for(std::size_t p = 0; p < data.size(); p++){
+        EXPECT_DOUBLE_EQ(M(D[p].i, D[p].j), D[p].value);
+    }
+}
+
+TEST(CRS_matrix_tests, multiply_column){
+    std::vector<double>data;
+    std::vector<double>column;
+    std::vector<double>X;
+    std::vector<std::size_t>indices;
+    std::vector<std::size_t>indptr;
+    std::vector<std::size_t>i;
+    std::vector<std::size_t>j;
+    std::ifstream fileA;
+    std::ifstream filed;
+    std::ifstream filex;
+    std::ifstream filei;
+    std::ifstream filej;
+    std::ifstream fileColumn;
+    std::ifstream fileRes;
+    fileA.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_data.txt");
+    filed.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_indices.txt");
+    filex.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_indptr.txt");
+    filei.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_i.txt");
+    filej.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_j.txt");
+    fileColumn.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_D.txt");
+    fileRes.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_X.txt");
+    apply_vector<double>(fileA, data);
+    apply_vector<std::size_t>(filed, indices);
+    apply_vector<std::size_t>(filex, indptr);
+    apply_vector<std::size_t>(filei, i);
+    apply_vector<std::size_t>(filej, j);
+    apply_vector<double>(fileColumn, column);
+    apply_vector<double>(fileRes, X);
+    std::vector<DOK<double>>D;
+    for(std::size_t z = 0; z<data.size(); z++){
+        D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
+    }
+    std::sort(D.begin(), D.end());
+    CSR_matrix<double> M;
+    M.change_matrix(D);
+    std::vector<double> Result = M * column;
+
+    for(std::size_t p = 0; p < Result.size(); ++p){
+        EXPECT_DOUBLE_EQ(Result[p], X[p])<<Result[p]<<" "<<X[p]<<" "<<p<<"\n";
+    }
 
 }
