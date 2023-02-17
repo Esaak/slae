@@ -45,14 +45,13 @@ namespace CSR_matrix_space {
             col_ind.resize(N);
             row_indx.resize(A.back().i + 2);
             row_indx[0] = 0;
-            std::size_t count = 0;
+            std::size_t count = 1;
             for (std::size_t p = 0; p < N; p++) {
                 data[p] = A[p].value;
                 col_ind[p] = A[p].j;
                 if (p > 0 && A[static_cast<int>(p) - 1].i != A[p].i) {
-                    for (std::size_t vn = A[static_cast<int>(p) - 1].i; vn < A[p].i; vn++) {
-                        row_indx[++count] = p;
-                    }
+                    std::ranges::fill_n(row_indx.begin()+A[static_cast<int>(p) - 1].i + 1, A[p].i - A[static_cast<int>(p) - 1].i, p);
+                    count+=A[p].i - A[static_cast<int>(p) - 1].i;
                 }
             }
             row_indx.back() = N;
@@ -61,21 +60,20 @@ namespace CSR_matrix_space {
         T &operator()(std::size_t i, std::size_t j) {
             std::size_t f1 = row_indx[i];
             std::size_t f2 = row_indx[i + 1];
-            for (std::size_t p = f1; p < f2; ++p) {
-                if (col_ind[p] == j) {
-                    return data[p];
-                }
+            auto result = std::ranges::find(col_ind.begin() + f1, col_ind.begin() + f2, j);
+            if(result != col_ind.begin()+f2){
+                return data[*result];
             }
+
             throw std::invalid_argument("invalid argument");
         }
 
         T operator()(std::size_t i, std::size_t j) const {
             std::size_t f1 = row_indx[i];
             std::size_t f2 = row_indx[i + 1];
-            for (std::size_t p = f1; p < f2; ++p) {
-                if (col_ind[p] == j) {
-                    return data[p];
-                }
+            auto result = std::ranges::find(col_ind.begin() + f1, col_ind.begin() + f2, j);
+            if(result != col_ind.begin()+f2){
+                return data[*result];
             }
             return static_cast<T>(0);
         }

@@ -54,6 +54,7 @@ void apply_vector(auto& file, std::vector<T>& data){
 }
 
 TEST(CRS_matrix_tests, index_operator_test){
+    std::size_t N = 10;
     std::vector<double>data;
     std::vector<std::size_t>indices;
     std::vector<std::size_t>indptr;
@@ -69,24 +70,39 @@ TEST(CRS_matrix_tests, index_operator_test){
     filex.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_indptr.txt");
     filei.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_i.txt");
     filej.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_j.txt");
-    apply_vector<double>(fileA, data);
-    apply_vector<std::size_t>(filed, indices);
-    apply_vector<std::size_t>(filex, indptr);
-    apply_vector<std::size_t>(filei, i);
-    apply_vector<std::size_t>(filej, j);
-    std::vector<DOK<double>>D;
-    for(std::size_t z = 0; z<data.size(); z++){
-        D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
+    for(std::size_t it; it<N; it++) {
+        apply_vector<double>(fileA, data);
+        apply_vector<std::size_t>(filed, indices);
+        apply_vector<std::size_t>(filex, indptr);
+        apply_vector<std::size_t>(filei, i);
+        apply_vector<std::size_t>(filej, j);
+        std::vector<DOK<double>> D;
+        for (std::size_t z = 0; z < data.size(); z++) {
+            D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
+        }
+        std::sort(D.begin(), D.end());
+        CSR_matrix<double> M;
+        M.change_matrix(D);
+        for (std::size_t p = 0; p < data.size(); p++) {
+            EXPECT_DOUBLE_EQ(M(D[p].i, D[p].j), D[p].value);
+        }
+        data.clear();
+        indices.clear();
+        indptr.clear();
+        i.clear();
+        j.clear();
+        D.clear();
     }
-    std::sort(D.begin(), D.end());
-    CSR_matrix<double> M;
-    M.change_matrix(D);
-    for(std::size_t p = 0; p < data.size(); p++){
-        EXPECT_DOUBLE_EQ(M(D[p].i, D[p].j), D[p].value);
-    }
+    fileA.close();
+    filed.close();
+    filex.close();
+    filei.close();
+    filej.close();
+
 }
 
 TEST(CRS_matrix_tests, multiply_column){
+    std::size_t N = 10;
     std::vector<double>data;
     std::vector<double>column;
     std::vector<double>X;
@@ -108,24 +124,43 @@ TEST(CRS_matrix_tests, multiply_column){
     filej.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_j.txt");
     fileColumn.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_D.txt");
     fileRes.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_X.txt");
-    apply_vector<double>(fileA, data);
-    apply_vector<std::size_t>(filed, indices);
-    apply_vector<std::size_t>(filex, indptr);
-    apply_vector<std::size_t>(filei, i);
-    apply_vector<std::size_t>(filej, j);
-    apply_vector<double>(fileColumn, column);
-    apply_vector<double>(fileRes, X);
-    std::vector<DOK<double>>D;
-    for(std::size_t z = 0; z<data.size(); z++){
-        D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
-    }
-    std::sort(D.begin(), D.end());
-    CSR_matrix<double> M;
-    M.change_matrix(D);
-    std::vector<double> Result = M * column;
+    for(std::size_t it = 0; it< N; ++it) {
+        apply_vector<double>(fileA, data);
+        apply_vector<std::size_t>(filed, indices);
+        apply_vector<std::size_t>(filex, indptr);
+        apply_vector<std::size_t>(filei, i);
+        apply_vector<std::size_t>(filej, j);
+        apply_vector<double>(fileColumn, column);
+        apply_vector<double>(fileRes, X);
+        std::vector<DOK<double>> D;
+        for (std::size_t z = 0; z < data.size(); z++) {
+            D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
+        }
+        std::sort(D.begin(), D.end());
+        CSR_matrix<double> M;
+        M.change_matrix(D);
+        std::vector<double> Result = M * column;
 
-    for(std::size_t p = 0; p < Result.size(); ++p){
-        EXPECT_DOUBLE_EQ(Result[p], X[p])<<Result[p]<<" "<<X[p]<<" "<<p<<"\n";
+        for (std::size_t p = 0; p < Result.size(); ++p) {
+            EXPECT_DOUBLE_EQ(Result[p], X[p]) << Result[p] << " " << X[p] << " " << p <<" "<<it<<"\n";
+        }
+        D.clear();
+        i.clear();
+        j.clear();
+        indptr.clear();
+        indices.clear();
+        X.clear();
+        column.clear();
+        data.clear();
+
+
     }
+    fileA.close();
+    filed.close();
+    filex.close();
+    filei.close();
+    filej.close();
+    fileColumn.close();
+    fileRes.close();
 
 }
