@@ -1,12 +1,12 @@
 #include <gtest/gtest.h>
-#include <iostream>
 #include <fstream>
 #include <cmath>
 #include <string>
 #include <random>
-#include <sstream>
 #include "../src/CSR_matrix.hpp"
 
+using namespace DOK_space;
+using namespace CSR_matrix_space;
 
 TEST(CRS_matrix_tests, DOK_sort){
     constexpr int N = 10;
@@ -79,7 +79,7 @@ TEST(CRS_matrix_tests, index_operator_test){
         D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
     }
     std::sort(D.begin(), D.end());
-    CSR_matrix<double> M; 
+    CSR_matrix<double> M;
     M.change_matrix(D);
     for(std::size_t p = 0; p < data.size(); p++){
         EXPECT_DOUBLE_EQ(M(D[p].i, D[p].j), D[p].value);
