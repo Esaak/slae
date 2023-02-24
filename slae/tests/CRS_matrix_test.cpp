@@ -140,9 +140,9 @@ TEST(CRS_matrix_tests, multiply_column){
         CSR_matrix<double> M;
         M.change_matrix(D);
         std::vector<double> Result = M * column;
-
+        //EXPECT_EQ(Result, X);
         for (std::size_t p = 0; p < Result.size(); ++p) {
-            EXPECT_DOUBLE_EQ(Result[p], X[p]) << Result[p] << " " << X[p] << " " << p <<" "<<it<<"\n";
+           EXPECT_DOUBLE_EQ(Result[p], X[p]) << Result[p] << " " << X[p] << " " << p <<" "<<it<<"\n";
         }
         D.clear();
         i.clear();

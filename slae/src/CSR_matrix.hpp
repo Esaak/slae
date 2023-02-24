@@ -4,17 +4,18 @@
 
 #ifndef SLAE_CSR_MATRIX_HPP
 #define SLAE_CSR_MATRIX_HPP
+
 #include <vector>
 #include <concepts>
 #include <compare>
 #include <cstring>
 #include <utility>
 #include <algorithm>
+#include "Matrix.hpp"
 
-template <typename T>
-concept aritmetical = std::is_floating_point<T>::value || std::is_integral<T>::value;
+
 namespace DOK_space {
-    template<aritmetical T>
+    template<arithmetical T>
     struct DOK {
         std::size_t i;
         std::size_t j;
@@ -31,14 +32,14 @@ namespace DOK_space {
     };
 }
 namespace CSR_matrix_space {
-    template<aritmetical T>
+    template<arithmetical T>
     class CSR_matrix {
     private:
         std::vector<T> data;
         std::vector<std::size_t> col_ind;
         std::vector<std::size_t> row_indx;
     public:
-        void change_matrix(const std::vector<DOK_space::DOK<T>> &A){
+        void change_matrix(const std::vector<DOK_space::DOK<T>> &A) {
             data.clear();
             std::size_t N = A.size();
             data.resize(N);
@@ -50,8 +51,9 @@ namespace CSR_matrix_space {
                 data[p] = A[p].value;
                 col_ind[p] = A[p].j;
                 if (p > 0 && A[static_cast<int>(p) - 1].i != A[p].i) {
-                    std::ranges::fill_n(row_indx.begin()+A[static_cast<int>(p) - 1].i + 1, A[p].i - A[static_cast<int>(p) - 1].i, p);
-                    count+=A[p].i - A[static_cast<int>(p) - 1].i;
+                    std::ranges::fill_n(row_indx.begin() + A[static_cast<int>(p) - 1].i + 1,
+                                        A[p].i - A[static_cast<int>(p) - 1].i, p);
+                    count += A[p].i - A[static_cast<int>(p) - 1].i;
                 }
             }
             row_indx.back() = N;
@@ -61,7 +63,7 @@ namespace CSR_matrix_space {
             std::size_t f1 = row_indx[i];
             std::size_t f2 = row_indx[i + 1];
             auto result = std::ranges::find(col_ind.begin() + f1, col_ind.begin() + f2, j);
-            if(result != col_ind.begin()+f2){
+            if (result != col_ind.begin() + f2) {
                 return data[*result];
             }
 
@@ -72,7 +74,7 @@ namespace CSR_matrix_space {
             std::size_t f1 = row_indx[i];
             std::size_t f2 = row_indx[i + 1];
             auto result = std::ranges::find(col_ind.begin() + f1, col_ind.begin() + f2, j);
-            if(result != col_ind.begin()+f2){
+            if (result != col_ind.begin() + f2) {
                 return data[*result];
             }
             return static_cast<T>(0);

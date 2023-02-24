@@ -9,14 +9,15 @@
 #include <algorithm>
 #include <concepts>
 #include <ranges>
-template <typename T>
-concept aritmetical = std::is_floating_point<T>::value || std::is_integral<T>::value;
+
+#include "Matrix.hpp"
 
 
-template <aritmetical T>
-class Tridiagonal_matrix{
+
+template<arithmetical T>
+class Tridiagonal_matrix {
 private:
-    struct Triads{
+    struct Triads {
         T a;
         T b;
         T c;
@@ -25,10 +26,11 @@ private:
     std::vector<Triads> data;
     std::size_t N;
 public:
-    std::size_t size() const{
+    std::size_t size() const {
         return N;
     }
-    void change_matrix(const std::vector<T> &a, const std::vector<T> &b, const std::vector<T> &c)  {
+
+    void change_matrix(const std::vector<T> &a, const std::vector<T> &b, const std::vector<T> &c) {
         data.reserve(a.size());
         N = a.size();
         //std::ranges::copy(a.begin(), a.end(), );
@@ -40,34 +42,33 @@ public:
             data[i].c = c[i];
         }
     }
-    Triads & operator [](const std::size_t i) {
+
+    Triads &operator[](const std::size_t i) {
         return data[i];
     }
-    const Triads & operator [](const std::size_t i) const{
+
+    const Triads &operator[](const std::size_t i) const {
         return data[i];
     }
 
 
-    const T& operator()(const std::size_t i,const std::size_t j) const {
-        if(j + 1 == i){
+    const T &operator()(const std::size_t i, const std::size_t j) const {
+        if (j + 1 == i) {
             return data[i].a;
-        }
-        else if(j == i){
+        } else if (j == i) {
             return data[i].b;
-        }
-        else if(j == i+1){
+        } else if (j == i + 1) {
             return data[i].c;
         }
         throw std::invalid_argument("invalid argument");
     }
-    T& operator()(std::size_t i, std::size_t j){
-        if(j + 1 == i){
+
+    T &operator()(std::size_t i, std::size_t j) {
+        if (j + 1 == i) {
             return data[i].a;
-        }
-        else if(j == i){
+        } else if (j == i) {
             return data[i].b;
-        }
-        else if(j == i+1){
+        } else if (j == i + 1) {
             return data[i].c;
         }
         throw std::invalid_argument("invalid argument");
