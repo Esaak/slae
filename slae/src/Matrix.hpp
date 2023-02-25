@@ -133,7 +133,7 @@ namespace Mrx {
             }
             return x;
         }
-        void ones(std::size_t j, std::size_t i){
+        void eye(std::size_t j, std::size_t i){
             data.resize(i*j);
             row = i;
             column = j;
