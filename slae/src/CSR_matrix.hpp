@@ -60,9 +60,9 @@ namespace CSR_matrix_space {
         }
 
         T &operator()(std::size_t i, std::size_t j) {
-            std::size_t f1 = row_indx[i];
-            std::size_t f2 = row_indx[i + 1];
-            auto result = std::ranges::find(col_ind.begin() + f1, col_ind.begin() + f2, j);
+            long f1 = static_cast<long>(row_indx[i]);
+            long f2 = static_cast<long>(row_indx[i + 1]);
+            decltype(col_ind.begin()) result = std::ranges::find(col_ind.begin() + f1, col_ind.begin() + f2, j);
             if (result != col_ind.begin() + f2) {
                 return data[*result];
             }
@@ -71,9 +71,9 @@ namespace CSR_matrix_space {
         }
 
         T operator()(std::size_t i, std::size_t j) const {
-            std::size_t f1 = row_indx[i];
-            std::size_t f2 = row_indx[i + 1];
-            auto result = std::ranges::find(col_ind.begin() + f1, col_ind.begin() + f2, j);
+            long f1 = static_cast<long>(row_indx[i]);
+            long f2 = static_cast<long>(row_indx[i + 1]);
+            decltype(col_ind.begin()) result = std::ranges::find(col_ind.begin() + f1, col_ind.begin() + f2, j);
             if (result != col_ind.begin() + f2) {
                 return data[*result];
             }
