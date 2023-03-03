@@ -4,17 +4,12 @@
 #ifndef SLAE_TRIDIAGONAL_MATRIX_HPP
 #define SLAE_TRIDIAGONAL_MATRIX_HPP
 
-#include <vector>
-#include <utility>
-#include <algorithm>
-#include <concepts>
-#include <ranges>
 
 #include "Matrix.hpp"
 
 
 
-template<arithmetical T>
+template<typename T, IsArithmetical<T> = true>
 class Tridiagonal_matrix {
 private:
     struct Triads {
@@ -33,9 +28,6 @@ public:
     void change_matrix(const std::vector<T> &a, const std::vector<T> &b, const std::vector<T> &c) {
         data.reserve(a.size());
         N = a.size();
-        //std::ranges::copy(a.begin(), a.end(), );
-        //for(auto& it: std::views::zip(a,b, c)){
-
         for (std::size_t i = 0; i < a.size(); i++) {
             data[i].a = a[i];
             data[i].b = b[i];

@@ -30,7 +30,7 @@ namespace solvers {
 
 
     namespace _diny {
-        template<arithmetical T>
+        template<typename T, IsArithmetical<T> = true>
         T sgn(T val) {
             return (T(0) < val) - (val < T(0));
         }
@@ -39,7 +39,7 @@ namespace solvers {
         std::vector<T> orthogonal_vector(const std::vector<T> &x, std::size_t n) {
             T e;
             std::vector<T> new_x;
-            std::ranges::copy(x.begin(), x.end(), std::back_inserter(new_x));
+            std::copy(x.begin(), x.end(), std::back_inserter(new_x));
             e = sgn(new_x[0]) * sqrt(std::inner_product(new_x.begin(), new_x.end(), new_x.begin(), T(0)));
             new_x[0] += e;
             return new_x;

@@ -19,17 +19,22 @@ TEST(CRS_matrix_tests, DOK_sort){
     static std::mt19937 gen(rd());
     static std::uniform_int_distribution<int>distrib(minn, maxx);
     std::vector<DOK<int>> D;
-
-    std::ranges::generate(i, [&](){ return distrib(gen);});
-    std::ranges::generate(j, [&](){ return distrib(gen);});
-    std::ranges::generate(data, [&](){ return distrib(gen);});
+    for(auto& it: i){
+        it = distrib(gen);
+    }
+    for(auto& it: j){
+        it = distrib(gen);
+    }
+    for(auto& it: data){
+        it = distrib(gen);
+    }
     for(int z = 0; z<N; z++){
         D.emplace_back(DOK<int>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
     }
     std::sort(D.begin(), D.end());
-    std::ranges::sort(i);
+    std::sort(i.begin(), i.end());
     std::vector<std::size_t> temp;
-    std::ranges::transform(D.begin(), D.end(),std::back_inserter(temp), [](auto& a){return a.i;});
+    std::transform(D.begin(), D.end(),std::back_inserter(temp), [](auto& a){return a.i;});
 
     ASSERT_EQ(temp.size(), i.size()) << "Vectors x and y are of unequal length";
 

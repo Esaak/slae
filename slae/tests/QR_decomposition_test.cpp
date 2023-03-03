@@ -1,7 +1,5 @@
 #include <gtest/gtest.h>
-#include "../src/Matrix.hpp"
 #include "../src/slae_solver.hpp"
-#include<ranges>
 #include <numeric>
 #include <utility>
 #include <cmath>

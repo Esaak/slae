@@ -4,20 +4,22 @@
 
 #define SLAE_MATRIX_HPP
 
-#include <concepts>
-#include <ranges>
+
 #include <vector>
 #include <functional>
 #include <numeric>
 #include <utility>
 #include <cmath>
+#include <compare>
+#include <cstring>
+#include <algorithm>
+
 
 template<typename T>
-concept arithmetical = std::is_floating_point<T>::value || std::is_integral<T>::value;
-
+using IsArithmetical = std::enable_if_t<std::is_arithmetic_v<T>, bool>;
 
 namespace Mrx {
-    template<arithmetical T>
+    template<typename T, IsArithmetical<T> = true>
     class Matrix {
     private:
         std::size_t column;
@@ -121,13 +123,13 @@ namespace Mrx {
 
         std::vector<T> operator[](std::size_t i) const {
             std::vector<T> one_row;
-            std::ranges::copy_n(data.begin() + column * i, column, std::back_inserter(one_row));
+            std::copy_n(data.begin() + column * i, column, std::back_inserter(one_row));
             return one_row;
         }
 
         std::vector<T> get_row(std::size_t i, int begin, int end) const {
             std::vector<T> x(end - begin);
-            std::ranges::copy(data.begin() + i * column + begin, data.begin() + i * column + end, x.begin());
+            std::copy(data.begin() + i * column + begin, data.begin() + i * column + end, x.begin());
             return x;
         }
 

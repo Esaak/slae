@@ -5,17 +5,12 @@
 #ifndef SLAE_CSR_MATRIX_HPP
 #define SLAE_CSR_MATRIX_HPP
 
-#include <vector>
-#include <concepts>
-#include <compare>
-#include <cstring>
-#include <utility>
-#include <algorithm>
+
 #include "Matrix.hpp"
 
 
 namespace DOK_space {
-    template<arithmetical T>
+    template<typename T, IsArithmetical<T> = true>
     struct DOK {
         std::size_t i;
         std::size_t j;
@@ -32,7 +27,7 @@ namespace DOK_space {
     };
 }
 namespace CSR_matrix_space {
-    template<arithmetical T>
+    template<typename T, IsArithmetical<T> = true>
     class CSR_matrix {
     private:
         std::vector<T> data;
@@ -51,7 +46,7 @@ namespace CSR_matrix_space {
                 data[p] = A[p].value;
                 col_ind[p] = A[p].j;
                 if (p > 0 && A[static_cast<int>(p) - 1].i != A[p].i) {
-                    std::ranges::fill_n(row_indx.begin() + A[static_cast<int>(p) - 1].i + 1,
+                    std::fill_n(row_indx.begin() + A[static_cast<int>(p) - 1].i + 1,
                                         A[p].i - A[static_cast<int>(p) - 1].i, p);
                     count += A[p].i - A[static_cast<int>(p) - 1].i;
                 }
@@ -62,7 +57,7 @@ namespace CSR_matrix_space {
         T &operator()(std::size_t i, std::size_t j) {
             long f1 = static_cast<long>(row_indx[i]);
             long f2 = static_cast<long>(row_indx[i + 1]);
-            decltype(col_ind.begin()) result = std::ranges::find(col_ind.begin() + f1, col_ind.begin() + f2, j);
+            decltype(col_ind.begin()) result = std::find(col_ind.begin() + f1, col_ind.begin() + f2, j);
             if (result != col_ind.begin() + f2) {
                 return data[*result];
             }
@@ -73,7 +68,7 @@ namespace CSR_matrix_space {
         T operator()(std::size_t i, std::size_t j) const {
             long f1 = static_cast<long>(row_indx[i]);
             long f2 = static_cast<long>(row_indx[i + 1]);
-            decltype(col_ind.begin()) result = std::ranges::find(col_ind.begin() + f1, col_ind.begin() + f2, j);
+            decltype(col_ind.begin()) result = std::find(col_ind.begin() + f1, col_ind.begin() + f2, j);
             if (result != col_ind.begin() + f2) {
                 return data[*result];
             }
