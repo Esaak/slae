@@ -11,8 +11,8 @@ TEST(QR_tests, simple_test){
     //int N = 9;
     //int vec_size = 9;
     std::vector<std::vector<double>> test{{1,2,3}, {4,5,6}, {7,8,9}};
-    Mrx::Matrix<double> matrix;
-    matrix.change_matrix(test);
+    Mrx::Matrix<double> matrix(test);
+
     /*
     for(auto&& it: test){
         for(auto&& t:it){
@@ -64,12 +64,9 @@ TEST(QR_tests, main_test){
             Q.push_back(tQ);
             R.push_back(tR);
         }
-        Mrx::Matrix<double>R_matrix;
-        Mrx::Matrix<double>R_Q;
-        Mrx::Matrix<double>R_R;
-        R_matrix.change_matrix(matrix);
-        R_Q.change_matrix(Q);
-        R_R.change_matrix(R);
+        Mrx::Matrix<double>R_matrix(matrix);
+        Mrx::Matrix<double>R_Q(Q);
+        Mrx::Matrix<double>R_R(R);
         std::pair<Mrx::Matrix<double>, Mrx::Matrix<double>> answ;
         answ = solvers::Householder(R_matrix);
         for(std::size_t x = 0; x < N; x++){

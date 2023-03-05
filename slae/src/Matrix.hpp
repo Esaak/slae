@@ -22,21 +22,19 @@ namespace Mrx {
     template<typename T, IsArithmetical<T> = true>
     class Matrix {
     private:
-        std::size_t column;
-        std::size_t row;
+        std::size_t column{};
+        std::size_t row{};
         std::vector<T> data;
-
     public:
-        void change_matrix(const std::vector<std::vector<T>> &other) {
-            data.clear();
+        Matrix() = default;
+        explicit Matrix(const std::vector<std::vector<T>> &other):column(other[0].size()), row(other.size()){
             for (std::size_t i = 0; i < other.size(); ++i) {
                 for (std::size_t j = 0; j < other[0].size(); ++j) {
                     data.push_back(other[i][j]);
                 }
             }
-            row = other.size();
-            column = other[0].size();
         }
+
 
         T &operator()(std::size_t i, std::size_t j) {
             return data[i * column + j];
@@ -70,28 +68,27 @@ namespace Mrx {
         }
 
 
-        void transponse() {
-            std::vector<T> new_data(row * column);
+        Matrix<T> transponse() const{
+            Matrix<T> new_matrix;
+            new_matrix.data.resize(row * column);
+            new_matrix.column = row;
+            new_matrix.row = column;
             if (column == row) {
                 for (std::size_t i = 0; i < row; i++) {
                     for (std::size_t j = 1 + i; j < column; j++) {
-                        std::swap(data[i * row + j], new_data[j * row + i]);
-                        std::swap(data[j * row + i], new_data[i * row + j]);
+                        new_matrix(j, i) = data[i * column + j];
+                        new_matrix(i, j) = data[j * column + i];
                     }
+                    new_matrix(i, i) = data[i * column + i];
                 }
-                for (std::size_t i = 0; i < column; i++) {
-                    new_data[i * column + i] = data[i * column + i];
-                }
-                data = new_data;
-                return;
+                return new_matrix;
             }
             for (std::size_t t = 0; t < column; t++) {
                 for (std::size_t q = 0; q < row; q++) {
-                    new_data[t * row + q] = data[q * column + t];
+                    new_matrix(t, q) = data[q * column + t];
                 }
             }
-            std::swap(row, column);
-            data = new_data;
+            return new_matrix;
         }
 
         Matrix &operator*(const Matrix<T> &other) {
@@ -111,7 +108,6 @@ namespace Mrx {
         }
 
         Matrix &operator+=(const Matrix<T> &other) {
-            if (column != other.column || row != other.row) throw std::invalid_argument("Invalid");
             data += other.data;
             return *this;
         }
@@ -141,13 +137,15 @@ namespace Mrx {
             return x;
         }
 
-        void eye(std::size_t j, std::size_t i) {
-            data.resize(i * j);
-            row = i;
-            column = j;
-            for (std::size_t p = 0; p < i; p++) {
-                data[p + p * j] = 1;
+        static Matrix eye(std::size_t j, std::size_t i) {
+            Matrix<T> new_matrix;
+            new_matrix.data.resize(i * j);
+            new_matrix.row = i;
+            new_matrix.column = j;
+            for (std::size_t p = 0; p < std::min(new_matrix.column, new_matrix.row); p++) {
+                new_matrix(p,p) = 1;
             }
+            return new_matrix;
         }
 
     };

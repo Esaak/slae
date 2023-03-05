@@ -8,7 +8,7 @@
 using namespace DOK_space;
 using namespace CSR_matrix_space;
 
-TEST(CRS_matrix_tests, DOK_sort){
+TEST(CSR_matrix_tests, DOK_sort){
     constexpr int N = 10;
     constexpr int minn = 1;
     constexpr int maxx = 1000;
@@ -58,7 +58,7 @@ void apply_vector(auto& file, std::vector<T>& data){
     }
 }
 
-TEST(CRS_matrix_tests, index_operator_test){
+TEST(CSR_matrix_tests, index_operator_test){
     std::size_t N = 10;
     std::vector<double>data;
     std::vector<std::size_t>indices;
@@ -86,8 +86,8 @@ TEST(CRS_matrix_tests, index_operator_test){
             D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
         }
         std::sort(D.begin(), D.end());
-        CSR_matrix<double> M;
-        M.change_matrix(D);
+        CSR_matrix<double> M(D, N, N);
+
         for (std::size_t p = 0; p < data.size(); p++) {
             EXPECT_DOUBLE_EQ(M(D[p].i, D[p].j), D[p].value);
         }
@@ -106,7 +106,7 @@ TEST(CRS_matrix_tests, index_operator_test){
 
 }
 
-TEST(CRS_matrix_tests, multiply_column){
+TEST(CSR_matrix_tests, multiply_column){
     std::size_t N = 10;
     std::vector<double>data;
     std::vector<double>column;
@@ -142,8 +142,7 @@ TEST(CRS_matrix_tests, multiply_column){
             D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
         }
         std::sort(D.begin(), D.end());
-        CSR_matrix<double> M;
-        M.change_matrix(D);
+        CSR_matrix<double> M(D, N, N);
         std::vector<double> Result = M * column;
         //EXPECT_EQ(Result, X);
         for (std::size_t p = 0; p < Result.size(); ++p) {

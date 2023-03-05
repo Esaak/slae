@@ -5,7 +5,7 @@
 #define SLAE_SLAE_SOLVER_HPP
 
 #include "tridiagonal_matrix.hpp"
-
+#include "CSR_matrix.hpp"
 namespace solvers {
     template<std::floating_point T>
     std::vector<T> tridiagonal_matrix_algorithm(const Tridiagonal_matrix<T> &A, const std::vector<T> &D) {
@@ -36,10 +36,9 @@ namespace solvers {
         }
 
         template<std::floating_point T>
-        std::vector<T> orthogonal_vector(const std::vector<T> &x, std::size_t n) {
+        std::vector<T> orthogonal_vector(const std::vector<T> &x) {
             T e;
-            std::vector<T> new_x;
-            std::copy(x.begin(), x.end(), std::back_inserter(new_x));
+            std::vector<T> new_x = x;
             e = sgn(new_x[0]) * sqrt(std::inner_product(new_x.begin(), new_x.end(), new_x.begin(), T(0)));
             new_x[0] += e;
             return new_x;
@@ -51,44 +50,6 @@ namespace solvers {
             return betta / norm;
         }
 
-        template<std::floating_point T>
-        void find_R(Mrx::Matrix<T> &matrix, const std::vector<T> &v) {
-            std::size_t n = static_cast<int>(matrix.get_column_size()) - static_cast<int>(v.size());
-            T norm = std::inner_product(v.begin(), v.end(), v.begin(), T(0));
-            for (std::size_t j = n; j < matrix.get_column_size(); j++) {
-                T projection = search_projection(v, matrix.get_column(j, n, matrix.get_column_size()), norm);
-                if (n == j) {
-                    std::size_t i = j;
-                    for (; i <= n; i++) {
-                        matrix(i, j) -= 2 * v[i - j] * projection;
-                    }
-                    for (; i < matrix.get_column_size(); i++) {
-                        matrix(i, j) = 0;
-                    }
-
-                } else {
-                    for (std::size_t i = n; i < matrix.get_column_size(); i++) {
-                        matrix(i, j) -= 2 * v[i - n] * projection;
-                    }
-                }
-            }
-        }
-
-/*
-
-*/
-        template<std::floating_point T>
-        void find_Q(Mrx::Matrix<T> &Q, const std::vector<T> &v) {
-            Mrx::Matrix<T> temp_Q = Q;
-            T norm = std::inner_product(v.begin(), v.end(), v.begin(), T(0));
-            std::size_t n = static_cast<int>(Q.get_column_size()) - static_cast<int>(v.size());
-            for (std::size_t i = 0; i < Q.get_column_size(); i++) {
-                T projection = search_projection(v, temp_Q.get_column(i, n, Q.get_column_size()), norm);
-                for (std::size_t j = n; j < Q.get_column_size(); j++) {
-                    Q(j, i) -= 2 * v[j - n] * projection;
-                }
-            }
-        }
         //this is experimental function does not use
         template<std::floating_point T>
         void find_Q_test(Mrx::Matrix<T> &Q, const std::vector<T> &v) {
@@ -109,12 +70,12 @@ namespace solvers {
         using namespace _diny;
         std::size_t N = matrix[0].size();
         Mrx::Matrix<T> temp;
-        temp.eye(N, N);
+        temp = temp.eye(N, N);
         for (std::size_t p = 0; p < matrix.size() - 1; p++) {
             Mrx::Matrix<T> temp1;
             Mrx::Matrix<T> temp2;
-            temp1.eye(N, N);
-            temp2.eye(matrix[p].size(), matrix[p].size());
+            temp1 = temp1.eye(N, N);
+            temp2 = temp2.eye(matrix[p].size(), matrix[p].size());
             std::size_t i;
             T norm = std::inner_product(matrix[p].begin(), matrix[p].end(), matrix[p].begin(), T(0));
             for (i = N - matrix[p].size(); i < N; ++i) {
@@ -135,17 +96,86 @@ namespace solvers {
         using namespace _diny;
         Mrx::Matrix<T> new_matrix = A;
         Mrx::Matrix<T> Q;
-
-        Q.eye(A.get_column_size(), A.get_row_size());
+        Q = Q.eye(A.get_column_size(), A.get_row_size());
         for (std::size_t i = 0; i + 1 < new_matrix.get_column_size(); ++i) {
             std::vector<T> temp1 = new_matrix.get_column(i, i, new_matrix.get_column_size());
-            std::vector<T> temp = orthogonal_vector(temp1, i);
-            find_R(new_matrix, temp);
-            find_Q(Q, temp);
+            std::vector<T> ort_vector = orthogonal_vector(temp1);
+            T norma = std::inner_product(ort_vector.begin(), ort_vector.end(), ort_vector.begin(), T(0));
+            for (std::size_t j = i; j < new_matrix.get_column_size(); j++) {
+                if (i == j) {
+                    T projection = T(0.5);
+                    std::size_t p = j;
+                    for (; p <= i; p++) {
+                        new_matrix(p, j) -= 2 * ort_vector[p - j] * projection;
+                    }
+                    for (; p < new_matrix.get_column_size(); p++) {
+                        new_matrix(p, j) = 0;
+                    }
+                } else {
+                    T projection = search_projection(ort_vector, new_matrix.get_column(j, i, new_matrix.get_column_size()), norma);
+                    for (std::size_t p = 0; p + i < new_matrix.get_column_size(); p++) {
+                        new_matrix(p + i, j) -= 2 * ort_vector[p] * projection;
+                    }
+                }
+            }
+            for (std::size_t p = 0; p < Q.get_column_size(); p++) {
+                T projection = search_projection(ort_vector, Q.get_column(p, i, Q.get_column_size()), norma);
+                for (std::size_t j = 0; j + i < Q.get_column_size(); j++) {
+                    Q(j + i, p) -= 2 * ort_vector[j] * projection;
+                }
+            }
         }
-        Q.transponse();
-        return std::make_pair(Q, new_matrix);
+        Mrx::Matrix<T> QT = Q.transponse();
+        return std::make_pair(QT, new_matrix);
     }
+    /*
+    template<std::floating_point T>
+    T vector_norm(const std::vector<T>& vec){
+        return std::inner_product(vec.begin(), vec.end(), vec.begin(), T(0));
+    }
+
+    template<std::floating_point T>
+    std::vector<T>discrepancy(const CSR_matrix_space::CSR_matrix<T>& A, const std::vector<T>& b, const std::vector<T>& x){
+        //b- Ax;
+        std::vector<T> ax = A * x;
+        std::vector<T> answ(b.size());
+        for(std::size_t i = 0; i < b.size(); i++){
+            answ = b[i] - ax[i];
+        }
+        return answ;
+    }*/
+    /*
+    template<std::floating_point T>
+    std::vector<T>MPI (const CSR_matrix_space::CSR_matrix<T>& A, const std::vector<T>& b, T tau, T discrepancy0, const std::vector<T>& x0){
+        std::vector<T> x = x0;
+        std::vector<T> x_next = x0;
+        while(x_next == x0 || discrepancy(A, b, x) >= discrepancy0 ){
+            for(std::size_t i = 0; i < x0.size(); i++){
+                x_next[i] = x[i] + tau * discrepancy(A,b,x);
+            }
+            x = x_next;
+        }
+        return x;
+    }
+
+    template<std::floating_point T>
+    std::vector<T> Gauss_Seidel (const CSR_matrix_space::CSR_matrix<T>& A, const std::vector<T>& b, T discrepancy0, const std::vector<T>& x0){
+
+    }
+
+    template<std::floating_point T>
+    friend std::vector<T> Jacobi (const CSR_matrix_space::CSR_matrix<T>& A, const std::vector<T>& b, T discrepancy0, const std::vector<T>& x0){
+        std::vector<T> x = x0;
+        std::vector<T> x_next = x0;
+        while(x_next == x0 || discrepancy(A, b, x) >= discrepancy0){
+            for(std::size_t i = 0; i < x0.size(); i++){
+                std::vector<T> temp(x0.size());
+                for(std::size_t j = 0; j < temp.size(); j++){
+                    std::size_t f1 =
+                }
+            }
+        }
+    }*/
 }
 
 #endif //SLAE_SLAE_SOLVER_HPP

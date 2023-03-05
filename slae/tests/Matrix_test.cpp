@@ -19,10 +19,8 @@ TEST(Matrix_tests, operators_test){
     test_matrix2[1][1] = 2;
     test_matrix2[2][2] = 2;
     test_matrix[2][2] = 5;
-    Mrx::Matrix<int> A;
-    Mrx::Matrix<int> B;
-    A.change_matrix(test_matrix);
-    B.change_matrix(test_matrix2);
+    Mrx::Matrix<int> A(test_matrix);
+    Mrx::Matrix<int> B(test_matrix2);
     A*=B;
     for(std::size_t i = 0; i<3;i++){
         for(std::size_t j = 0; j<3;j++){

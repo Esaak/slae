@@ -5,7 +5,8 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 add_subdirectory(Google_tests/lib) # это строчка не нужна
 
 
-file(GLOB files "*.cpp")
+file(GLOB files "*.cpp" "./TEST_04_03/*.cpp")
+#file(GLOB files1 "./TEST_04_03/*.cpp")
 foreach(filename ${files})
     get_filename_component (TName ${filename} NAME_WE)
     add_executable("${TName}" ${filename})
