@@ -58,6 +58,53 @@ void apply_vector(auto& file, std::vector<T>& data){
     }
 }
 
+TEST(CSR_matrix_tests, boundary_condition){
+    std::size_t N = 3;
+    std::vector<std::size_t>indices{0, 1, 2};
+    std::vector<std::size_t>indptr{0, 3, 3, 3};
+    std::vector<std::size_t>i{0, 0, 0};
+    std::vector<std::size_t>j{0, 1, 2};
+    std::vector<double>data{1, 2, 3};
+    std::vector<DOK<double>> D;
+    for(std::size_t p = 0; p < N; p++){
+        D.emplace_back(DOK<double>{static_cast<size_t>(i[p]), static_cast<size_t>(j[p]), data[p]});
+    }
+    CSR_matrix<double> M(D, N, N);
+    for (std::size_t p = 0; p < N; p++) {
+        EXPECT_DOUBLE_EQ(M(0, p), data[p]);
+    }
+    for (std::size_t p = 1; p < N; p++) {
+        for(std::size_t q = 0; q < N; q++) {
+            EXPECT_DOUBLE_EQ(M(p, q), 0);
+        }
+    }
+    indptr.clear();
+    indices.clear();
+    i.clear();
+    j.clear();
+    data.clear();
+    indices = {1};
+    indptr = {0, 0, 1, 1};
+    data = {1};
+    i = {0};
+    j = {0};
+    std::vector<DOK<double>> D1;
+    for(std::size_t p = 0; p < i.size(); p++){
+        D1.emplace_back(DOK<double>{static_cast<size_t>(i[p]), static_cast<size_t>(j[p]), data[p]});
+    }
+    CSR_matrix<double> M1(D1, N, N);
+    for(std::size_t p = 0; p < N; p++){
+        for(std::size_t q = 0; q < N; q++){
+            if(p == 0 && q == 0){
+                EXPECT_DOUBLE_EQ(M1(p, q), 1);
+            }
+            else{
+                EXPECT_DOUBLE_EQ(M1(p, q), 0);
+            }
+        }
+    }
+
+}
 TEST(CSR_matrix_tests, index_operator_test){
     std::size_t N = 10;
     std::vector<double>data;
@@ -75,7 +122,7 @@ TEST(CSR_matrix_tests, index_operator_test){
     filex.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_indptr.txt");
     filei.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_i.txt");
     filej.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_j.txt");
-    for(std::size_t it; it<N; it++) {
+    for(std::size_t it = 0; it<N; it++) {
         apply_vector<double>(fileA, data);
         apply_vector<std::size_t>(filed, indices);
         apply_vector<std::size_t>(filex, indptr);

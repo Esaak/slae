@@ -91,13 +91,13 @@ namespace Mrx {
             return new_matrix;
         }
 
-        Matrix &operator*(const Matrix<T> &other) {
+        Matrix &operator*(const Matrix<T> &other) const{
             if (column != other.row) throw std::invalid_argument("Invalid");
             Matrix new_matrix = *this;
             return new_matrix *= other;
         }
 
-        std::vector<T> dot(const std::vector<T> &vec) {
+        std::vector<T> dot(const std::vector<T> &vec) const{
             if (column != vec.size()) throw std::invalid_argument("Invalid");
             std::vector<T> res_vector(row);
             for (std::size_t i = 0; i < vec.size(); ++i) {
@@ -112,7 +112,7 @@ namespace Mrx {
             return *this;
         }
 
-        Matrix operator+(const Matrix<T> &other) {
+        Matrix operator+(const Matrix<T> &other) const{
             Matrix res_matrix = *this;
             return res_matrix += other;
         }
@@ -137,12 +137,12 @@ namespace Mrx {
             return x;
         }
 
-        static Matrix eye(std::size_t j, std::size_t i) {
+        static Matrix eye(std::size_t i){
             Matrix<T> new_matrix;
-            new_matrix.data.resize(i * j);
+            new_matrix.data.resize(i);
             new_matrix.row = i;
-            new_matrix.column = j;
-            for (std::size_t p = 0; p < std::min(new_matrix.column, new_matrix.row); p++) {
+            new_matrix.column = i;
+            for (std::size_t p = 0; p < i; p++) {
                 new_matrix(p,p) = 1;
             }
             return new_matrix;

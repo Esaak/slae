@@ -16,7 +16,7 @@ TEST(tests, first){
     std::vector<double> x0{0, 0, 0};
     std::vector<double> b{20, 30, 1};
     std::ofstream file;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_04_03/test3_data.txt");
+    file.open("/home/ilya/slae_lab/slae/tests/TEST_04_03/test3_data1.txt");
     for(std::size_t z = 0; z<i.size(); z++){
         D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
     }
@@ -24,7 +24,7 @@ TEST(tests, first){
     double r = pow(10, -12);
     double tau = 0.01;
     for(std::size_t p = 0; p < 30; p++) {
-        std::vector<double> a = ANSW.MPI_for3(ANSW, b, tau, r, x0, file);
+        std::vector<double> a = ANSW.MPI_for3(b, tau, r, x0, file);
 
         for(auto& it: a){
             std::cout<< it<<" ";
@@ -59,9 +59,9 @@ TEST(tests, second){
     }
 
     CSR_matrix<double> ANSW(D, 3, 3);
-    ANSW.MPI_for4(ANSW, b, tau, iteration_numbers, x0, file_M);
-    ANSW.Jacobi_for4(ANSW, b, iteration_numbers, x0, file_J);
-    ANSW.Gauss_Seidel_for4(ANSW, b, iteration_numbers, x0, file_G);
+    ANSW.MPI_for4(b, tau, iteration_numbers, x0, file_M);
+    ANSW.Jacobi_for4( b, iteration_numbers, x0, file_J);
+    ANSW.Gauss_Seidel_for4(b, iteration_numbers, x0, file_G);
     file_M.close();
     file_J.close();
     file_G.close();
