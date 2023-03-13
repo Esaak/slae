@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/CSR_matrix_test.dir/CSR_matrix_test.cpp.o -o CSR_matrix_test  ../lib/libgtest.a ../lib/libgtest_main.a ../lib/libgtest.a 

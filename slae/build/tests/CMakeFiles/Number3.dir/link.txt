@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/Number3.dir/TEST_04_03/Number3.cpp.o -o Number3  ../lib/libgtest.a ../lib/libgtest_main.a ../lib/libgtest.a 
