@@ -1,0 +1,15 @@
+Running main() from /home/ilya/slae_lab/slae/tests/Google_tests/lib/googletest/src/gtest_main.cc
+[==========] Running 3 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 3 tests from Iteration_tests
+[ RUN      ] Iteration_tests.MPI_test
+[       OK ] Iteration_tests.MPI_test (490 ms)
+[ RUN      ] Iteration_tests.Jacobi_test
+[       OK ] Iteration_tests.Jacobi_test (44 ms)
+[ RUN      ] Iteration_tests.Gauss_Seidel_test
+[       OK ] Iteration_tests.Gauss_Seidel_test (37 ms)
+[----------] 3 tests from Iteration_tests (578 ms total)
+
+[----------] Global test environment tear-down
+[==========] 3 tests from 1 test suite ran. (608 ms total)
+[  PASSED  ] 3 tests.

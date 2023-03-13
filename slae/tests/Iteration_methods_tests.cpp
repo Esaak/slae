@@ -15,7 +15,7 @@ void apply_vector(auto& file, std::vector<T>& data){
         str<<temp;
         T f;
         str>>f;
-        data.push_back(f);
+        data.push_back(std::move(f));
     }
 }
 TEST(Iteration_tests, MPI_test) {
@@ -82,6 +82,7 @@ TEST(Iteration_tests, Jacobi_test) {
     std::vector<std::size_t> j;
     std::vector<double> b;
     std::vector<double> x;
+    std::vector<double> result;
     fileA.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_data.txt");
     filei.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_i.txt");
     filej.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_j.txt");
@@ -100,12 +101,13 @@ TEST(Iteration_tests, Jacobi_test) {
         }
         CSR_matrix<double> M(D, N, N);
         double tolerance = pow(10, -10);
+        data.clear();
+        data.resize(N, 0);
         std::vector<double>x0(N);
-        std::vector<double> result = M.Jacobi(b, tolerance, x0);
+        result = M.Jacobi(b, data, tolerance);
         for(std::size_t p = 0; p<N; p++){
             EXPECT_NEAR(result[p], x[p], tolerance);
         }
-
         data.clear();
         x.clear();
         b.clear();

@@ -195,7 +195,6 @@ TEST(CSR_matrix_tests, multiply_column){
         for (std::size_t p = 0; p < Result.size(); ++p) {
            EXPECT_DOUBLE_EQ(Result[p], X[p]) << Result[p] << " " << X[p] << " " << p <<" "<<it<<"\n";
         }
-        D.clear();
         i.clear();
         j.clear();
         indptr.clear();
@@ -203,8 +202,6 @@ TEST(CSR_matrix_tests, multiply_column){
         X.clear();
         column.clear();
         data.clear();
-
-
     }
     fileA.close();
     filed.close();

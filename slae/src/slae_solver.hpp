@@ -74,8 +74,8 @@ namespace solvers {
         for (std::size_t p = 0; p < matrix.size() - 1; p++) {
             Mrx::Matrix<T> temp1;
             Mrx::Matrix<T> temp2;
-            temp1 = temp1.eye(N, N);
-            temp2 = temp2.eye(matrix[p].size(), matrix[p].size());
+            temp1 = temp1.eye(N);
+            temp2 = temp2.eye(matrix[p].size());
             std::size_t i;
             T norm = std::inner_product(matrix[p].begin(), matrix[p].end(), matrix[p].begin(), T(0));
             for (i = N - matrix[p].size(); i < N; ++i) {
@@ -96,7 +96,7 @@ namespace solvers {
         using namespace _diny;
         Mrx::Matrix<T> new_matrix = A;
         Mrx::Matrix<T> Q;
-        Q = Q.eye(A.get_column_size(), A.get_row_size());
+        Q = Q.eye(A.get_column_size());
         for (std::size_t i = 0; i + 1 < new_matrix.get_column_size(); ++i) {
             std::vector<T> temp1 = new_matrix.get_column(i, i, new_matrix.get_column_size());
             std::vector<T> ort_vector = orthogonal_vector(temp1);

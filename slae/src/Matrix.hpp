@@ -139,7 +139,7 @@ namespace Mrx {
 
         static Matrix eye(std::size_t i){
             Matrix<T> new_matrix;
-            new_matrix.data.resize(i);
+            new_matrix.data.resize(i*i);
             new_matrix.row = i;
             new_matrix.column = i;
             for (std::size_t p = 0; p < i; p++) {

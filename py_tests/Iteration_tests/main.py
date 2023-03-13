@@ -17,7 +17,7 @@ def create_test():
             line = []
             for k in range(N):
                 if k == p:
-                    t = N*N*np.random.uniform(0.5, 1)
+                    t = np.round(N*N*np.random.uniform(0.5, 1), 4)
                     line.append(t)
                     fA.write(str(t))
                     fi.write(str(p))
@@ -27,7 +27,7 @@ def create_test():
                     fj.write(" ")
                 else:
                     if np.random.random() < 0.1:
-                        t = np.random.uniform(-N, N)
+                        t = np.round(np.random.uniform(-N, N),4)
                         line.append(t)
                         fA.write(str(t))
                         fi.write(str(p))

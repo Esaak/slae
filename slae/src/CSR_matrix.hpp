@@ -52,7 +52,7 @@ namespace CSR_matrix_space {
     public:
         CSR_matrix() = default;
 
-        explicit CSR_matrix(const std::vector<DOK_space::DOK<T>> &A, std::size_t row,
+        CSR_matrix(const std::vector<DOK_space::DOK<T>> &A, std::size_t row,
                             std::size_t column) { // need , std::size_t row, std::size_t column
             std::size_t N = A.size();
             data.resize(N);
@@ -68,8 +68,7 @@ namespace CSR_matrix_space {
                 }
                 else if(p + 1==N){
                     int p_indx = std::max(0, static_cast<int>(p) - 1);
-                    std::fill_n(row_indx.begin() + A[p_indx].i + 1,
-                                static_cast<int>(row_indx.size()) - A[p_indx].i, N);
+                    std::fill(row_indx.begin() + A[p_indx].i + 1, row_indx.end(), N);
                 }
             }
             row_indx.back() = N;
@@ -198,21 +197,22 @@ namespace CSR_matrix_space {
         }
 
 
-        std::vector<T> Jacobi(const std::vector<T> &b, T tolerance0,
-                              const std::vector<T> &x0) const{
+        std::vector<T> Jacobi(const std::vector<T>&b, const std::vector<T>& x0, T tolerance0) {
             CSR_matrix_space::CSR_matrix<T> A = *this;
-            std::vector<T> x = x0;
+            std::vector<T>x = x0;
+            //std::vector<T> diag_el(x0.size());
             while (euclid_norm(discrepancy(A, b, x)) >= tolerance0) {
                 std::vector<T> temp(x0.size());
                 for (std::size_t j = 0; j < x0.size(); j++) {
                     for (std::size_t p = row_indx[j]; p < row_indx[j + 1]; ++p) {
-                        if (j == col_ind[p]) continue;
+                        if (j == col_ind[p]) {
+                            continue;
+                        }
                         temp[j] += (data[p] * x[col_ind[p]]) / A(j, j);
                     }
+                    temp[j] = (b[j] / A(j, j) - temp[j]);
                 }
-                for (std::size_t i = 0; i < x0.size(); i++) {
-                    x[i] = (b[i] / A(i, i) - temp[i]);
-                }
+                x=temp;
             }
             return x;
         }
