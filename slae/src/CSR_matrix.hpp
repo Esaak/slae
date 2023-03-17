@@ -45,9 +45,37 @@ namespace CSR_matrix_space {
         }
 
         T euclid_norm(const std::vector<T> &vec) const{
-            return sqrt(std::inner_product(vec.begin(), vec.end(), vec.begin(), T(0)));
+            return std::sqrt(std::inner_product(vec.begin(), vec.end(), vec.begin(), T(0)));
+        }
+        T scalar_multiplication (const std::vector<T> &vector_1, const std::vector<T> &vector_2) const{
+            return std::inner_product(vector_1.begin(), vector_1.end(), vector_2.begin(), T(0));
         }
 
+        std::vector<std::size_t> tau_distribution(std::size_t n) const{
+            std::vector<std::size_t> tau_distribution_v(n, 0);
+            for(std::size_t i = 2; i <= n; i*=2){
+                std::size_t j = 0;
+                while(j < n){
+                    tau_distribution_v[j + n/i] = i - 1 - tau_distribution_v[j];
+                    j+=(n * 2)/i;
+                }
+            }
+            return tau_distribution_v;
+        }
+
+        std::vector<T> chebyshev_polynomials_solutions(long n) const{
+            T cos_b = std::cos(M_PI/(2 * static_cast<T>(n)));
+            T sin_b = std::sqrt(1 - std::pow(cos_b,2));
+            T sin_a = 2 * sin_b * cos_b;
+            T cos_a = std::pow(cos_b,2) - std::pow(sin_b,2);
+            std::vector<T> solutions(n);
+            solutions[0] = cos_b;
+            for(long i = 0; i + 1 < n; i++){
+                solutions[i+1] = solutions[i]*cos_a - sin_b * sin_a;
+                sin_b = solutions[i] * sin_a + sin_b * cos_a;
+            }
+            return solutions;
+        }
 
     public:
         CSR_matrix() = default;
@@ -92,125 +120,33 @@ namespace CSR_matrix_space {
             }
             return answ;
         }
-
-
-        std::vector<T>
-        MPI_for3(const std::vector<T> &b, T tau, T discrepancy0,
-                 const std::vector<T> &x0, auto &file) {
-            CSR_matrix_space::CSR_matrix<T> A = *this;
-            std::vector<T> x = x0;
-            std::vector<T> x_next = x0;
-            std::size_t count = 0;
-            T discrepancy_new = euclid_norm(discrepancy(A, b, x));
-            T delta_discrepancy = discrepancy_new;
-            while (discrepancy_new >= discrepancy0) {
-                for (std::size_t i = 0; i < x0.size(); i++) {
-                    x_next[i] = x[i] + tau * discrepancy(A, b, x)[i];
-                }
-                x = x_next;
-                count += 1;
-                if (std::abs(discrepancy_new - euclid_norm(discrepancy(A, b, x))) > delta_discrepancy &&
-                    count > 300)
-                    break;
-                else {
-                    delta_discrepancy = std::abs(discrepancy_new - euclid_norm(discrepancy(A, b, x)));
-                    discrepancy_new = euclid_norm(discrepancy(A, b, x));
-                }
-            }
-
-            file << count << " ";
-
-            return x;
-        }
-
-        std::vector<T> MPI_for4(const std::vector<T> &b, T tau,
-                                std::size_t iteration_numbers, const std::vector<T> &x0, auto &file) {
-            CSR_matrix_space::CSR_matrix<T> A = *this;
-            std::vector<T> x = x0;
-            std::vector<T> x_next = x0;
-            std::size_t count = 0;
-            T discrepancy_new = euclid_norm(discrepancy(A, b, x));
-            while (count < iteration_numbers) {
-                for (std::size_t i = 0; i < x0.size(); i++) {
-                    x_next[i] = x[i] + tau * discrepancy(A, b, x)[i];
-                }
-                x = x_next;
-                count += 1;
-                file << discrepancy_new << " ";
-                discrepancy_new = euclid_norm(discrepancy(A, b, x));
-            }
-            for (auto &it: x) std::cout << it << " ";
-
-            return x;
-        }
-
-
-        std::vector<T> Gauss_Seidel_for4(const std::vector<T> &b,
-                                         std::size_t iteration_numbers, const std::vector<T> &x0, auto &file) {
-            CSR_matrix_space::CSR_matrix<T> A = *this;
-            std::vector<T> x = x0;
-            std::size_t count = 0;
-
-            T discrepancy_new = euclid_norm(discrepancy(A, b, x));
-            while (count < iteration_numbers) {
-                for (std::size_t j = 0; j < x.size(); j++) {
-                    T t = 0;
-                    for (std::size_t p = row_indx[j]; p < row_indx[j + 1]; ++p) {
-                        if (j == col_ind[p]) continue;
-                        t += (data[p] * x[col_ind[p]]) / A(j, j);
-                    }
-                    x[j] = b[j] / A(j, j) - t;
-                }
-                file << discrepancy_new << " ";
-                discrepancy_new = euclid_norm(discrepancy(A, b, x));
-                count += 1;
-            }
-            for (auto &it: x) std::cout << it << " ";
-            return x;
-        }
-
-
-        std::vector<T>
-        Jacobi_for4(const std::vector<T> &b, std::size_t iteration_numbers,
-                    const std::vector<T> &x0, auto &file) {
-            CSR_matrix_space::CSR_matrix<T> A = *this;
-            std::vector<T> x = x0;
-            T discrepancy_new = euclid_norm(discrepancy(A, b, x));
-            std::size_t count = 0;
-            while (count < iteration_numbers) {
-                std::vector<T> temp(x0.size());
-                for (std::size_t j = 0; j < temp.size(); j++) {
-                    for (std::size_t p = row_indx[j]; p < row_indx[j + 1]; ++p) {
-                        if (j == col_ind[p]) continue;
-                        temp[j] += ((data[p] * x[col_ind[p]]) / A(j, j));
-                    }
-                }
-                for (std::size_t i = 0; i < x0.size(); i++) {
-                    x[i] = (b[i] / A(i, i) - temp[i]);
-                }
-                file << discrepancy_new << " ";
-                discrepancy_new = euclid_norm(discrepancy(A, b, x));
-                count += 1;
-            }
-            for (auto &it: x) std::cout << it << " ";
-            return x;
-        }
-
-
+//        CSR_matrix operator - (const CSR_matrix<T> &other) const{
+//            CSR_matrix new_matrix;
+//            if()
+//
+//        }
         std::vector<T> Jacobi(const std::vector<T>&b, const std::vector<T>& x0, T tolerance0) {
             CSR_matrix_space::CSR_matrix<T> A = *this;
             std::vector<T>x = x0;
-            //std::vector<T> diag_el(x0.size());
+            std::vector<T> diag_elements;
+            std::vector<T> norm_b;
+            diag_elements.reserve(x0.size());
+            norm_b.reserve(x0.size());
+
             while (euclid_norm(discrepancy(A, b, x)) >= tolerance0) {
                 std::vector<T> temp(x0.size());
                 for (std::size_t j = 0; j < x0.size(); j++) {
+                    if(diag_elements.size() != x0.size()){
+                        diag_elements.emplace_back(A(j,j));
+                        norm_b.emplace_back(b[j]/diag_elements[j]);
+                    }
                     for (std::size_t p = row_indx[j]; p < row_indx[j + 1]; ++p) {
                         if (j == col_ind[p]) {
                             continue;
                         }
-                        temp[j] += (data[p] * x[col_ind[p]]) / A(j, j);
+                        temp[j] += (data[p] * x[col_ind[p]]) / diag_elements[j];
                     }
-                    temp[j] = (b[j] / A(j, j) - temp[j]);
+                    temp[j] = (norm_b[j] - temp[j]);
                 }
                 x=temp;
             }
@@ -221,19 +157,50 @@ namespace CSR_matrix_space {
                                     const std::vector<T> &x0) const{
             CSR_matrix_space::CSR_matrix<T> A = *this;
             std::vector<T> x = x0;
+            std::vector<T> diag_elements;
+            std::vector<T> norm_b;
+            diag_elements.reserve(x0.size());
+            norm_b.reserve(x0.size());
             while (euclid_norm(discrepancy(A, b, x)) >= tolerance0) {
                 for (std::size_t j = 0; j < x.size(); j++) {
+                    if(diag_elements.size()!= x0.size()){
+                        diag_elements.emplace_back(A(j,j));
+                        norm_b.emplace_back(b[j]/diag_elements[j]);
+                    }
                     T t = 0;
                     for (std::size_t p = row_indx[j]; p < row_indx[j + 1]; ++p) {
                         if (j == col_ind[p]) continue;
-                        t += (data[p] * x[col_ind[p]]) / A(j, j);
+                        t += (data[p] * x[col_ind[p]]) / diag_elements[j];
                     }
-                    x[j] = b[j] / A(j, j) - t;
+                    x[j] = norm_b[j] - t;
                 }
             }
             return x;
         }
 
+        T estimate_lambda_max (const std::vector<T> &r0, T tolerance0)const{
+            CSR_matrix_space::CSR_matrix<T> A = *this;
+            std::vector<T> r = r0;
+            T lambda, next_lambda;
+            T r_err = tolerance0;
+            std::vector <T> next_r;
+
+            next_r = A * r;
+            T norma = euclid_norm(next_r);
+            lambda = scalar_multiplication(next_r, r);
+            std::transform(next_r.begin(), next_r.end(), next_r.begin(), [norma](T a){return a/norma;});
+            r = next_r;
+            while(r_err >= tolerance0){
+                next_r = A * r;
+                norma = euclid_norm(next_r);
+                next_lambda = scalar_multiplication(next_r, r);
+                std::transform(next_r.begin(), next_r.end(), next_r.begin(), [norma](T a){return a/norma;});
+                r_err = std::abs((lambda - next_lambda))/lambda;
+                lambda = next_lambda;
+                r = next_r;
+            }
+            return lambda;
+        }
 
         std::vector<T> MPI(const std::vector<T> &b, T tau, T tolerance0,
                            const std::vector<T> &x0) const{
@@ -245,6 +212,27 @@ namespace CSR_matrix_space {
                 for (std::size_t i = 0; i < x0.size(); i++) {
                     x[i] = x[i] + tau * new_discrepancy[i];
                 }
+                new_discrepancy = discrepancy(A, b, x);
+            }
+            return x;
+        }
+
+        std::vector<T> quick_MPI(const std::vector<T>&b, T tolerance0, const std::vector<T>& x0, std::size_t n, T lambda_max, T lambda_min) const{
+            std::vector<T> x = x0;
+            CSR_matrix A = *this;
+            std::vector<std::size_t> tau_distribution_v = tau_distribution(n);
+            std::vector<T> tau_v = chebyshev_polynomials_solutions(n);
+            std::transform(tau_v.begin(), tau_v.end(), tau_v.begin(), [lambda_max, lambda_min](T a){
+                return 1 / (a * (lambda_max - lambda_min)/2 + (lambda_max + lambda_min)/2);
+            });
+            std::vector<T>new_discrepancy = discrepancy(A, b, x);
+            std::size_t count = 0;
+            while(euclid_norm(new_discrepancy) >= tolerance0){
+                if(count>=n) count = 0;
+                for (std::size_t i = 0; i < x0.size(); i++) {
+                    x[i] = x[i] + tau_v[count] * new_discrepancy[i];
+                }
+                count ++;
                 new_discrepancy = discrepancy(A, b, x);
             }
             return x;

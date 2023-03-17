@@ -10,6 +10,7 @@ def create_test():
     fb = open("test_b.txt", "a")
     fx = open("test_x.txt", "a")
     fL = open("test_L.txt", "a")
+    fL_min = open("test_l_min.txt", "a")
     for i in range(n):
         matrix = []
         b = []
@@ -50,6 +51,7 @@ def create_test():
 
         lmbda, va = np.linalg.eigh(matrix)
         mmax = np.max(np.abs(lmbda))
+        mmin = np.min(lmbda)
         x = np.linalg.solve(matrix, b)
 
         for p in b:
@@ -63,6 +65,8 @@ def create_test():
         fx.write("\n")
         fL.write(str(mmax))
         fL.write("\n")
+        fL_min.write(str(mmin))
+        fL_min.write("\n")
         matrix.clear()
         b.clear()
 
