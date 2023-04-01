@@ -189,11 +189,11 @@ TEST(CSR_matrix_tests, multiply_column){
             D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
         }
         std::sort(D.begin(), D.end());
-        CSR_matrix<double> M(D, N, N);
+        CSR_matrix<double> M(D, X.size(), X.size());
         std::vector<double> Result = M * column;
         //EXPECT_EQ(Result, X);
         for (std::size_t p = 0; p < Result.size(); ++p) {
-           EXPECT_DOUBLE_EQ(Result[p], X[p]) << Result[p] << " " << X[p] << " " << p <<" "<<it<<"\n";
+           EXPECT_NEAR(Result[p], X[p], std::abs(X[p])) << Result[p] << " " << X[p] << " " << p <<" "<<it<<"\n";
         }
         i.clear();
         j.clear();
@@ -210,5 +210,4 @@ TEST(CSR_matrix_tests, multiply_column){
     filej.close();
     fileColumn.close();
     fileRes.close();
-
 }

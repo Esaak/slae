@@ -1,7 +1,8 @@
 import scipy as sp
 import numpy as np
 def create_test():
-    N = 10
+    N = 1000
+    n= 10
     minn = 1
     maxx = 10
     dim = 3
@@ -12,7 +13,7 @@ def create_test():
     fj = open("test_j.txt", "a")
     fD = open("test_D.txt", "a")
     fX = open("test_X.txt", "a")
-    for p in range(N):
+    for p in range(n):
         data = []
         D = []
         for i in range(N):
