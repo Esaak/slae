@@ -10,23 +10,32 @@ def create_test():
     fj = open("test_j.txt", "a")
     fb = open("test_b.txt", "a")
     fx = open("test_x.txt", "a")
-
+    fL = open("test_L.txt", "a")
     for i in range(n):
         matrix = [0] * N
+        D = [0] * N
+        U = [0] * N
+        L = [0] * N
         for j in range(N):
             matrix[j] = [0] * N
+            D[j] = [0] * N
+            U[j] = [0] * N
+            L[j] = [0] * N
         b = []
         for p in range(N):
             for k in range(p, N):
                 if k == p:
                     t = np.round(N * N * np.random.uniform(0.5, 1), 4)
-                    matrix[k][p] = t
+                    D[k][p] = t
                 else:
                     if np.random.random() < 0.1:
                         t = np.round(np.random.uniform(-np.sqrt(N), np.sqrt(N)), 4)
                         matrix[p][k] = t
-        matrix2 = np.array(matrix).T
-        matrix = matrix2 @ np.array(matrix)
+                        if k > p :
+                            U[p][k] = t
+        matrix =np.array(matrix).T @ np.array(matrix)
+        L = np.array(U).T
+        matrix = matrix + np.array(D)
         for p in range(N):
             for k in range(N):
                 if matrix[p][k] != 0:
@@ -57,6 +66,12 @@ def create_test():
             fx.write(str(p))
             fx.write(" ")
         fx.write("\n")
+        mu_max = np.max(np.abs(np.linalg.eigvals(np.eye(N) - np.linalg.inv(D) @ matrix)))
+        omega = 1 + (mu_max/(1 + np.sqrt(1 - mu_max ** 2))) ** 2
+        P = - np.linalg.inv(np.array(D) + omega * np.array(L)) @ (omega * np.array(U) + (omega - 1) * np.array(D))
+        eig_vals= np.linalg.eigvals(P)
+        fL.write(str(np.max(np.abs(eig_vals))))
+        fL.write("\n")
 
         b.clear()
 
