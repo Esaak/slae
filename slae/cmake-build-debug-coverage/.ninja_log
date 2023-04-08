@@ -1,7 +1,0 @@
-# ninja log v5
-1	1674	1677974447644850458	tests/Google_tests/lib/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o	a12405d6f46994c5
-3	1670	1677974555595139621	tests/CMakeFiles/Number3.dir/TEST_04_03/Number3.cpp.o	1ac0431145743be5
-1670	1844	1677974555768475248	tests/Number3	431d39230f687a4a
-6648	6776	1677974452738620483	lib/libgtest.a	c6e87ed846879544
-1	6648	1677974452611943641	tests/Google_tests/lib/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	db0b1ffee4d4851b
-6776	6804	1677974452775290095	lib/libgtest_main.a	39920a5194bc078c
