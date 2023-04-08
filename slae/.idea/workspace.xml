@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="slae" targetName="Matrix_test" />
+      <config projectName="slae" targetName="tridiagonal_test" />
+      <config projectName="slae" targetName="TEST_08_04" />
+      <config projectName="slae" targetName="gmock_main" />
+      <config projectName="slae" targetName="Number3" />
+      <config projectName="slae" targetName="QR_decomposition_test" />
+      <config projectName="slae" targetName="Iteration_methods_simple_tests" />
+      <config projectName="slae" targetName="gmock" />
+      <config projectName="slae" targetName="gtest" />
+      <config projectName="slae" targetName="CSR_matrix_test" />
+      <config projectName="slae" targetName="Iteration_methods_tests" />
+      <config projectName="slae" targetName="gtest_main" />
+      <config projectName="slae" targetName="slae" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+      <configuration PROFILE_NAME="Debug-Coverage" ENABLED="true" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage" />
+      <configuration PROFILE_NAME="Release" ENABLED="true" CONFIG_NAME="Release" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f824d44b-8c38-4656-b979-6cbadc503a46" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CMakeLists.txt" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2022" />
+    <option name="minorVersion" value="3.2" />
+  </component>
+  <component name="ProjectId" id="2LXWm8NWnEjgxvIKpH25hqG743P" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;cf.advertisement.text.has.clang-format&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/ilya/slae_lab/slae&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;CMakeSettings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests/TEST_08_04" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Google Test.TEST_08_04.second_number_Conjugate_Gradient_test">
+    <configuration name="Iteration_methods_simple_tests" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="Iteration_methods_simple_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="slae" RUN_TARGET_NAME="Iteration_methods_simple_tests" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Iteration_methods_tests" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="Iteration_methods_tests" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="slae" RUN_TARGET_NAME="Iteration_methods_tests" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Matrix_test" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="Matrix_test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="slae" RUN_TARGET_NAME="Matrix_test" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Number3" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="Number3" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="slae" RUN_TARGET_NAME="Number3" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TEST_08_04" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="TEST_08_04" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="slae" RUN_TARGET_NAME="TEST_08_04" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TEST_08_04.second_number_CHEB_MPI_test" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="TEST_08_04" RUN_TARGET_PROJECT_NAME="slae" RUN_TARGET_NAME="TEST_08_04" TEST_CLASS="TEST_08_04" TEST_METHOD="second_number_CHEB_MPI_test" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TEST_08_04.second_number_Conjugate_Gradient_test" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="TEST_08_04" RUN_TARGET_PROJECT_NAME="slae" RUN_TARGET_NAME="TEST_08_04" TEST_CLASS="TEST_08_04" TEST_METHOD="second_number_Conjugate_Gradient_test" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TEST_08_04.second_number_MPI_opt_test" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="TEST_08_04" RUN_TARGET_PROJECT_NAME="slae" RUN_TARGET_NAME="TEST_08_04" TEST_CLASS="TEST_08_04" TEST_METHOD="second_number_MPI_opt_test" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TEST_08_04.second_number_MPI_test" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="TEST_08_04" RUN_TARGET_PROJECT_NAME="slae" RUN_TARGET_NAME="TEST_08_04" TEST_CLASS="TEST_08_04" TEST_METHOD="second_number_MPI_test" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TEST_08_04.second_number_Steepest_Descent_test" type="CMakeGoogleTestRunConfigurationType" factoryName="Google Test" temporary="true" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="TEST_08_04" RUN_TARGET_PROJECT_NAME="slae" RUN_TARGET_NAME="TEST_08_04" TEST_CLASS="TEST_08_04" TEST_METHOD="second_number_Steepest_Descent_test" TEST_MODE="SUITE_TEST">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="BeforeTestRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gmock" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="gmock" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gmock_main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="gmock_main" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gtest" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="gtest" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gtest_main" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="gtest_main" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="slae" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="slae" TARGET_NAME="slae" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.slae" />
+      <item itemvalue="CMake Application.gmock" />
+      <item itemvalue="CMake Application.gmock_main" />
+      <item itemvalue="CMake Application.gtest" />
+      <item itemvalue="CMake Application.gtest_main" />
+      <item itemvalue="Google Test.Iteration_methods_simple_tests" />
+      <item itemvalue="Google Test.Iteration_methods_tests" />
+      <item itemvalue="Google Test.Matrix_test" />
+      <item itemvalue="Google Test.Number3" />
+      <item itemvalue="Google Test.TEST_08_04" />
+      <item itemvalue="Google Test.TEST_08_04.second_number_MPI_test" />
+      <item itemvalue="Google Test.TEST_08_04.second_number_CHEB_MPI_test" />
+      <item itemvalue="Google Test.TEST_08_04.second_number_Conjugate_Gradient_test" />
+      <item itemvalue="Google Test.TEST_08_04.second_number_MPI_opt_test" />
+      <item itemvalue="Google Test.TEST_08_04.second_number_Steepest_Descent_test" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Google Test.TEST_08_04.second_number_Conjugate_Gradient_test" />
+        <item itemvalue="Google Test.TEST_08_04.second_number_CHEB_MPI_test" />
+        <item itemvalue="Google Test.TEST_08_04.second_number_Steepest_Descent_test" />
+        <item itemvalue="Google Test.TEST_08_04.second_number_MPI_opt_test" />
+        <item itemvalue="Google Test.TEST_08_04.second_number_MPI_test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f824d44b-8c38-4656-b979-6cbadc503a46" name="Changes" comment="" />
+      <created>1676018064783</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1676018064783</updated>
+      <workItem from="1676018066527" duration="296000" />
+      <workItem from="1676018374721" duration="335000" />
+      <workItem from="1676020281451" duration="214000" />
+      <workItem from="1676020506967" duration="381000" />
+      <workItem from="1676048038699" duration="482000" />
+      <workItem from="1676048533405" duration="150000" />
+      <workItem from="1676048694270" duration="5456000" />
+      <workItem from="1676054814763" duration="1119000" />
+      <workItem from="1676056314478" duration="1344000" />
+      <workItem from="1676144479916" duration="5049000" />
+      <workItem from="1676208472496" duration="12013000" />
+      <workItem from="1676232692981" duration="7329000" />
+      <workItem from="1676290316283" duration="228000" />
+      <workItem from="1676380361078" duration="1527000" />
+      <workItem from="1676389704763" duration="30000" />
+      <workItem from="1676499904298" duration="4779000" />
+      <workItem from="1676531651415" duration="1166000" />
+      <workItem from="1676545593248" duration="896000" />
+      <workItem from="1676640260052" duration="14048000" />
+      <workItem from="1676750839101" duration="6245000" />
+      <workItem from="1676790763533" duration="2583000" />
+      <workItem from="1676794343187" duration="93000" />
+      <workItem from="1676812812222" duration="963000" />
+      <workItem from="1676868444875" duration="4515000" />
+      <workItem from="1676879656403" duration="1877000" />
+      <workItem from="1676913230752" duration="13000" />
+      <workItem from="1676918761696" duration="195000" />
+      <workItem from="1676988577983" duration="36000" />
+      <workItem from="1677052071407" duration="1234000" />
+      <workItem from="1677058143560" duration="1020000" />
+      <workItem from="1677059538683" duration="598000" />
+      <workItem from="1677088807990" duration="1007000" />
+      <workItem from="1677090644384" duration="815000" />
+      <workItem from="1677095835033" duration="4253000" />
+      <workItem from="1677180795280" duration="15477000" />
+      <workItem from="1677201314550" duration="17000" />
+      <workItem from="1677256245553" duration="794000" />
+      <workItem from="1677269116938" duration="1483000" />
+      <workItem from="1677300317042" duration="1551000" />
+      <workItem from="1677303322916" duration="546000" />
+      <workItem from="1677305375335" duration="1632000" />
+      <workItem from="1677314582768" duration="3232000" />
+      <workItem from="1677327495462" duration="3284000" />
+      <workItem from="1677331486306" duration="2510000" />
+      <workItem from="1677346718907" duration="8224000" />
+      <workItem from="1677514560373" duration="229000" />
+      <workItem from="1677523302051" duration="25000" />
+      <workItem from="1677795476824" duration="3256000" />
+      <workItem from="1677869726851" duration="5939000" />
+      <workItem from="1677911520206" duration="3388000" />
+      <workItem from="1677928484168" duration="1941000" />
+      <workItem from="1677931396135" duration="1464000" />
+      <workItem from="1677939940636" duration="2719000" />
+      <workItem from="1677945644093" duration="6596000" />
+      <workItem from="1677954077468" duration="3360000" />
+      <workItem from="1677958460388" duration="15279000" />
+      <workItem from="1678093245581" duration="1000" />
+      <workItem from="1678103383966" duration="171000" />
+      <workItem from="1678198408816" duration="726000" />
+      <workItem from="1678201264712" duration="253000" />
+      <workItem from="1678456798758" duration="11145000" />
+      <workItem from="1678475635929" duration="5182000" />
+      <workItem from="1678636632457" duration="616000" />
+      <workItem from="1678682955034" duration="2922000" />
+      <workItem from="1678685967678" duration="3868000" />
+      <workItem from="1678696540420" duration="11669000" />
+      <workItem from="1678718652560" duration="1870000" />
+      <workItem from="1678722658716" duration="602000" />
+      <workItem from="1678805642017" duration="113000" />
+      <workItem from="1678995962247" duration="6076000" />
+      <workItem from="1679066234881" duration="11774000" />
+      <workItem from="1679128698043" duration="636000" />
+      <workItem from="1679196503045" duration="604000" />
+      <workItem from="1679204524723" duration="646000" />
+      <workItem from="1679211701174" duration="13000" />
+      <workItem from="1679254450441" duration="554000" />
+      <workItem from="1679408015866" duration="12000" />
+      <workItem from="1679472798171" duration="1275000" />
+      <workItem from="1679477293355" duration="504000" />
+      <workItem from="1679479366726" duration="424000" />
+      <workItem from="1680011535546" duration="838000" />
+      <workItem from="1680013104725" duration="3923000" />
+      <workItem from="1680019487017" duration="4581000" />
+      <workItem from="1680102589490" duration="14182000" />
+      <workItem from="1680130638853" duration="250000" />
+      <workItem from="1680149968284" duration="3856000" />
+      <workItem from="1680168268684" duration="4733000" />
+      <workItem from="1680260513402" duration="4265000" />
+      <workItem from="1680265952467" duration="803000" />
+      <workItem from="1680300863509" duration="303000" />
+      <workItem from="1680337291747" duration="12544000" />
+      <workItem from="1680433281027" duration="8243000" />
+      <workItem from="1680442554294" duration="6000" />
+      <workItem from="1680939580773" duration="1122000" />
+      <workItem from="1680941909499" duration="6866000" />
+      <workItem from="1680963309096" duration="3832000" />
+      <workItem from="1680969484487" duration="6320000" />
+      <workItem from="1680979849251" duration="898000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticEditVcpkgJson value="false" />
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticFoundErrors value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="../../../slae_lab/slae/cmake-build-debug-coverage" NAME="tests.first Coverage Results" MODIFIED="1677974453646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="gcov/llvm" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

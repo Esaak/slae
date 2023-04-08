@@ -1,0 +1,402 @@
+        -:    0:Source:/home/ilya/slae_lab/slae/src/CSR_matrix.hpp
+        -:    0:Graph:/home/ilya/slae_lab/slae/cmake-build-debug-coverage/tests/CMakeFiles/Number3.dir/TEST_04_03/Number3.cpp.gcno
+        -:    0:Data:/home/ilya/slae_lab/slae/cmake-build-debug-coverage/tests/CMakeFiles/Number3.dir/TEST_04_03/Number3.cpp.gcda
+        -:    0:Runs:2
+        -:    1://
+        -:    2:// Created by ilya on 12.02.23.
+        -:    3://
+        -:    4:
+        -:    5:#ifndef SLAE_CSR_MATRIX_HPP
+        -:    6:#define SLAE_CSR_MATRIX_HPP
+        -:    7:
+        -:    8:
+        -:    9:#include "Matrix.hpp"
+        -:   10:
+        -:   11:
+        -:   12:namespace DOK_space {
+        -:   13:    template<typename T, IsArithmetical<T> = true>
+        -:   14:    struct DOK {
+        -:   15:        std::size_t i;
+        -:   16:        std::size_t j;
+        -:   17:        T value;
+        -:   18:
+        -:   19:        bool operator<(const DOK &A) {
+        -:   20:            if (i < A.i) {
+        -:   21:                return true;
+        -:   22:            } else if (i == A.i && j <= A.j) {
+        -:   23:                return true;
+        -:   24:            }
+        -:   25:            return false;
+        -:   26:        }
+        -:   27:    };
+        -:   28:}
+        -:   29:namespace CSR_matrix_space {
+        -:   30:    template<typename T, IsArithmetical<T> = true>
+        -:   31:    class CSR_matrix {
+        -:   32:    private:
+        -:   33:        std::vector<T> data;
+        -:   34:        std::vector<std::size_t> col_ind;
+        -:   35:        std::vector<std::size_t> row_indx;
+        -:   36:
+        -:   37:
+function _ZN16CSR_matrix_space10CSR_matrixIdLb1EE11discrepancyERKS1_RKSt6vectorIdSaIdEES8_ called 1029 returned 100% blocks executed 77%
+     1029:   38:        std::vector<T>discrepancy(const CSR_matrix_space::CSR_matrix<T>& A, const std::vector<T>& b, const std::vector<T>& x){
+        -:   39:            //b- Ax;
+     1029:   40:            std::vector<T> ax = A * x;
+     1029:   40-block  0
+call    0 returned 1029
+branch  1 taken 1029 (fallthrough)
+branch  2 taken 0 (throw)
+     1029:   41:            std::vector<T> answ(b.size());
+     1029:   41-block  0
+call    0 returned 1029
+call    1 returned 1029
+call    2 returned 1029
+branch  3 taken 1029 (fallthrough)
+branch  4 taken 0 (throw)
+     1029:   41-block  1
+call    5 returned 1029
+    $$$$$:   41-block  2
+call    6 never executed
+    $$$$$:   41-block  3
+     4116:   42:            for(std::size_t i = 0; i < b.size(); i++){
+     4116:   42-block  0
+call    0 returned 4116
+branch  1 taken 3087
+branch  2 taken 1029 (fallthrough)
+     3087:   43:                answ[i]= b[i] - ax[i];
+     3087:   43-block  0
+call    0 returned 3087
+call    1 returned 3087
+call    2 returned 3087
+        -:   44:            }
+     2058:   45:            return answ;
+     1029:   45-block  0
+     1029:   45-block  1
+     1029:   46:        }
+     1029:   46-block  0
+call    0 returned 1029
+    $$$$$:   46-block  1
+call    1 never executed
+        -:   47:
+function _ZN16CSR_matrix_space10CSR_matrixIdLb1EE11vector_normERKSt6vectorIdSaIdEE called 258 returned 100% blocks executed 100%
+      258:   48:        T vector_norm(const std::vector<T>& vec){
+      258:   49:            return sqrt(std::inner_product(vec.begin(), vec.end(), vec.begin(), T(0)));
+      258:   49-block  0
+call    0 returned 258
+call    1 returned 258
+call    2 returned 258
+call    3 returned 258
+        -:   50:        }
+        -:   51:
+        -:   52:
+        -:   53:    public:
+        -:   54:        CSR_matrix() = default;
+function _ZN16CSR_matrix_space10CSR_matrixIdLb1EEC2ERKSt6vectorIN9DOK_space3DOKIdLb1EEESaIS5_EEmm called 1 returned 100% blocks executed 80%
+        1:   55:        explicit CSR_matrix(const std::vector<DOK_space::DOK<T>> &A, std::size_t row, std::size_t column){ // need , std::size_t row, std::size_t column
+        1:   55-block  0
+call    0 returned 1
+call    1 returned 1
+call    2 returned 1
+        1:   56:            std::size_t N = A.size();
+call    0 returned 1
+        1:   57:            data.resize(N);
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   58:            col_ind.resize(N);
+        1:   58-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   59:            row_indx.resize(row + 1);
+        1:   59-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:   60:            row_indx[0] = 0;
+        1:   60-block  0
+call    0 returned 1
+        -:   61:            //std::size_t count = 1;
+        7:   62:            for (std::size_t p = 0; p < N; p++) {
+        6:   62-block  0
+        7:   62-block  1
+branch  0 taken 6
+branch  1 taken 1 (fallthrough)
+        6:   63:                data[p] = A[p].value;
+        6:   63-block  0
+call    0 returned 6
+call    1 returned 6
+        6:   64:                col_ind[p] = A[p].j;
+call    0 returned 6
+call    1 returned 6
+        6:   65:                if (p > 0 && A[static_cast<int>(p) - 1].i != A[p].i) {
+branch  0 taken 5 (fallthrough)
+branch  1 taken 1
+        5:   65-block  0
+call    2 returned 5
+call    3 returned 5
+branch  4 taken 2 (fallthrough)
+branch  5 taken 3
+        2:   65-block  1
+        4:   65-block  2
+        6:   65-block  3
+branch  6 taken 2 (fallthrough)
+branch  7 taken 4
+        2:   66:                    std::fill_n(row_indx.begin() + A[static_cast<int>(p) - 1].i + 1,
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+call    3 returned 2
+branch  4 taken 2 (fallthrough)
+branch  5 taken 0 (throw)
+        2:   66-block  0
+    $$$$$:   66-block  1
+    $$$$$:   66-block  2
+        2:   67:                                A[p].i - A[static_cast<int>(p) - 1].i, p);
+        2:   67-block  0
+call    0 returned 2
+call    1 returned 2
+call    2 returned 2
+        -:   68:                    //count += A[p].i - A[static_cast<int>(p) - 1].i;
+        -:   69:                }
+        -:   70:            }
+        1:   71:            row_indx.back() = N;
+        1:   71-block  0
+call    0 returned 1
+        1:   72:        }
+    $$$$$:   72-block  0
+call    0 never executed
+    $$$$$:   72-block  1
+call    1 never executed
+    $$$$$:   72-block  2
+call    2 never executed
+        -:   73:        /*
+        -:   74:        void change_matrix(const std::vector<DOK_space::DOK<T>> &A) {
+        -:   75:            data.clear();
+        -:   76:            std::size_t N = A.size();
+        -:   77:            data.resize(N);
+        -:   78:            col_ind.resize(N);
+        -:   79:            row_indx.resize(A.back().i + 2);
+        -:   80:            row_indx[0] = 0;
+        -:   81:            //std::size_t count = 1;
+        -:   82:            for (std::size_t p = 0; p < N; p++) {
+        -:   83:                data[p] = A[p].value;
+        -:   84:                col_ind[p] = A[p].j;
+        -:   85:                if (p > 0 && A[static_cast<int>(p) - 1].i != A[p].i) {
+        -:   86:                    std::fill_n(row_indx.begin() + A[static_cast<int>(p) - 1].i + 1,
+        -:   87:                                        A[p].i - A[static_cast<int>(p) - 1].i, p);
+        -:   88:                    //count += A[p].i - A[static_cast<int>(p) - 1].i;
+        -:   89:                }
+        -:   90:            }
+        -:   91:            row_indx.back() = N;
+        -:   92:        }*/
+        -:   93:        /*
+        -:   94:        T &operator()(std::size_t i, std::size_t j) {
+        -:   95:            long f1 = static_cast<long>(row_indx[i]);
+        -:   96:            long f2 = static_cast<long>(row_indx[i + 1]);
+        -:   97:            decltype(col_ind.begin()) result = std::find(col_ind.begin() + f1, col_ind.begin() + f2, j);
+        -:   98:            if (result != col_ind.begin() + f2) {
+        -:   99:                return data[*result];
+        -:  100:            }
+        -:  101:
+        -:  102:            throw std::invalid_argument("invalid argument");
+        -:  103:        }
+        -:  104:        */
+        -:  105:        T operator()(std::size_t i, std::size_t j) const {
+        -:  106:            long f1 = static_cast<long>(row_indx[i]);
+        -:  107:            long f2 = static_cast<long>(row_indx[i + 1]);
+        -:  108:            decltype(col_ind.begin()) result = std::find(col_ind.begin() + f1, col_ind.begin() + f2, j);
+        -:  109:            if (result != col_ind.begin() + f2) {
+        -:  110:                return data[*result];
+        -:  111:            }
+        -:  112:            return static_cast<T>(0);
+        -:  113:        }
+        -:  114:
+function _ZNK16CSR_matrix_space10CSR_matrixIdLb1EEmlERKSt6vectorIdSaIdEE called 1029 returned 100% blocks executed 91%
+     1029:  115:        std::vector<T> operator*(const std::vector<T> &D) const{
+     1029:  116:            std::vector<T> answ(row_indx.size() - 1);
+     1029:  116-block  0
+call    0 returned 1029
+call    1 returned 1029
+call    2 returned 1029
+branch  3 taken 1029 (fallthrough)
+branch  4 taken 0 (throw)
+     1029:  116-block  1
+call    5 returned 1029
+    $$$$$:  116-block  2
+call    6 never executed
+     4116:  117:            for (std::size_t i = 0; i < D.size(); i++) {
+     3087:  117-block  0
+     4116:  117-block  1
+call    0 returned 4116
+branch  1 taken 3087
+branch  2 taken 1029 (fallthrough)
+     3087:  118:                    std::size_t f1 = row_indx[i];
+     3087:  118-block  0
+call    0 returned 3087
+     3087:  119:                    std::size_t f2 = row_indx[i + 1];
+call    0 returned 3087
+     9261:  120:                    for (std::size_t p = f1; p < f2; ++p) {
+     9261:  120-block  0
+branch  0 taken 6174
+branch  1 taken 3087 (fallthrough)
+     6174:  121:                        answ[i] += data[p] * D[col_ind[p]];
+     6174:  121-block  0
+call    0 returned 6174
+call    1 returned 6174
+call    2 returned 6174
+call    3 returned 6174
+        -:  122:                    }
+        -:  123:                }
+     1029:  124:            return answ;
+     1029:  124-block  0
+     1029:  124-block  1
+        -:  125:        }
+        -:  126:
+        -:  127:
+function _ZN16CSR_matrix_space10CSR_matrixIdLb1EE3MPIERKS1_RKSt6vectorIdSaIdEEddS8_ called 1 returned 100% blocks executed 76%
+        1:  128:        std::pair<std::vector<T>, std::size_t> MPI (const CSR_matrix_space::CSR_matrix<T>& A, const std::vector<T>& b, T tau, T discrepancy0, const std::vector<T>& x0){
+        1:  129:            std::vector<T> x = x0;
+        1:  129-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  130:            std::vector<T> x_next = x0;
+        1:  130-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  131:            std::size_t count = 0;
+      258:  132:            while(vector_norm(discrepancy(A, b, x)) >= discrepancy0 ){
+        1:  132-block  0
+      258:  132-block  1
+call    0 returned 258
+branch  1 taken 258 (fallthrough)
+branch  2 taken 0 (throw)
+      258:  132-block  2
+call    3 returned 258
+branch  4 taken 258 (fallthrough)
+branch  5 taken 0 (throw)
+      258:  132-block  3
+call    6 returned 258
+branch  7 taken 257
+branch  8 taken 1 (fallthrough)
+    $$$$$:  132-block  4
+call    9 never executed
+    $$$$$:  132-block  5
+     1028:  133:                for(std::size_t i = 0; i < x0.size(); i++){
+      257:  133-block  0
+     1028:  133-block  1
+call    0 returned 1028
+branch  1 taken 771
+branch  2 taken 257 (fallthrough)
+      771:  134:                    x_next[i] = x[i] + tau * discrepancy(A,b,x)[i];
+      771:  134-block  0
+call    0 returned 771
+call    1 returned 771
+branch  2 taken 771 (fallthrough)
+branch  3 taken 0 (throw)
+      771:  134-block  1
+call    4 returned 771
+call    5 returned 771
+call    6 returned 771
+    $$$$$:  134-block  2
+        -:  135:                }
+      257:  136:                x = x_next;
+      257:  136-block  0
+call    0 returned 257
+branch  1 taken 257 (fallthrough)
+branch  2 taken 0 (throw)
+      257:  137:                count+=1;
+      257:  137-block  0
+        -:  138:            }
+        2:  139:            return std::make_pair(x, count);
+        1:  139-block  0
+call    0 returned 1
+branch  1 taken 1 (fallthrough)
+branch  2 taken 0 (throw)
+        1:  139-block  1
+        1:  140:        }
+        1:  140-block  0
+call    0 returned 1
+call    1 returned 1
+    $$$$$:  140-block  1
+call    2 never executed
+    $$$$$:  140-block  2
+call    3 never executed
+        -:  141:
+        -:  142:
+        -:  143:
+        -:  144:        std::vector<T> Gauss_Seidel (const std::vector<T>& b, T discrepancy0, const std::vector<T>& x0){
+        -:  145:            std::vector<T> x(x0.size());
+        -:  146:            std::vector<T> temp(x0.size());
+        -:  147:            for(std::size_t j = 0; j < temp.size(); j++){
+        -:  148:                std::size_t f1 = row_indx[j];
+        -:  149:                std::size_t f2 = row_indx[j + 1];
+        -:  150:                for (std::size_t p = f1; p < f2; ++p) {
+        -:  151:                    if(j <= col_ind[p]) continue;
+        -:  152:                    temp[j] += data[p] * x0[col_ind[p]];
+        -:  153:                }
+        -:  154:            }
+        -:  155:            for(std::size_t i = 0; i < x0.size(); i++){
+        -:  156:                x[i] = (b[i] - temp[i])/ *this(i, i);
+        -:  157:            }
+        -:  158:
+        -:  159:            while(vector_norm( discrepancy(*this, b, x)) >= discrepancy0){
+        -:  160:                for(std::size_t j = 0; j < temp.size(); j++){
+        -:  161:                    std::size_t f1 = row_indx[j];
+        -:  162:                    std::size_t f2 = row_indx[j + 1];
+        -:  163:                    for (std::size_t p = f1; p < f2; ++p) {
+        -:  164:                        if(j == col_ind[p]) continue;
+        -:  165://                        if(j < col_ind[p]) {
+        -:  166://
+        -:  167://                        }
+        -:  168:                        x[j] += data[p] * x[col_ind[p]];
+        -:  169:                    }
+        -:  170:                }
+        -:  171:                for(std::size_t i = 0; i < x0.size(); i++){
+        -:  172:                    x[i] = (b[i] - x[i])/ *this(i,i);
+        -:  173:                }
+        -:  174:            }
+        -:  175:            return x;
+        -:  176:        }
+        -:  177:
+        -:  178:
+        -:  179:        std::vector<T> Jacobi (const std::vector<T>& b, T discrepancy0, const std::vector<T>& x0){
+        -:  180:            std::vector<T> x = x0;
+        -:  181:            std::vector<T> x_next = x0;
+        -:  182:            while(vector_norm(discrepancy(*this, b, x)) >= discrepancy0){
+        -:  183:                std::vector<T> temp(x0.size());
+        -:  184:                for(std::size_t j = 0; j < temp.size(); j++){
+        -:  185:                    std::size_t f1 = row_indx[j];
+        -:  186:                    std::size_t f2 = row_indx[j + 1];
+        -:  187:                    for (std::size_t p = f1; p < f2; ++p) {
+        -:  188:                        if(j == col_ind[p]) continue;
+        -:  189:                        temp[j] += data[p] * x[col_ind[p]];
+        -:  190:                    }
+        -:  191:                }
+        -:  192:                for(std::size_t i = 0; i < x0.size(); i++){
+        -:  193:                    x_next[i] = (b[i] - temp[i])/ *this(i,i);
+        -:  194:                }
+        -:  195:                x = x_next;
+        -:  196:            }
+        -:  197:            return x;
+        -:  198:        }
+        -:  199:
+        -:  200:    };
+        -:  201:    /*
+        -:  202:    template<std::floating_point T>
+        -:  203:    std::vector<T>MPI (const CSR_matrix_space::CSR_matrix<T>& A, const std::vector<T>& b, T tau, T discrepancy0, const std::vector<T>& x0){
+        -:  204:        std::vector<T> x = x0;
+        -:  205:        std::vector<T> x_next = x0;
+        -:  206:        while(vector_norm(discrepancy(A, b, x)) >= discrepancy0 ){
+        -:  207:            for(std::size_t i = 0; i < x0.size(); i++){
+        -:  208:                x_next[i] = x[i] + tau * discrepancy(A,b,x)[i];
+        -:  209:            }
+        -:  210:            x = x_next;
+        -:  211:        }
+        -:  212:        return x;
+        -:  213:    }*/
+        -:  214:}
+        -:  215:#endif //SLAE_CSR_MATRIX_HPP
