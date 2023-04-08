@@ -302,7 +302,42 @@ namespace CSR_matrix_space {
             }
             return x;
         }
+        std::vector<T> MPI_debug(const std::vector<T> &b, T tau, T tolerance0,
+                           const std::vector<T> &x0, auto& file, auto& file1) const {
+            std::vector<T> x = x0;
+            std::vector<T> r = discrepancy(b, x);
+            int count = 0;
+            while (euclid_norm(r) >= tolerance0) {
+                for (std::size_t i = 0; i < x0.size(); i++) {
+                    x[i] = x[i] + tau * r[i];
+                }
+                file<<count<<" ";
+                file1<<euclid_norm(r)<<" ";
+                r = discrepancy(b, x);
+                count++;
+            }
+            return x;
+        }
+        std::vector<T> MPI_debug_2(const std::vector<T> &b, T tau, T tolerance0,
+                                 const std::vector<T> &x0, auto& file, auto& file1) const {
+            std::vector<T> x = x0;
+            std::vector<T> r = discrepancy(b, x);
+            int count = 0;
+            while (euclid_norm(r) >= tolerance0) {
+                for (std::size_t i = 0; i < x0.size(); i++) {
+                    x[i] = x[i] + tau * r[i];
+                }
+                file<<count<<" ";
 
+                for(auto& it: r){
+                    file1<<-it<<" ";
+                }
+                file1<<"\n";
+                r = discrepancy(b, x);
+                count++;
+            }
+            return x;
+        }
         std::vector<T>
         Chebyshev_MPI(const std::vector<T> &b, T tolerance0, const std::vector<T> &x0, std::size_t n, T lambda_max,
                       T lambda_min) const {
@@ -325,6 +360,87 @@ namespace CSR_matrix_space {
             return x;
         }
 
+        std::vector<T>
+        Chebyshev_MPI_debug(const std::vector<T> &b, T tolerance0, const std::vector<T> &x0, std::size_t n, T lambda_max,
+                      T lambda_min, auto& file, auto& file1) const {
+            std::vector<T> x = x0;
+            std::size_t count = 0;
+            std::vector<std::size_t> tau_distribution_v = tau_distribution(n);
+            std::vector<T> tau_v = chebyshev_polynomials_solutions(n);
+            std::transform(tau_v.begin(), tau_v.end(), tau_v.begin(), [lambda_max, lambda_min](T a) {
+                return 2 / (a * (lambda_max - lambda_min) + (lambda_max + lambda_min));
+            });
+            std::vector<T> r = discrepancy(b, x);
+            int counter = 0;
+            while (euclid_norm(r) >= tolerance0) {
+                if (count >= n) count = 0;
+                for (std::size_t i = 0; i < x0.size(); i++) {
+                    x[i] = x[i] + tau_v[tau_distribution_v[count]] * r[i];
+                }
+                count++;
+                r = discrepancy(b, x);
+                file1<< euclid_norm(r)<<" ";
+                file<<counter<<" ";
+                counter++;
+            }
+            return x;
+        }
+        std::vector<T>
+        Chebyshev_MPI_debug_2(const std::vector<T> &b, T tolerance0, const std::vector<T> &x0, std::size_t n, T lambda_max,
+                            T lambda_min, auto& file, auto& file1) const {
+            std::vector<T> x = x0;
+            std::size_t count = 0;
+            std::vector<std::size_t> tau_distribution_v = tau_distribution(n);
+            std::vector<T> tau_v = chebyshev_polynomials_solutions(n);
+            std::transform(tau_v.begin(), tau_v.end(), tau_v.begin(), [lambda_max, lambda_min](T a) {
+                return 2 / (a * (lambda_max - lambda_min) + (lambda_max + lambda_min));
+            });
+            std::vector<T> r = discrepancy(b, x);
+            int counter = 0;
+            while (euclid_norm(r) >= tolerance0) {
+                if (count >= n) count = 0;
+                for (std::size_t i = 0; i < x0.size(); i++) {
+                    x[i] = x[i] + tau_v[tau_distribution_v[count]] * r[i];
+                }
+                count++;
+                r = discrepancy(b, x);
+                for(auto& it: r){
+                    file1<<-it<<" ";
+                }
+                file1<<"\n";
+                file<<counter<<" ";
+                counter++;
+            }
+            return x;
+        }
+        std::vector<T>
+        Chebyshev_MPI_debug_second(const std::vector<T> &b, T tolerance0, const std::vector<T> &x0, std::size_t n, T lambda_max,
+                            T lambda_min, auto& file, auto& file1) const {
+            std::vector<T> x = x0;
+            std::size_t count = 0;
+            std::vector<std::size_t> tau_distribution_v = tau_distribution(n);
+            std::vector<T> tau_v = chebyshev_polynomials_solutions(n);
+            std::transform(tau_v.begin(), tau_v.end(), tau_v.begin(), [lambda_max, lambda_min](T a) {
+                return 2 / (a * (lambda_max - lambda_min) + (lambda_max + lambda_min));
+            });
+            std::vector<T> r = discrepancy(b, x);
+            int counter = 0;
+            while (euclid_norm(r) >= tolerance0) {
+                if (count >= n) count = 0;
+                for (std::size_t i = 0; i < x0.size(); i++) {
+                    x[i] = x[i] + tau_v[tau_distribution_v[count]] * r[i];
+                }
+                count++;
+                file1<< euclid_norm(discrepancy(b, x))<<" ";
+                file<<counter<<" ";
+                r = discrepancy(b, x);
+                counter++;
+            }
+            file1<<"\n";
+            file<<"\n";
+            return x;
+        }
+
         std::vector<T> SOR(const std::vector<T> &b, T tolerance0,
                            const std::vector<T> &x0, T omega) const {
             std::vector<T> x = x0;
@@ -343,6 +459,34 @@ namespace CSR_matrix_space {
                     x[j] *= omega;
                     x[j] /= diag_element;
                     x[j] -= (omega - 1) * temp;
+                }
+            }
+            return x;
+        }
+        std::vector<T> SOR_debug(const std::vector<T> &b, T tolerance0,
+                           const std::vector<T> &x0, T omega, auto& file, auto& file1) const {
+            std::vector<T> x = x0;
+            T diag_element = (1);
+            int count = 0;
+            while (euclid_norm(discrepancy(b, x)) >= tolerance0) {
+                file1<<euclid_norm(discrepancy(b, x))<<" ";
+                file<<count<<" ";
+                for (std::size_t j = 0; j < x.size(); j++) {
+                    T temp = x[j];
+                    x[j] = b[j];
+                    for (std::size_t p = row_indx[j]; p < row_indx[j + 1]; ++p) {
+                        if (j == col_ind[p]) {
+                            diag_element = data[p];
+                            continue;
+                        }
+                        x[j] -= (data[p] * x[col_ind[p]]);
+                    }
+                    x[j] *= omega;
+                    x[j] /= diag_element;
+                    x[j] -= (omega - 1) * temp;
+
+                    count++;
+
                 }
             }
             return x;
@@ -388,6 +532,31 @@ namespace CSR_matrix_space {
             return x;
         }
 
+        std::vector<T> Steepest_Descent_debug_2(const std::vector<T> &b, T tolerance0, const std::vector<T> &x0, auto& file, auto& file1) const {
+            std::vector<T> x = x0;
+            std::vector<T> r = discrepancy(b, x);
+            std::vector<T> a_r = (*this) * r;
+            T alpha = scalar_multiplication(r, r) / scalar_multiplication(r, a_r);
+            int count = 0;
+            while (euclid_norm(r) >= tolerance0) {
+                file<<count<<" ";
+                for(auto& it: r){
+                    file1<<-it<<" ";
+                }
+                file1<<"\n";
+                x[0] = x[0] + alpha * r[0];
+                for (std::size_t i = 1; i < x0.size(); i++) {
+                    x[i] = x[i] + alpha * r[i];
+                    r[i - 1] = r[i - 1] - alpha * a_r[i - 1];
+                }
+                r.back() = r.back() - alpha * a_r.back();
+                a_r = (*this) * r;
+                alpha = scalar_multiplication(r, r) / scalar_multiplication(r, a_r);
+                count++;
+            }
+            return x;
+        }
+
         std::vector<T> Polak_Balls(const std::vector<T> &b, T tolerance0, const std::vector<T> &x0) const{
             std::vector<T> x_prev(x0.size()), delta(x0.size());
             std::vector<T> x_next = x0;
@@ -429,6 +598,33 @@ namespace CSR_matrix_space {
                 std::transform(d.begin(), d.end(), r.begin(), d.begin(), [&coef](auto&& a, auto&&b){
                     return b + coef * a;
                 });
+            }
+            return x;
+        }
+
+        std::vector<T> Conjugate_Gradient_debug_2(const std::vector<T>& b,T tolerance0, const std::vector<T>& x0, auto& file, auto& file1) const{
+            std::vector<T>r, d, x = x0;
+            r = discrepancy(b, x0);
+            d = r;
+            int count = 0;
+            while(euclid_norm(r)>= tolerance0){
+                file<<count<<" ";
+                for(auto& it: r){
+                    file1<<-it<<" ";
+                }
+                file1<<"\n";
+                T r_d_scalar = scalar_multiplication(r, d);
+                T alpha = r_d_scalar/ scalar_multiplication(d, (*this) * d);
+                for(std::size_t i = 0; i < x.size(); i++){
+                    x[i] += alpha * d[i];
+                }
+                r = discrepancy(b,x);
+                T r_scalar = scalar_multiplication(r,r);
+                T coef = r_scalar/r_d_scalar;
+                std::transform(d.begin(), d.end(), r.begin(), d.begin(), [&coef](auto&& a, auto&&b){
+                    return b + coef * a;
+                });
+                count++;
             }
             return x;
         }
