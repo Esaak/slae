@@ -52,26 +52,28 @@ namespace CSR_matrix_space {
             return std::inner_product(vector_1.begin(), vector_1.end(), vector_2.begin(), T(0));
         }
 
-        std::vector<std::size_t> tau_distribution(std::size_t n) const {
-            std::vector<std::size_t> tau_distribution_v(n, 0);
-            for (std::size_t i = 2; i <= n; i *= 2) {
+
+        std::vector<std::size_t> tau_distribution(std::size_t N) const {
+            std::vector<std::size_t> tau_distribution_v(N, 0);
+            for (std::size_t i = 2; i <= N; i *= 2) {
                 std::size_t j = 0;
-                while (j < n) {
-                    tau_distribution_v[j + n / i] = i - 1 - tau_distribution_v[j];
-                    j += (n * 2) / i;
+                while (j < N) {
+                    tau_distribution_v[j + N / i] = i - 1 - tau_distribution_v[j];
+                    j += (N * 2) / i;
                 }
             }
             return tau_distribution_v;
         }
 
-        std::vector<T> chebyshev_polynomials_solutions(long n) const {
-            T cos_b = std::cos(M_PI / (2 * static_cast<T>(n)));
+
+        std::vector<T> chebyshev_polynomials_solutions(long N) const {
+            T cos_b = std::cos(M_PI / (2 * static_cast<T>(N)));
             T sin_b = std::sqrt(1 - std::pow(cos_b, 2));
             T sin_a = 2 * sin_b * cos_b;
             T cos_a = std::pow(cos_b, 2) - std::pow(sin_b, 2);
-            std::vector<T> solutions(n);
+            std::vector<T> solutions(N);
             solutions[0] = cos_b;
-            for (long i = 0; i + 1 < n; i++) {
+            for (long i = 0; i + 1 < N; i++) {
                 solutions[i + 1] = solutions[i] * cos_a - sin_b * sin_a;
                 sin_b = solutions[i] * sin_a + sin_b * cos_a;
             }
@@ -225,7 +227,7 @@ namespace CSR_matrix_space {
             return lambda;
         }
 
-        std::vector<T> Jacobi(const std::vector<T> &b, const std::vector<T> &x0, T tolerance0) {
+        std::vector<T> Jacobi(const std::vector<T> &b,  T tolerance0, const std::vector<T> &x0) const{
             std::vector<T> x = x0;
             T diag_element = T(1);
             while (euclid_norm(discrepancy(b, x)) >= tolerance0) {
@@ -347,7 +349,7 @@ namespace CSR_matrix_space {
         }
 
         std::vector<T> Chebyshev_SSOR(const std::vector<T> &b, T tolerance0,
-                                      const std::vector<T> &x0, T spectral_radius, T omega) {
+                                      const std::vector<T> &x0, T spectral_radius, T omega) const{
             std::vector<T> y_prev = x0;
             std::vector<T> y_next = one_step_SSOR(b, y_prev, omega);
 
@@ -368,7 +370,7 @@ namespace CSR_matrix_space {
             return y_next;
         }
 
-        std::vector<T> Steepest_Descent(const std::vector<T> &b, T tolerance0, const std::vector<T> &x0) {
+        std::vector<T> Steepest_Descent(const std::vector<T> &b, T tolerance0, const std::vector<T> &x0) const {
             std::vector<T> x = x0;
             std::vector<T> r = discrepancy(b, x);
             std::vector<T> a_r = (*this) * r;
@@ -386,7 +388,7 @@ namespace CSR_matrix_space {
             return x;
         }
 
-        std::vector<T> Polak_Balls(const std::vector<T> &b, T tolerance0, const std::vector<T> &x0) {
+        std::vector<T> Polak_Balls(const std::vector<T> &b, T tolerance0, const std::vector<T> &x0) const{
             std::vector<T> x_prev(x0.size()), delta(x0.size());
             std::vector<T> x_next = x0;
             std::vector<T> a_x_prev(x0.size()), a_x_next;
