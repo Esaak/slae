@@ -401,7 +401,7 @@ TEST(TEST_08_04, second_number_Conjugate_Gradient_test){
     CSR_matrix<double> M(D, N, N);
     double tolerance = pow(10, -13);
     std::vector<double> x0(N);
-    //double tau = 2/(lambda_max + lambda_min);
+
     std::vector<double> result = M.Conjugate_Gradient_debug_2(b, tolerance, x0, file, file1);
     std::copy(result.begin(), result.end(), std::ostream_iterator<double>(std::cout, " "));
     std::cout << "\n";
