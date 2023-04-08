@@ -36,12 +36,12 @@ TEST(Iteration_tests, MPI_test) {
     std::vector<std::size_t> j;
     std::vector<double> b;
     std::vector<double> x;
-    fileA.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_x.txt");
-    fileL.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_L.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_x.txt");
+    fileL.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_L.txt");
 
     for (std::size_t it = 0; it < n; it++) {
         apply_vector<double>(fileA, data);
@@ -88,11 +88,11 @@ TEST(Iteration_tests, Jacobi_test) {
     std::vector<double> b;
     std::vector<double> x;
     std::vector<double> result;
-    fileA.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_x.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_x.txt");
 
     for (std::size_t it = 0; it < n; it++) {
         apply_vector<double>(fileA, data);
@@ -134,11 +134,11 @@ TEST(Iteration_tests, Gauss_Seidel_test) {
     std::vector<std::size_t> j;
     std::vector<double> b;
     std::vector<double> x;
-    fileA.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_x.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_x.txt");
 
     for (std::size_t it = 0; it < n; it++) {
         apply_vector<double>(fileA, data);
@@ -185,13 +185,13 @@ TEST(Iteration_tests, Chebyshev_MPI_test) {
     std::vector<double> x;
     std::vector<double> lambda_min_v;
     std::vector<double> lambda_max_v;
-    fileA.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_x.txt");
-    fileL.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_l_min.txt");
-    fileL_max.open("/home/ilya/slae_lab/py_tests/Iteration_tests/test_L.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_x.txt");
+    fileL.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_l_min.txt");
+    fileL_max.open("/home/ilya/SLAE/slae/py_tests/Iteration_tests/test_L.txt");
     for (std::size_t it = 0; it < n; it++) {
         apply_vector<double>(fileA, data);
         apply_vector<double>(filex, x);
@@ -242,13 +242,13 @@ TEST(Iteration_tests, SOR_test){
     std::vector<double> b;
     std::vector<double> x;
     std::vector<double> omega;
-    fileA.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_x.txt");
-    fileL.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_L.txt");
-    fileW.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_w.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_x.txt");
+    fileL.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_L.txt");
+    fileW.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_w.txt");
 
     for (std::size_t it = 0; it < n; it++) {
         apply_vector<double>(fileA, data);
@@ -296,12 +296,12 @@ TEST(Iteration_tests, Chebyshev_Simmetrical_Gauss_Seidel_test){
     std::vector<double> b;
     std::vector<double> x;
     std::vector<double> L;
-    fileA.open("/home/ilya/slae_lab/py_tests/Iteration_Chebyshev_Gauss_Seidel_tests/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/Iteration_Chebyshev_Gauss_Seidel_tests/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/Iteration_Chebyshev_Gauss_Seidel_tests/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/Iteration_Chebyshev_Gauss_Seidel_tests/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/Iteration_Chebyshev_Gauss_Seidel_tests/test_x.txt");
-    fileL.open("/home/ilya/slae_lab/py_tests/Iteration_Chebyshev_Gauss_Seidel_tests/test_L.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/Iteration_Chebyshev_Gauss_Seidel_tests/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/Iteration_Chebyshev_Gauss_Seidel_tests/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/Iteration_Chebyshev_Gauss_Seidel_tests/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/Iteration_Chebyshev_Gauss_Seidel_tests/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/Iteration_Chebyshev_Gauss_Seidel_tests/test_x.txt");
+    fileL.open("/home/ilya/SLAE/slae/py_tests/Iteration_Chebyshev_Gauss_Seidel_tests/test_L.txt");
 
     for (std::size_t it = 0; it < n; it++) {
         apply_vector<double>(fileA, data);
@@ -349,13 +349,13 @@ TEST(Iteration_tests, Chebyshev_SSOR_test){
     std::vector<double> x;
     std::vector<double> spectr_radius;
     std::vector<double> omega;
-    fileA.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_x.txt");
-    fileL.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_L.txt");
-    fileW.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_w.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_x.txt");
+    fileL.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_L.txt");
+    fileW.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_w.txt");
 
     for (std::size_t it = 0; it < n; it++) {
         apply_vector<double>(fileA, data);
@@ -401,11 +401,11 @@ TEST(Iteration_tests, Steepest_Descent_test){
     std::vector<std::size_t> j;
     std::vector<double> b;
     std::vector<double> x;
-    fileA.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_x.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_x.txt");
     for (std::size_t it = 0; it < n; it++) {
         apply_vector<double>(fileA, data);
         apply_vector<double>(filex, x);
@@ -448,11 +448,11 @@ TEST(Iteration_tests, Polak_Balls_test){
     std::vector<std::size_t> j;
     std::vector<double> b;
     std::vector<double> x;
-    fileA.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_x.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_x.txt");
     for (std::size_t it = 0; it < n; it++) {
         apply_vector<double>(fileA, data);
         apply_vector<double>(filex, x);
@@ -492,11 +492,11 @@ TEST(Iteration_tests, Conjugate_Gradient_test){
     std::vector<std::size_t> j;
     std::vector<double> b;
     std::vector<double> x;
-    fileA.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/Chebyshev_SSOR_tests/test_x.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/Chebyshev_SSOR_tests/test_x.txt");
     for (std::size_t it = 0; it < n; it++) {
         apply_vector<double>(fileA, data);
         apply_vector<double>(filex, x);
@@ -570,17 +570,17 @@ TEST(Iteration_tests, time_test){
     std::vector<std::chrono::duration<double>> Gauss_Seidel_time_v(n);
     std::vector<std::chrono::duration<double>> Chebyshev_MPI_time_v(n);
 
-    fileA.open("/home/ilya/slae_lab/py_tests/Universal_Iteraton_test/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/Universal_Iteraton_test/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/Universal_Iteraton_test/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/Universal_Iteraton_test/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/Universal_Iteraton_test/test_x.txt");
-    fileL_min.open("/home/ilya/slae_lab/py_tests/Universal_Iteraton_test/test_L_min.txt");
-    fileL_max.open("/home/ilya/slae_lab/py_tests/Universal_Iteraton_test/test_L_max.txt");
-    fileL_SSOR.open("/home/ilya/slae_lab/py_tests/Universal_Iteraton_test/test_L_SSOR.txt");
-    fileL_Cheb_GS.open("/home/ilya/slae_lab/py_tests/Universal_Iteraton_test/test_L_CHEB_GS.txt");
-    fileL_SYM_GS.open("/home/ilya/slae_lab/py_tests/Universal_Iteraton_test/test_L_SYM_GS.txt");
-    fileW.open("/home/ilya/slae_lab/py_tests/Universal_Iteraton_test/test_w.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/Universal_Iteraton_test/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/Universal_Iteraton_test/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/Universal_Iteraton_test/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/Universal_Iteraton_test/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/Universal_Iteraton_test/test_x.txt");
+    fileL_min.open("/home/ilya/SLAE/slae/py_tests/Universal_Iteraton_test/test_L_min.txt");
+    fileL_max.open("/home/ilya/SLAE/slae/py_tests/Universal_Iteraton_test/test_L_max.txt");
+    fileL_SSOR.open("/home/ilya/SLAE/slae/py_tests/Universal_Iteraton_test/test_L_SSOR.txt");
+    fileL_Cheb_GS.open("/home/ilya/SLAE/slae/py_tests/Universal_Iteraton_test/test_L_CHEB_GS.txt");
+    fileL_SYM_GS.open("/home/ilya/SLAE/slae/py_tests/Universal_Iteraton_test/test_L_SYM_GS.txt");
+    fileW.open("/home/ilya/SLAE/slae/py_tests/Universal_Iteraton_test/test_w.txt");
 
     for (std::size_t it = 0; it < n; it++) {
         apply_vector<double>(fileA, data);

@@ -18,9 +18,9 @@ TEST(tridiagonal_tests, tridiagonal_test)
     std::ifstream fileA;
     std::ifstream filed;
     std::ifstream filex;
-    fileA.open("/home/ilya/slae_lab/py_tests/tridiagonal_test/testA.txt");
-    filed.open("/home/ilya/slae_lab/py_tests/tridiagonal_test/testd.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/tridiagonal_test/testx.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/tridiagonal_test/testA.txt");
+    filed.open("/home/ilya/SLAE/slae/py_tests/tridiagonal_test/testd.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/tridiagonal_test/testx.txt");
 //    filed.open("../../py_tests/tridiagonal_test/testd.txt");
 //    filex.open("../../py_tests/tridiagonal_test/testx.txt");
     for (int j = 0; j < 10; j++){

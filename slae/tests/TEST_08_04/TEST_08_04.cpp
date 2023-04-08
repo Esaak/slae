@@ -41,13 +41,13 @@ TEST(TEST_08_04, first_number_MPI_test){
     std::vector<std::size_t> j;
     std::vector<double> b_v;
     std::vector<double> x;
-    fileA.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_x.txt");
-    fileL_min.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_L_min.txt");
-    fileL_max.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_L_max.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_x.txt");
+    fileL_min.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_L_min.txt");
+    fileL_max.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_L_max.txt");
     apply_vector<double>(fileA, data);
     apply_vector<double>(filex, x);
     apply_vector<double>(fileb, b_v);
@@ -57,8 +57,8 @@ TEST(TEST_08_04, first_number_MPI_test){
     apply_vector<double>(fileL_min, lambda_min);
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_MPI.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_MPI.txt");
+    file.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_count_MPI.txt");
+    file1.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_r_MPI.txt");
     std::vector<DOK<double>> D;
 
 
@@ -93,13 +93,13 @@ TEST(TEST_08_04, first_number_MPI_opt_test){
     std::vector<std::size_t> j;
     std::vector<double> b_v;
     std::vector<double> x;
-    fileA.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_x.txt");
-    fileL_min.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_L_min.txt");
-    fileL_max.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_L_max.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_x.txt");
+    fileL_min.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_L_min.txt");
+    fileL_max.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_L_max.txt");
     apply_vector<double>(fileA, data);
     apply_vector<double>(filex, x);
     apply_vector<double>(fileb, b_v);
@@ -109,8 +109,8 @@ TEST(TEST_08_04, first_number_MPI_opt_test){
     apply_vector<double>(fileL_min, lambda_min);
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_MPI_opt.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_MPI_opt.txt");
+    file.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_count_MPI_opt.txt");
+    file1.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_r_MPI_opt.txt");
     std::vector<DOK<double>> D;
 
 
@@ -142,13 +142,13 @@ TEST(TEST_08_04, first_number_CHEB_MPI_test){
     std::vector<std::size_t> j;
     std::vector<double> b_v;
     std::vector<double> x;
-    fileA.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_x.txt");
-    fileL_min.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_L_min.txt");
-    fileL_max.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_L_max.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_x.txt");
+    fileL_min.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_L_min.txt");
+    fileL_max.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_L_max.txt");
     apply_vector<double>(fileA, data);
     apply_vector<double>(filex, x);
     apply_vector<double>(fileb, b_v);
@@ -158,8 +158,8 @@ TEST(TEST_08_04, first_number_CHEB_MPI_test){
     apply_vector<double>(fileL_min, lambda_min);
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_CHEB_MPI.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_CHEB_MPI.txt");
+    file.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_count_CHEB_MPI.txt");
+    file1.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_r_CHEB_MPI.txt");
     std::vector<DOK<double>> D;
 
 
@@ -190,13 +190,13 @@ TEST(TEST_08_04, first_number_SOR_test){
     std::vector<std::size_t> j;
     std::vector<double> b_v;
     std::vector<double> x;
-    fileA.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_x.txt");
-    fileL_min.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_L_min.txt");
-    fileL_max.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_L_max.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_x.txt");
+    fileL_min.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_L_min.txt");
+    fileL_max.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_L_max.txt");
     apply_vector<double>(fileA, data);
     apply_vector<double>(filex, x);
     apply_vector<double>(fileb, b_v);
@@ -206,8 +206,8 @@ TEST(TEST_08_04, first_number_SOR_test){
     apply_vector<double>(fileL_min, lambda_min);
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_SOR.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_SOR.txt");
+    file.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_count_SOR.txt");
+    file1.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_r_SOR.txt");
     std::vector<DOK<double>> D;
 
 
@@ -240,13 +240,13 @@ TEST(TEST_08_04, first_number_CHEB_MPI_second_test){
     std::vector<std::size_t> j;
     std::vector<double> b_v;
     std::vector<double> x;
-    fileA.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_data.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_j.txt");
-    fileb.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_b.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_x.txt");
-    fileL_min.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_L_min.txt");
-    fileL_max.open("/home/ilya/slae_lab/py_tests/TEST_08_04/test_L_max.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_data.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_j.txt");
+    fileb.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_b.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_x.txt");
+    fileL_min.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_L_min.txt");
+    fileL_max.open("/home/ilya/SLAE/slae/py_tests/TEST_08_04/test_L_max.txt");
     apply_vector<double>(fileA, data);
     apply_vector<double>(filex, x);
     apply_vector<double>(fileb, b_v);
@@ -256,8 +256,8 @@ TEST(TEST_08_04, first_number_CHEB_MPI_second_test){
     apply_vector<double>(fileL_min, lambda_min);
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_CHEB_MPI_second.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_CHEB_MPI_second.txt");
+    file.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_count_CHEB_MPI_second.txt");
+    file1.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_r_CHEB_MPI_second.txt");
     std::vector<DOK<double>> D;
 
 
@@ -290,8 +290,8 @@ TEST(TEST_08_04, second_number_MPI_test){
     //double lambda_min =16;
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_MPI_coord_ex2.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_MPI_coord_ex2.txt");
+    file.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_count_MPI_coord_ex2.txt");
+    file1.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_r_MPI_coord_ex2.txt");
     std::vector<DOK<double>> D;
     for (std::size_t z = 0; z < data.size(); z++) {
         D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
@@ -316,8 +316,8 @@ TEST(TEST_08_04, second_number_MPI_opt_test){
     double lambda_min =16;
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_MPI_coord_opt_ex2.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_MPI_coord_opt_ex2.txt");
+    file.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_count_MPI_coord_opt_ex2.txt");
+    file1.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_r_MPI_coord_opt_ex2.txt");
     std::vector<DOK<double>> D;
     for (std::size_t z = 0; z < data.size(); z++) {
         D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
@@ -341,8 +341,8 @@ TEST(TEST_08_04, second_number_Steepest_Descent_test){
     //double lambda_min =16;
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_Steepest_Descent_coord_ex2.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_Steepest_Descent_coord_ex2.txt");
+    file.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_count_Steepest_Descent_coord_ex2.txt");
+    file1.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_r_Steepest_Descent_coord_ex2.txt");
     std::vector<DOK<double>> D;
     for (std::size_t z = 0; z < data.size(); z++) {
         D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
@@ -367,8 +367,8 @@ TEST(TEST_08_04, second_number_CHEB_MPI_test){
     double lambda_min =16;
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_CHEB_MPI_coord_ex2.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_CHEB_MPI_coord_ex2.txt");
+    file.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_count_CHEB_MPI_coord_ex2.txt");
+    file1.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_r_CHEB_MPI_coord_ex2.txt");
     std::vector<DOK<double>> D;
     for (std::size_t z = 0; z < data.size(); z++) {
         D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
@@ -392,8 +392,8 @@ TEST(TEST_08_04, second_number_Conjugate_Gradient_test){
 
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_Conjugate_Gradient_coord_ex2.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_Conjugate_Gradient_coord_ex2.txt");
+    file.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_count_Conjugate_Gradient_coord_ex2.txt");
+    file1.open("/home/ilya/SLAE/slae/slae/tests/TEST_08_04/test_r_Conjugate_Gradient_coord_ex2.txt");
     std::vector<DOK<double>> D;
     for (std::size_t z = 0; z < data.size(); z++) {
         D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});

@@ -117,11 +117,11 @@ TEST(CSR_matrix_tests, index_operator_test){
     std::ifstream filex;
     std::ifstream filei;
     std::ifstream filej;
-    fileA.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_data.txt");
-    filed.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_indices.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_indptr.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_j.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_data.txt");
+    filed.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_indices.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_indptr.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_j.txt");
     for(std::size_t it = 0; it<N; it++) {
         apply_vector<double>(fileA, data);
         apply_vector<std::size_t>(filed, indices);
@@ -169,13 +169,13 @@ TEST(CSR_matrix_tests, multiply_column){
     std::ifstream filej;
     std::ifstream fileColumn;
     std::ifstream fileRes;
-    fileA.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_data.txt");
-    filed.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_indices.txt");
-    filex.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_indptr.txt");
-    filei.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_i.txt");
-    filej.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_j.txt");
-    fileColumn.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_D.txt");
-    fileRes.open("/home/ilya/slae_lab/py_tests/SRC_tests/test_X.txt");
+    fileA.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_data.txt");
+    filed.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_indices.txt");
+    filex.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_indptr.txt");
+    filei.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_i.txt");
+    filej.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_j.txt");
+    fileColumn.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_D.txt");
+    fileRes.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_X.txt");
     for(std::size_t it = 0; it< N; ++it) {
         apply_vector<double>(fileA, data);
         apply_vector<std::size_t>(filed, indices);

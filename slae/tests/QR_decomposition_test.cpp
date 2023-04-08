@@ -47,9 +47,9 @@ TEST(QR_tests, main_test){
     std::ifstream fileM;
     std::ifstream fileQ;
     std::ifstream fileR;
-    fileM.open("/home/ilya/slae_lab/py_tests/QR_test/matrix.txt");
-    fileQ.open("/home/ilya/slae_lab/py_tests/QR_test/Q.txt");
-    fileR.open("/home/ilya/slae_lab/py_tests/QR_test/R.txt");
+    fileM.open("/home/ilya/SLAE/slae/py_tests/QR_test/matrix.txt");
+    fileQ.open("/home/ilya/SLAE/slae/py_tests/QR_test/Q.txt");
+    fileR.open("/home/ilya/SLAE/slae/py_tests/QR_test/R.txt");
     for(std::size_t i = 0; i < N; i++){
         for(std::size_t p = 0; p < N; p++){
             std::vector<double> tm(N);
