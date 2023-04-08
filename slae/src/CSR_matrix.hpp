@@ -315,7 +315,7 @@ namespace CSR_matrix_space {
             while (euclid_norm(r) >= tolerance0) {
                 if (count >= n) count = 0;
                 for (std::size_t i = 0; i < x0.size(); i++) {
-                    x[i] = x[i] + tau_v[count] * r[i];
+                    x[i] = x[i] + tau_v[tau_distribution_v[count]] * r[i];
                 }
                 count++;
                 r = discrepancy(b, x);

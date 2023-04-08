@@ -166,7 +166,7 @@ TEST(Iteration_tests, Gauss_Seidel_test) {
 
 
 
-TEST(Iteration_tests, chebyshev_mpi_test) {
+TEST(Iteration_tests, Chebyshev_MPI_test) {
     std::size_t N = 100;
     std::size_t n = 10;
     std::ifstream fileA;

@@ -22,7 +22,7 @@ TEST(Iteration_simple_tests, lambda_max_simple_test) {
     std::cout << lambda_max;
 }
 
-TEST(Iteration_simple_tests, Chebyshev_mpi_simple_test) {
+TEST(Iteration_simple_tests, Chebyshev_MPI_simple_test) {
     std::vector<DOK<double>> D;
     std::vector<int> i{0, 0, 0, 1, 1, 1, 2, 2, 2};
     std::vector<int> j{0, 1, 2, 0, 1, 2, 0, 1, 2};
@@ -37,7 +37,7 @@ TEST(Iteration_simple_tests, Chebyshev_mpi_simple_test) {
     double lambda_r_tolerance0 = pow(10, -13);
     double lambda_max = ANSW.estimate_lambda_max(x0, lambda_r_tolerance0);
 
-    std::vector<double> a = ANSW.Chebyshev_MPI(b, lambda_r_tolerance0, x0, 16, lambda_max, lambda_min);
+    std::vector<double> a = ANSW.Chebyshev_MPI(b, lambda_r_tolerance0, x0, 128, lambda_max, lambda_min);
     std::cout << "\n";
     std::copy(a.begin(), a.end(), std::ostream_iterator<double>(std::cout, " "));
     std::cout << "\n";
