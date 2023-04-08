@@ -290,8 +290,8 @@ TEST(TEST_08_04, second_number_MPI_test){
     //double lambda_min =16;
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_MPI_ex2.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_MPI_ex2.txt");
+    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_MPI_coord_ex2.txt");
+    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_MPI_coord_ex2.txt");
     std::vector<DOK<double>> D;
     for (std::size_t z = 0; z < data.size(); z++) {
         D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
@@ -316,8 +316,8 @@ TEST(TEST_08_04, second_number_MPI_opt_test){
     double lambda_min =16;
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_MPI_opt_ex2.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_MPI_opt_ex2.txt");
+    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_MPI_coord_opt_ex2.txt");
+    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_MPI_coord_opt_ex2.txt");
     std::vector<DOK<double>> D;
     for (std::size_t z = 0; z < data.size(); z++) {
         D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
@@ -341,8 +341,8 @@ TEST(TEST_08_04, second_number_Steepest_Descent_test){
     //double lambda_min =16;
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_Steepest_Descent_ex2.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_Steepest_Descent_ex2.txt");
+    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_Steepest_Descent_coord_ex2.txt");
+    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_Steepest_Descent_coord_ex2.txt");
     std::vector<DOK<double>> D;
     for (std::size_t z = 0; z < data.size(); z++) {
         D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
@@ -367,8 +367,8 @@ TEST(TEST_08_04, second_number_CHEB_MPI_test){
     double lambda_min =16;
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_CHEB_MPI_ex2.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_CHEB_MPI_ex2.txt");
+    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_CHEB_MPI_coord_ex2.txt");
+    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_CHEB_MPI_coord_ex2.txt");
     std::vector<DOK<double>> D;
     for (std::size_t z = 0; z < data.size(); z++) {
         D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
@@ -392,8 +392,8 @@ TEST(TEST_08_04, second_number_Conjugate_Gradient_test){
 
     std::ofstream file;
     std::ofstream file1;
-    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_Conjugate_Gradient_ex2.txt");
-    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_Conjugate_Gradient_ex2.txt");
+    file.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_count_Conjugate_Gradient_coord_ex2.txt");
+    file1.open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_Conjugate_Gradient_coord_ex2.txt");
     std::vector<DOK<double>> D;
     for (std::size_t z = 0; z < data.size(); z++) {
         D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});

@@ -323,14 +323,18 @@ namespace CSR_matrix_space {
             std::vector<T> x = x0;
             std::vector<T> r = discrepancy(b, x);
             int count = 0;
+            for(auto& it: x){
+                file1<<it<<" ";
+            }
+            file1<<"\n";
             while (euclid_norm(r) >= tolerance0) {
                 for (std::size_t i = 0; i < x0.size(); i++) {
                     x[i] = x[i] + tau * r[i];
                 }
                 file<<count<<" ";
 
-                for(auto& it: r){
-                    file1<<-it<<" ";
+                for(auto& it: x){
+                    file1<<it<<" ";
                 }
                 file1<<"\n";
                 r = discrepancy(b, x);
@@ -397,6 +401,10 @@ namespace CSR_matrix_space {
             });
             std::vector<T> r = discrepancy(b, x);
             int counter = 0;
+            for(auto& it: x){
+                file1<<it<<" ";
+            }
+            file1<<"\n";
             while (euclid_norm(r) >= tolerance0) {
                 if (count >= n) count = 0;
                 for (std::size_t i = 0; i < x0.size(); i++) {
@@ -404,8 +412,8 @@ namespace CSR_matrix_space {
                 }
                 count++;
                 r = discrepancy(b, x);
-                for(auto& it: r){
-                    file1<<-it<<" ";
+                for(auto& it: x){
+                    file1<<it<<" ";
                 }
                 file1<<"\n";
                 file<<counter<<" ";
@@ -538,12 +546,13 @@ namespace CSR_matrix_space {
             std::vector<T> a_r = (*this) * r;
             T alpha = scalar_multiplication(r, r) / scalar_multiplication(r, a_r);
             int count = 0;
+            for(auto& it: x){
+                file1<<it<<" ";
+            }
+            file1<<"\n";
             while (euclid_norm(r) >= tolerance0) {
                 file<<count<<" ";
-                for(auto& it: r){
-                    file1<<-it<<" ";
-                }
-                file1<<"\n";
+
                 x[0] = x[0] + alpha * r[0];
                 for (std::size_t i = 1; i < x0.size(); i++) {
                     x[i] = x[i] + alpha * r[i];
@@ -553,6 +562,10 @@ namespace CSR_matrix_space {
                 a_r = (*this) * r;
                 alpha = scalar_multiplication(r, r) / scalar_multiplication(r, a_r);
                 count++;
+                for(auto& it: x){
+                    file1<<it<<" ";
+                }
+                file1<<"\n";
             }
             return x;
         }
@@ -607,12 +620,13 @@ namespace CSR_matrix_space {
             r = discrepancy(b, x0);
             d = r;
             int count = 0;
+            for(auto& it: x){
+                file1<<it<<" ";
+            }
+            file1<<"\n";
+
             while(euclid_norm(r)>= tolerance0){
                 file<<count<<" ";
-                for(auto& it: r){
-                    file1<<-it<<" ";
-                }
-                file1<<"\n";
                 T r_d_scalar = scalar_multiplication(r, d);
                 T alpha = r_d_scalar/ scalar_multiplication(d, (*this) * d);
                 for(std::size_t i = 0; i < x.size(); i++){
@@ -624,6 +638,10 @@ namespace CSR_matrix_space {
                 std::transform(d.begin(), d.end(), r.begin(), d.begin(), [&coef](auto&& a, auto&&b){
                     return b + coef * a;
                 });
+                for(auto& it: x){
+                    file1<<it<<" ";
+                }
+                file1<<"\n";
                 count++;
             }
             return x;

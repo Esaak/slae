@@ -249,4 +249,95 @@ def second_part_plot():
     plt.savefig("second_ex_with_mpi.png")
     plt.show()
 
-second_part_plot()
+
+def second2_part_plot():
+    plt.figure(figsize=(12, 7))
+    plt.minorticks_on()
+    plt.grid(
+        which='major'
+    )
+    plt.grid(
+        which='minor',
+        linestyle='--'
+    )
+    data_MPI_matrix = []
+    with open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_MPI_coord_ex2.txt", 'r') as f:
+        y = f.readlines()
+        for line in y:
+            data = line.split()
+            data_MPI_matrix.append(np.array(data, dtype=float))
+        it_MPI = np.arange(len(data_MPI_matrix))
+
+    data_MPI_opt_matrix = []
+    with open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_MPI_coord_opt_ex2.txt", 'r') as f:
+        y = f.readlines()
+        for line in y:
+            data = line.split()
+            data_MPI_opt_matrix.append(np.array(data, dtype=float))
+        it_MPI_opt = np.arange(len(data_MPI_opt_matrix))
+    data_CHEB_MPI_matrix = []
+    with open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_CHEB_MPI_coord_ex2.txt", 'r') as f:
+        y = f.readlines()
+        for line in y:
+            data = line.split()
+            data_CHEB_MPI_matrix.append(np.array(data, dtype=float))
+        it_CHEB_MPI = np.arange(len(data_CHEB_MPI_matrix))
+    data_Steepest_Descent_matrix = []
+    with open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_Steepest_Descent_coord_ex2.txt", 'r') as f:
+        y = f.readlines()
+        for line in y:
+            data = line.split()
+            data_Steepest_Descent_matrix.append(np.array(data, dtype=float))
+        it_Steepest_Descent = np.arange(len(data_Steepest_Descent_matrix))
+    data_Conjugate_Gradient_matrix = []
+    with open("/home/ilya/slae_lab/slae/tests/TEST_08_04/test_r_Conjugate_Gradient_coord_ex2.txt", 'r') as f:
+        y = f.readlines()
+        for line in y:
+            data = line.split()
+            data_Conjugate_Gradient_matrix.append(np.array(data, dtype=float))
+        it_Conjugate_Gradient= np.arange(len(data_Conjugate_Gradient_matrix))
+
+    lambda_max_v = {0, 0, 0, 1}
+    lambda_min_v = {1, 0, 0, 0}
+    x_MPI = []
+    y_MPI = []
+    x_MPI_opt = []
+    y_MPI_opt = []
+    x_CHEB_MPI = []
+    y_CHEB_MPI = []
+    x_Steepest_descent = []
+    y_Steepest_descent = []
+    x_Conjugate_Gradient = []
+    y_Conjugate_Gradient = []
+    for it in range(len(it_MPI)):
+        x_MPI.append(data_MPI_matrix[it][0])
+        y_MPI.append(data_MPI_matrix[it][3])
+
+    for it in range(len(it_MPI_opt)):
+        x_MPI_opt.append(data_MPI_opt_matrix[it][0])
+        y_MPI_opt.append(data_MPI_opt_matrix[it][3])
+
+    for it in range(len(it_CHEB_MPI)):
+        x_CHEB_MPI.append(data_CHEB_MPI_matrix[it][0])
+        y_CHEB_MPI.append(data_CHEB_MPI_matrix[it][3])
+
+    for it in range(len(it_Steepest_Descent)):
+        x_Steepest_descent.append(data_Steepest_Descent_matrix[it][0])
+        y_Steepest_descent.append(data_Steepest_Descent_matrix[it][3])
+    for it in range(len(it_Conjugate_Gradient)):
+        x_Conjugate_Gradient.append(data_Conjugate_Gradient_matrix[it][0])
+        y_Conjugate_Gradient.append(data_Conjugate_Gradient_matrix[it][3])
+
+
+    plt.plot(x_MPI, y_MPI, "--o", label = "MPI")
+    plt.plot(x_MPI_opt, y_MPI_opt,"--o", label = "MPI_opt")
+    plt.plot(x_CHEB_MPI, y_CHEB_MPI,"--o", label = "CHEB_MPI")
+    plt.plot(x_Steepest_descent, y_Steepest_descent,"--o", label = "Steepest_descent")
+    plt.plot(x_Conjugate_Gradient, y_Conjugate_Gradient,"--o", label = "Conjugate_Gradient")
+    plt.xlabel(r'$x_{min}$')
+    plt.ylabel(r'$x_{max}$')
+    plt.legend()
+    plt.savefig("coord_with_first_coord.png")
+    plt.show()
+#second_part_plot()
+second2_part_plot()
