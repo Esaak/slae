@@ -7,7 +7,7 @@
 
 using namespace DOK_space;
 using namespace CSR_matrix_space;
-
+const std::string py_path = "/home/ilya/SLAE/slae/py_tests/";
 TEST(CSR_matrix_tests, DOK_sort){
     constexpr int N = 10;
     constexpr int minn = 1;
@@ -106,7 +106,8 @@ TEST(CSR_matrix_tests, boundary_condition){
 
 }
 TEST(CSR_matrix_tests, index_operator_test){
-    std::size_t N = 10;
+    std::size_t N = 1000;
+    std::size_t n = 10;
     std::vector<double>data;
     std::vector<std::size_t>indices;
     std::vector<std::size_t>indptr;
@@ -117,12 +118,12 @@ TEST(CSR_matrix_tests, index_operator_test){
     std::ifstream filex;
     std::ifstream filei;
     std::ifstream filej;
-    fileA.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_data.txt");
-    filed.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_indices.txt");
-    filex.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_indptr.txt");
-    filei.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_i.txt");
-    filej.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_j.txt");
-    for(std::size_t it = 0; it<N; it++) {
+    fileA.open(py_path + "SRC_tests/test_data.txt");
+    filed.open(py_path + "SRC_tests/test_indices.txt");
+    filex.open(py_path + "SRC_tests/test_indptr.txt");
+    filei.open(py_path + "SRC_tests/test_i.txt");
+    filej.open(py_path + "SRC_tests/test_j.txt");
+    for(std::size_t it = 0; it<n; it++) {
         apply_vector<double>(fileA, data);
         apply_vector<std::size_t>(filed, indices);
         apply_vector<std::size_t>(filex, indptr);
@@ -154,7 +155,7 @@ TEST(CSR_matrix_tests, index_operator_test){
 }
 
 TEST(CSR_matrix_tests, multiply_column){
-    std::size_t N = 10;
+    std::size_t n = 10;
     std::vector<double>data;
     std::vector<double>column;
     std::vector<double>X;
@@ -169,14 +170,14 @@ TEST(CSR_matrix_tests, multiply_column){
     std::ifstream filej;
     std::ifstream fileColumn;
     std::ifstream fileRes;
-    fileA.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_data.txt");
-    filed.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_indices.txt");
-    filex.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_indptr.txt");
-    filei.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_i.txt");
-    filej.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_j.txt");
-    fileColumn.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_D.txt");
-    fileRes.open("/home/ilya/SLAE/slae/py_tests/SRC_tests/test_X.txt");
-    for(std::size_t it = 0; it< N; ++it) {
+    fileA.open(py_path + "SRC_tests/test_data.txt");
+    filed.open(py_path + "SRC_tests/test_indices.txt");
+    filex.open(py_path + "SRC_tests/test_indptr.txt");
+    filei.open(py_path + "SRC_tests/test_i.txt");
+    filej.open(py_path + "SRC_tests/test_j.txt");
+    fileColumn.open(py_path + "SRC_tests/test_D.txt");
+    fileRes.open(py_path + "SRC_tests/test_X.txt");
+    for(std::size_t it = 0; it< n; ++it) {
         apply_vector<double>(fileA, data);
         apply_vector<std::size_t>(filed, indices);
         apply_vector<std::size_t>(filex, indptr);

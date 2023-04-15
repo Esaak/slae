@@ -7,20 +7,16 @@
 #include <fstream>
 #include <cmath>
 
+
+
+const std::string py_path = "/home/ilya/SLAE/slae/py_tests/";
+
+
 TEST(QR_tests, simple_test){
-    //int N = 9;
-    //int vec_size = 9;
+
     std::vector<std::vector<double>> test{{1,2,3}, {4,5,6}, {7,8,9}};
     Mrx::Matrix<double> matrix(test);
 
-    /*
-    for(auto&& it: test){
-        for(auto&& t:it){
-            std::cout<<t<<" ";
-        }
-        std::cout<<"\n";
-    }
-    */
     std::pair<Mrx::Matrix<double>, Mrx::Matrix<double>> D;
     D = solvers::Householder(matrix);
     for(std::size_t i = 0; i < 3; i++){
@@ -47,9 +43,9 @@ TEST(QR_tests, main_test){
     std::ifstream fileM;
     std::ifstream fileQ;
     std::ifstream fileR;
-    fileM.open("/home/ilya/SLAE/slae/py_tests/QR_test/matrix.txt");
-    fileQ.open("/home/ilya/SLAE/slae/py_tests/QR_test/Q.txt");
-    fileR.open("/home/ilya/SLAE/slae/py_tests/QR_test/R.txt");
+    fileM.open(py_path + "QR_test/matrix.txt");
+    fileQ.open(py_path + "QR_test/Q.txt");
+    fileR.open(py_path + "QR_test/R.txt");
     for(std::size_t i = 0; i < N; i++){
         for(std::size_t p = 0; p < N; p++){
             std::vector<double> tm(N);
