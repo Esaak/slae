@@ -128,6 +128,129 @@ namespace solvers {
         Mrx::Matrix<T> QT = Q.transponse();
         return std::make_pair(QT, new_matrix);
     }
+    template<std::floating_point T>
+    std::vector<T> discrepancy(const Mrx::Matrix<T> &A, const std::vector<T> &b, const std::vector<T> &x) {
+        std::vector<T> ax = A * x;
+        for (std::size_t i = 0; i < x.size(); ++i) {
+            ax[i] = b[i] - ax[i];
+        }
+        return ax;
+    }
+    template<std::floating_point T>
+    T euclid_norm(const std::vector<T> &vec) {
+        return std::sqrt(std::inner_product(vec.begin(), vec.end(), vec.begin(), T(0)));
+    }
+    template<std::floating_point T>
+    T scalar_multiplication(const std::vector<T> &vector_1, const std::vector<T> &vector_2) {
+        return std::inner_product(vector_1.begin(), vector_1.end(), vector_2.begin(), T(0));
+    }
+    template<std::floating_point T>
+    std::vector<T> back_Gauss(const Mrx::Matrix<T> &A,const std::vector<T>& b){
+        std::vector<T>answ = b;
+        for(long i = static_cast<long>(b.size()) - 1; i >= 1; i--){
+            answ[i]/= A(i,i);
+            for(long j = i - 1; j >= 0; j--){
+                answ[j]-= answ[i] * A(j,i);
+            }
+        }
+        answ[0]/=A(0,0);
+        return answ;
+    }
+
+    // Создать файл с математикой. // надо подумать о том чтобы хранить матрицу транспонированной.
+    template<std::floating_point T>
+    std::vector<T> GMRES(const Mrx::Matrix<T> &A, const std::vector<T> b, const std::vector<T> x0, std::size_t m) {
+        std::vector<T> r = discrepancy(A, b, x0);
+        std::vector<std::pair<T, T>> rotations;
+        std::vector<std::vector<T>> Q(m + 1);
+//        Q.reserve(m+1);
+        std::vector<T> z(m);
+        std::vector<T> v_next;
+        T h_prev{}, h;
+        rotations.reserve(m - 1);
+        Mrx::Matrix<T> H = Mrx::Matrix<T>::zeros(m, m);
+
+        T r_n = std::sqrt(scalar_multiplication(r,r));
+        std::transform(r.begin(), r.end(), r.begin(), [r_n](T a){return  a/r_n;});
+        Q[0].swap(r);
+
+        for(std::size_t i = 0; i < m; i++){
+            v_next = A * Q[i];
+            for(std::size_t j = 0; j < i + 1; j++){
+                h = scalar_multiplication(v_next, Q[j]);
+
+                for(std::size_t k = 0; k < v_next.size(); k++){
+                    v_next[k]-=h*Q[j][k];
+                }
+                if(!rotations.empty() && j!=0 ){// стоит подумать о последней итерации, возможно можно просто не считать диагональный элемент
+                    H(j - 1, i) = rotations[j - 1].first * h_prev - rotations[j - 1].second * h;
+                    h_prev = rotations[j - 1].second * h_prev + rotations[j - 1].first * h;
+                    H(j, i) = h_prev;
+                }
+                else{
+                    h_prev = h;
+                }
+
+            }
+            h = std::sqrt(scalar_multiplication(v_next,v_next));
+            /*
+            if(std::abs(h_prev) >= std::abs(h)){ //здесь подумать об арифметических операций
+                T y1 = h/h_prev;
+                T znam = std::sqrt(1 + y1*y1);
+//                rotations.emplace_back(1/znam, -y1/znam);
+                rotations.emplace_back(1/znam, -y1/znam);
+                H(i,i) = h_prev * znam;
+                //H(i+1, i) -= (rotations.back().second*h_prev + rotations.back().first * h);
+            }
+            else{
+                T x1 = h_prev/h;
+                T znam = std::sqrt(1 + x1*x1);
+                //rotations.emplace_back(std::abs(x1)/znam, _diny::sgn(x1)/znam);
+                rotations.emplace_back(std::abs(x1)/znam, -1./znam);
+                H(i,i) = h*znam*_diny::sgn(h_prev);
+                //H(i+1, i) -= (rotations.back().second*h_prev + rotations.back().first * h);
+            } */
+            T y1 = std::max(std::abs(h_prev), std::abs(h));
+            T x1 = std::min(std::abs(h_prev), std::abs(h))/y1;
+            T znam = std::sqrt(1 + x1 * x1);
+            rotations.emplace_back(h_prev/y1/znam, -h/y1/znam);
+            H(i,i) = rotations.back().first * h_prev - rotations.back().second * h;
+//            T znam = std::sqrt(h*h + h_prev*h_prev);
+//            T c = h_prev/znam;
+//            T s = h/znam;
+//            rotations.emplace_back(c, s);
+//            H(i, i) = c * h_prev + s * h;
+            if(h!=0){
+                Q[i+1].reserve(m);
+                std::transform(v_next.begin(), v_next.end(), std::back_inserter(Q[i + 1]), [h](T a){return  a/h;});
+            }
+            else{
+                break;
+            }
+        }
+
+        for(std:: size_t i = 0; i + 1< m; i++){
+            z[i] = rotations[i].first * r_n;
+            for(std::size_t j = 0; j < i; j++){
+                z[i]*= rotations[j].second;
+            }
+        }
+
+        z[m-1] = r_n * rotations.back().first;
+        for(std::size_t i = 0; i + 1 < m; i++){
+            z.back() *= rotations[i].second; //можно ззаписать в переменную
+        }
+        std::vector<T> y = back_Gauss(H,z);
+        Q.pop_back();
+        Mrx::Matrix<T> V(Q);
+        std::vector<T>x(x0);
+        std::vector<T> vy = V.transponse()*y;
+        for(std::size_t i = 0; i < x.size(); i++){
+            x[i]+=vy[i];
+        }
+        return x;
+
+    }
     /*
     template<std::floating_point T>
     T vector_norm(const std::vector<T>& vec){
@@ -176,6 +299,8 @@ namespace solvers {
             }
         }
     }*/
+
+
 }
 
 #endif //SLAE_SLAE_SOLVER_HPP

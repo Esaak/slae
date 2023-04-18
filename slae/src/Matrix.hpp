@@ -91,10 +91,21 @@ namespace Mrx {
             return new_matrix;
         }
 
-        Matrix &operator*(const Matrix<T> &other) const{
+        Matrix operator*(const Matrix<T> &other) const{
             if (column != other.row) throw std::invalid_argument("Invalid");
             Matrix new_matrix = *this;
             return new_matrix *= other;
+        }
+
+        std::vector<T> operator*(const std::vector<T>& other) const{
+            if (column != other.size()) throw std::invalid_argument("Invalid");
+            std::vector<T> temp(row);
+            for(std::size_t i = 0; i < row; i++){
+                for(std::size_t j = 0; j < column; j++){
+                    temp[i] +=other[j] * (*this)(i, j);
+                }
+            }
+            return temp;
         }
 
         std::vector<T> dot(const std::vector<T> &vec) const{
@@ -147,7 +158,13 @@ namespace Mrx {
             }
             return new_matrix;
         }
-
+        static Matrix zeros(std::size_t i, std::size_t j){
+            Matrix<T> new_matrix;
+            new_matrix.data.resize(i*j, 0);
+            new_matrix.row = i;
+            new_matrix.column = j;
+            return new_matrix;
+        }
     };
 
 
