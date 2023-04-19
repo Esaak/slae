@@ -29,6 +29,7 @@ namespace DOK_space {
 namespace CSR_matrix_space {
     template<typename T, IsArithmetical<T> = true>
     class CSR_matrix {
+        //using discrepancy = discrepancy<>;
     private:
         std::vector<T> data;
         std::vector<std::size_t> col_ind;
@@ -37,23 +38,6 @@ namespace CSR_matrix_space {
         /************************************************************************************/
             /////////////////////// Private support functions  ///////////////////////////
         /************************************************************************************/
-        std::vector<T>
-        discrepancy(const std::vector<T> &b, const std::vector<T> &x) const {
-            std::vector<T> ax = (*this) * x;
-            for (std::size_t i = 0; i < x.size(); ++i) {
-                ax[i] = b[i] - ax[i];
-            }
-            return ax;
-        }
-
-        T euclid_norm(const std::vector<T> &vec) const {
-            return std::sqrt(std::inner_product(vec.begin(), vec.end(), vec.begin(), T(0)));
-        }
-
-        T scalar_multiplication(const std::vector<T> &vector_1, const std::vector<T> &vector_2) const {
-            return std::inner_product(vector_1.begin(), vector_1.end(), vector_2.begin(), T(0));
-        }
-
 
         std::vector<std::size_t> tau_distribution(std::size_t N) const {
             std::vector<std::size_t> tau_distribution_v(N, 0);
@@ -239,7 +223,7 @@ namespace CSR_matrix_space {
         std::vector<T> Jacobi(const std::vector<T> &b,  T tolerance0, const std::vector<T> &x0) const{
             std::vector<T> x = x0;
             T diag_element = T(1);
-            while (euclid_norm(discrepancy(b, x)) >= tolerance0) {
+            while (euclid_norm(discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x)) >= tolerance0) {
                 std::vector<T> temp(x0.size());
                 for (std::size_t j = 0; j < x0.size(); j++) {
                     for (std::size_t p = row_indx[j]; p < row_indx[j + 1]; ++p) {
@@ -260,7 +244,7 @@ namespace CSR_matrix_space {
                                     const std::vector<T> &x0) const {
             std::vector<T> x = x0;
             T diag_element = T(1);
-            while (euclid_norm(discrepancy(b, x)) >= tolerance0) {
+            while (euclid_norm(discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x)) >= tolerance0) {
                 for (std::size_t j = 0; j < x.size(); j++) {
                     x[j] = b[j];
                     for (std::size_t p = row_indx[j]; p < row_indx[j + 1]; ++p) {
@@ -285,7 +269,7 @@ namespace CSR_matrix_space {
             T mu = 1 / spectral_radius;
             T mu_next;
 
-            while (euclid_norm(discrepancy(b, y_next)) >= tolerance0) {
+            while (euclid_norm(discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, y_next)) >= tolerance0) {
                 mu_next = 2 * mu / spectral_radius - mu_prev;
                 y_next = one_step_Simmetrical_Gauss_Seidel(b, y_next);
                 for (std::size_t i = 0; i < y_next.size(); i++) {
@@ -301,13 +285,13 @@ namespace CSR_matrix_space {
         std::vector<T> MPI(const std::vector<T> &b, T tau, T tolerance0,
                            const std::vector<T> &x0) const {
             std::vector<T> x = x0;
-            std::vector<T> r = discrepancy(b, x);
+            std::vector<T> r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
             while (euclid_norm(r) >= tolerance0) {
 
                 for (std::size_t i = 0; i < x0.size(); i++) {
                     x[i] = x[i] + tau * r[i];
                 }
-                r = discrepancy(b, x);
+                r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
             }
             return x;
         }
@@ -323,14 +307,14 @@ namespace CSR_matrix_space {
             std::transform(tau_v.begin(), tau_v.end(), tau_v.begin(), [lambda_max, lambda_min](T a) {
                 return 2 / (a * (lambda_max - lambda_min) + (lambda_max + lambda_min));
             });
-            std::vector<T> r = discrepancy(b, x);
+            std::vector<T> r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
             while (euclid_norm(r) >= tolerance0) {
                 if (count >= n) count = 0;
                 for (std::size_t i = 0; i < x0.size(); i++) {
                     x[i] = x[i] + tau_v[tau_distribution_v[count]] * r[i];
                 }
                 count++;
-                r = discrepancy(b, x);
+                r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
             }
             return x;
         }
@@ -343,7 +327,7 @@ namespace CSR_matrix_space {
                            const std::vector<T> &x0, T omega) const {
             std::vector<T> x = x0;
             T diag_element = (1);
-            while (euclid_norm(discrepancy(b, x)) >= tolerance0) {
+            while (euclid_norm(discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x)) >= tolerance0) {
                 for (std::size_t j = 0; j < x.size(); j++) {
                     T temp = x[j];
                     x[j] = b[j];
@@ -372,7 +356,7 @@ namespace CSR_matrix_space {
             T mu = 1 / spectral_radius;
             T mu_next;
 
-            while (euclid_norm(discrepancy(b, y_next)) >= tolerance0) {
+            while (euclid_norm(discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, y_next)) >= tolerance0) {
                 mu_next = 2 * mu / spectral_radius - mu_prev;
                 y_next = one_step_SSOR(b, y_next, omega);
                 for (std::size_t i = 0; i < y_next.size(); i++) {
@@ -391,7 +375,7 @@ namespace CSR_matrix_space {
 
         std::vector<T> Steepest_Descent(const std::vector<T> &b, T tolerance0, const std::vector<T> &x0) const {
             std::vector<T> x = x0;
-            std::vector<T> r = discrepancy(b, x);
+            std::vector<T> r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
             std::vector<T> a_r = (*this) * r;
             T alpha = scalar_multiplication(r, r) / scalar_multiplication(r, a_r);
             while (euclid_norm(r) >= tolerance0) {
@@ -436,7 +420,7 @@ namespace CSR_matrix_space {
 
         std::vector<T> Conjugate_Gradient(const std::vector<T>& b,T tolerance0, const std::vector<T>& x0) const{
             std::vector<T>r, d, x = x0;
-            r = discrepancy(b, x0);
+            r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x0);
             d = r;
             while(euclid_norm(r)>= tolerance0){
                 T r_d_scalar = scalar_multiplication(r, d);
@@ -444,7 +428,7 @@ namespace CSR_matrix_space {
                 for(std::size_t i = 0; i < x.size(); i++){
                     x[i] += alpha * d[i];
                 }
-                r = discrepancy(b,x);
+                r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b,x);
                 T r_scalar = scalar_multiplication(r,r);
                 T coef = r_scalar/r_d_scalar;
                 std::transform(d.begin(), d.end(), r.begin(), d.begin(), [&coef](auto&& a, auto&&b){
@@ -459,7 +443,7 @@ namespace CSR_matrix_space {
         std::vector<T> MPI_debug(const std::vector<T> &b, T tau, T tolerance0,
                                  const std::vector<T> &x0, auto& file, auto& file1) const {
             std::vector<T> x = x0;
-            std::vector<T> r = discrepancy(b, x);
+            std::vector<T> r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
             int count = 0;
             while (euclid_norm(r) >= tolerance0) {
                 for (std::size_t i = 0; i < x0.size(); i++) {
@@ -467,7 +451,7 @@ namespace CSR_matrix_space {
                 }
                 file<<count<<" ";
                 file1<<euclid_norm(r)<<" ";
-                r = discrepancy(b, x);
+                r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
                 count++;
             }
             return x;
@@ -475,7 +459,7 @@ namespace CSR_matrix_space {
         std::vector<T> MPI_debug_2(const std::vector<T> &b, T tau, T tolerance0,
                                    const std::vector<T> &x0, auto& file, auto& file1) const {
             std::vector<T> x = x0;
-            std::vector<T> r = discrepancy(b, x);
+            std::vector<T> r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
             int count = 0;
             for(auto& it: x){
                 file1<<it<<" ";
@@ -491,7 +475,7 @@ namespace CSR_matrix_space {
                     file1<<it<<" ";
                 }
                 file1<<"\n";
-                r = discrepancy(b, x);
+                r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
                 count++;
             }
             return x;
@@ -506,7 +490,7 @@ namespace CSR_matrix_space {
             std::transform(tau_v.begin(), tau_v.end(), tau_v.begin(), [lambda_max, lambda_min](T a) {
                 return 2 / (a * (lambda_max - lambda_min) + (lambda_max + lambda_min));
             });
-            std::vector<T> r = discrepancy(b, x);
+            std::vector<T> r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
             int counter = 0;
             while (euclid_norm(r) >= tolerance0) {
                 if (count >= n) count = 0;
@@ -514,7 +498,7 @@ namespace CSR_matrix_space {
                     x[i] = x[i] + tau_v[tau_distribution_v[count]] * r[i];
                 }
                 count++;
-                r = discrepancy(b, x);
+                r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
                 file1<< euclid_norm(r)<<" ";
                 file<<counter<<" ";
                 counter++;
@@ -531,7 +515,7 @@ namespace CSR_matrix_space {
             std::transform(tau_v.begin(), tau_v.end(), tau_v.begin(), [lambda_max, lambda_min](T a) {
                 return 2 / (a * (lambda_max - lambda_min) + (lambda_max + lambda_min));
             });
-            std::vector<T> r = discrepancy(b, x);
+            std::vector<T> r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
             int counter = 0;
             for(auto& it: x){
                 file1<<it<<" ";
@@ -543,7 +527,7 @@ namespace CSR_matrix_space {
                     x[i] = x[i] + tau_v[tau_distribution_v[count]] * r[i];
                 }
                 count++;
-                r = discrepancy(b, x);
+                r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
                 for(auto& it: x){
                     file1<<it<<" ";
                 }
@@ -555,7 +539,7 @@ namespace CSR_matrix_space {
         }
         std::vector<T> Conjugate_Gradient_debug_2(const std::vector<T>& b,T tolerance0, const std::vector<T>& x0, auto& file, auto& file1) const{
             std::vector<T>r, d, x = x0;
-            r = discrepancy(b, x0);
+            r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x0);
             d = r;
             int count = 0;
             for(auto& it: x){
@@ -570,7 +554,7 @@ namespace CSR_matrix_space {
                 for(std::size_t i = 0; i < x.size(); i++){
                     x[i] += alpha * d[i];
                 }
-                r = discrepancy(b,x);
+                r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b,x);
                 T r_scalar = scalar_multiplication(r,r);
                 T coef = r_scalar/r_d_scalar;
                 std::transform(d.begin(), d.end(), r.begin(), d.begin(), [&coef](auto&& a, auto&&b){
@@ -586,7 +570,7 @@ namespace CSR_matrix_space {
         }
         std::vector<T> Steepest_Descent_debug_2(const std::vector<T> &b, T tolerance0, const std::vector<T> &x0, auto& file, auto& file1) const {
             std::vector<T> x = x0;
-            std::vector<T> r = discrepancy(b, x);
+            std::vector<T> r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
             std::vector<T> a_r = (*this) * r;
             T alpha = scalar_multiplication(r, r) / scalar_multiplication(r, a_r);
             int count = 0;
@@ -618,8 +602,8 @@ namespace CSR_matrix_space {
             std::vector<T> x = x0;
             T diag_element = (1);
             int count = 0;
-            while (euclid_norm(discrepancy(b, x)) >= tolerance0) {
-                file1<<euclid_norm(discrepancy(b, x))<<" ";
+            while (euclid_norm(discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x)) >= tolerance0) {
+                file1<<euclid_norm(discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x))<<" ";
                 file<<count<<" ";
                 for (std::size_t j = 0; j < x.size(); j++) {
                     T temp = x[j];
@@ -651,7 +635,7 @@ namespace CSR_matrix_space {
             std::transform(tau_v.begin(), tau_v.end(), tau_v.begin(), [lambda_max, lambda_min](T a) {
                 return 2 / (a * (lambda_max - lambda_min) + (lambda_max + lambda_min));
             });
-            std::vector<T> r = discrepancy(b, x);
+            std::vector<T> r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
             int counter = 0;
             while (euclid_norm(r) >= tolerance0) {
                 if (count >= n) count = 0;
@@ -659,9 +643,9 @@ namespace CSR_matrix_space {
                     x[i] = x[i] + tau_v[tau_distribution_v[count]] * r[i];
                 }
                 count++;
-                file1<< euclid_norm(discrepancy(b, x))<<" ";
+                file1<< euclid_norm(discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x))<<" ";
                 file<<counter<<" ";
-                r = discrepancy(b, x);
+                r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x);
                 counter++;
             }
             file1<<"\n";

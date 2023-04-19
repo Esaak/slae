@@ -14,7 +14,7 @@ TEST(GMRES_tests, back_gauss_test){
     std::vector<double> b{3, 2, 4};
     std::vector<double> x0 = {95/126., -2/21., 4/9.};
     Mrx::Matrix<double> M(data);
-    std::vector<double> x = solvers::back_Gauss(M,b);
+    std::vector<double> x = solvers::back_Gauss_T(M,b);
     std::copy(x.begin(), x.end(), std::ostream_iterator<double>(std::cout, " "));
     std::cout<<"\n";
     std::copy(x0.begin(), x0.end(), std::ostream_iterator<double>(std::cout, " "));
@@ -26,7 +26,7 @@ TEST(GMRES_tests, GMRES_test){
     data[1] = {4,7,6};
     data[2] = {5,2,9};
     std::vector<double> b{3, 2, 4};
-    std::vector<double> x0 = {-25/8., -1/4., 17/8.};
+    std::vector<double> x0 = {-25/8., 1/4., 17/8.};
     Mrx::Matrix<double> M(data);
     std::vector<double> res0(3);
     std::vector<double> x = solvers::GMRES(M,b, res0, 3);

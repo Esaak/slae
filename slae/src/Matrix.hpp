@@ -13,6 +13,7 @@
 #include <compare>
 #include <cstring>
 #include <algorithm>
+#include "Math.hpp"
 
 
 template<typename T>
@@ -107,7 +108,7 @@ namespace Mrx {
             }
             return temp;
         }
-
+        /*
         std::vector<T> dot(const std::vector<T> &vec) const{
             if (column != vec.size()) throw std::invalid_argument("Invalid");
             std::vector<T> res_vector(row);
@@ -117,6 +118,7 @@ namespace Mrx {
             }
             return res_vector;
         }
+        */
 
         Matrix &operator+=(const Matrix<T> &other) {
             data += other.data;
@@ -133,7 +135,9 @@ namespace Mrx {
             std::copy_n(data.begin() + column * i, column, std::back_inserter(one_row));
             return one_row;
         }
-
+        void set_row(const std::vector<T>& other, std::size_t i){
+            std::copy(other.begin(), other.end(), data.begin() + i * column);
+        }
         std::vector<T> get_row(std::size_t i, int begin, int end) const {
             std::vector<T> x(end - begin);
             std::copy(data.begin() + i * column + begin, data.begin() + i * column + end, x.begin());
