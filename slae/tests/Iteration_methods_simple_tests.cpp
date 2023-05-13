@@ -178,7 +178,7 @@ TEST(Iteration_simple_tests, BCG_simple_test) {
     }
     CSR_matrix<double> ANSW(D, 3, 3);
     double lambda_r_tolerance0 = pow(10, -13);
-    std::vector<double> a = ANSW.BCG(b, lambda_r_tolerance0, x0);
+    std::vector<double> a = ANSW.BICG(b, b.size(), x0);
     std::cout << "\n";
     std::copy(a.begin(), a.end(), std::ostream_iterator<double>(std::cout, " "));
     std::cout << "\n";

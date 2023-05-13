@@ -750,7 +750,7 @@ TEST(Iteration_tests, time_test){
 
 }
 
-TEST(Iteration_tests, BCG_test){
+TEST(Iteration_tests, BICG_test){
     std::size_t N = 100;
     std::size_t n = 10;
     std::ifstream fileA;
@@ -781,8 +781,8 @@ TEST(Iteration_tests, BCG_test){
         CSR_matrix<double> M(D, N, N);
         double tolerance = pow(10, -10);
         std::vector<double> x0(N);
-
-        std::vector<double> result = M.BCG(b, tolerance, x0);
+        std::size_t T = 100;
+        std::vector<double> result = M.BICG(b, T, x0);
         for (std::size_t p = 0; p < N; p++) {
             EXPECT_NEAR(result[p], x[p], tolerance);
         }

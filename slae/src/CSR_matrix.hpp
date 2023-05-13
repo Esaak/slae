@@ -469,7 +469,7 @@ namespace CSR_matrix_space {
             return x;
         }
 
-        std::vector<T> BCG(const std::vector<T>& b,T tolerance0, const std::vector<T>& x0) const{
+        std::vector<T> BICG(const std::vector<T>& b,std::size_t M, const std::vector<T>& x0) const{
             std::vector<T> r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x0);
             std::vector<T>x = x0;
             CSR_matrix<T> A_T = (*this).transpose();
@@ -478,21 +478,15 @@ namespace CSR_matrix_space {
             T r_scalar_next, r_scalar_prev, tetta, q;
 
             r_scalar_prev = scalar_multiplication(r,r);
-            z = (*this)*p;
-            z_T = A_T*p;
-            q = r_scalar_prev/(scalar_multiplication(p_T, z));
-            for(std::size_t i = 0; i < r.size(); i++){
-                x[i]-=q*p[i];
-                r[i]-=q*z[i];
-                r_T[i]-=q*z_T[i];
-            }
 
-            while (euclid_norm(r) >= tolerance0){
+            for(std::size_t it = 0; it < M; it++){
                 r_scalar_next = scalar_multiplication(r_T,r);
-                tetta = r_scalar_next/r_scalar_prev;
-                for(std::size_t i = 0; i < r.size(); i++){
-                    p[i]=r[i] + tetta*p[i];
-                    p_T[i]=r_T[i] + tetta*p_T[i];
+                if(it != 0){
+                    tetta = r_scalar_next/r_scalar_prev;
+                    for(std::size_t i = 0; i < r.size(); i++){
+                        p[i]=r[i] + tetta*p[i];
+                        p_T[i]=r_T[i] + tetta*p_T[i];
+                    }
                 }
                 z = (*this)*p;
                 z_T = A_T*p;
