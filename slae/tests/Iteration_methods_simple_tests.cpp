@@ -160,3 +160,26 @@ TEST(Iteration_simple_tests, Conjugate_Gradient_simple_test) {
     std::copy(a.begin(), a.end(), std::ostream_iterator<double>(std::cout, " "));
     std::cout << "\n";
 }
+
+
+TEST(Iteration_simple_tests, BCG_simple_test) {
+    std::vector<DOK<double>> D;
+    std::vector<int> i{0, 0, 0, 1, 1, 1, 2, 2, 2};
+    std::vector<int> j{0, 1, 2, 0, 1, 2, 0, 1, 2};
+    std::vector<double> data{12, 17, 3, 17, 15825, 28, 3, 28, 238};
+    std::vector<double> x0{0, 0, 0};
+    std::vector<double> b{1, 2, 3};
+    std::vector<double> diag_elements(3);
+    for (std::size_t z = 0; z < i.size(); z++) {
+        D.emplace_back(DOK<double>{static_cast<size_t>(i[z]), static_cast<size_t>(j[z]), data[z]});
+        if (i[z] == j[z]) {
+            diag_elements[i[z]] = data[z];
+        }
+    }
+    CSR_matrix<double> ANSW(D, 3, 3);
+    double lambda_r_tolerance0 = pow(10, -13);
+    std::vector<double> a = ANSW.BCG(b, lambda_r_tolerance0, x0);
+    std::cout << "\n";
+    std::copy(a.begin(), a.end(), std::ostream_iterator<double>(std::cout, " "));
+    std::cout << "\n";
+}

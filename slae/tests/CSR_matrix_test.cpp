@@ -212,3 +212,44 @@ TEST(CSR_matrix_tests, multiply_column){
     fileColumn.close();
     fileRes.close();
 }
+
+TEST(CSR_matrix_tests, transpose_test){
+    std::size_t N = 3;
+    std::vector<std::size_t>indices{0, 1, 2};
+    std::vector<std::size_t>indptr{0, 3, 3, 3};
+    std::vector<std::size_t>i{0, 0, 0};
+    std::vector<std::size_t>j{0, 1, 2};
+    std::vector<double>data{1, 2, 3};
+    std::vector<DOK<double>> D;
+    for(std::size_t p = 0; p < N; p++){
+        D.emplace_back(DOK<double>{static_cast<size_t>(i[p]), static_cast<size_t>(j[p]), data[p]});
+    }
+    CSR_matrix<double> M(D, N, N);
+    CSR_matrix<double> B = M.transpose();
+    indptr.clear();
+    indices.clear();
+    i.clear();
+    j.clear();
+    data.clear();
+    N = 4;
+
+    indices = {0,2,0,3,0,1,2,3};
+    indptr = {0,2,2,4,8};
+    data = {1,4,5,8,2,3,5,6};
+    std::vector<double> dataT = {1,5,2,3,4,5,8,6};
+
+    i = {0, 0, 2, 2, 3, 3, 3, 3};
+    std::vector<double> iT = {0, 0, 0, 1, 2, 2, 3, 3};
+    j = {0, 2, 0, 3, 0, 1, 2, 3};
+    std::vector<double> jT = {0, 2, 3, 3, 0, 3, 2, 3};
+    std::vector<DOK<double>> D1;
+    for(std::size_t p = 0; p < i.size(); p++){
+        D1.emplace_back(DOK<double>{static_cast<size_t>(i[p]), static_cast<size_t>(j[p]), data[p]});
+    }
+    CSR_matrix<double> M1(D1, N, N);
+    CSR_matrix<double> B1 = M1.transpose();
+    for(std::size_t it = 0; it < iT.size(); it++){
+        EXPECT_DOUBLE_EQ(B1(iT[it], jT[it]), dataT[it]);
+    }
+
+}

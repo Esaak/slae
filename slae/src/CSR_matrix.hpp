@@ -9,6 +9,7 @@
 #include "Matrix.hpp"
 
 
+
 namespace DOK_space {
     template<typename T, IsArithmetical<T> = true>
     struct DOK {
@@ -34,7 +35,8 @@ namespace CSR_matrix_space {
         std::vector<T> data;
         std::vector<std::size_t> col_ind;
         std::vector<std::size_t> row_indx;
-
+        std::size_t row;
+        std::size_t column;
         /************************************************************************************/
             /////////////////////// Private support functions  ///////////////////////////
         /************************************************************************************/
@@ -152,9 +154,11 @@ namespace CSR_matrix_space {
             ///////////////////////Constructors & Operators ///////////////////////////
         /************************************************************************************/
         CSR_matrix() = default;
+        CSR_matrix(const std::vector<T>& data, const std::vector<std::size_t>& col_ind, const std::vector<std::size_t>& row_indx, std::size_t row, std::size_t column):
+        data(data), col_ind(col_ind), row_indx(row_indx), row(row), column(column){}
 
         CSR_matrix(const std::vector<DOK_space::DOK<T>> &A, std::size_t row,
-                   std::size_t column) {
+                   std::size_t column): row(row), column(column) {
             std::size_t N = A.size();
             data.resize(N);
             col_ind.resize(N);
@@ -216,6 +220,33 @@ namespace CSR_matrix_space {
                 r = next_r;
             }
             return lambda;
+        }
+
+        CSR_matrix transpose () const{
+            std::vector<T> data_(data.size());
+            std::vector<std::size_t> col_ind_(data.size());
+            std::vector<std::size_t> row_indx_(column + 1);
+            for(std::size_t i = 0; i < data.size(); i++){
+                row_indx_[col_ind[i] + 1] ++;
+            }
+            std::size_t s = 0;
+            for (std::size_t i = 1; i <= column; ++i) {
+                std::size_t tmp = row_indx_[i];
+                row_indx_[i] = s;
+                s+=tmp;
+            }
+            for(std::size_t i = 0; i < row; i++){
+                std::size_t j1 = row_indx[i];
+                std::size_t j2 = row_indx[i+1];
+                for(std::size_t j = j1; j < j2; j++){
+                    std::size_t index = row_indx_[col_ind[j]+1];
+                    data_[index] = data[j];
+                    col_ind_[index] = i;
+                    row_indx_[col_ind[j] + 1]++;
+                }
+            }
+
+            return CSR_matrix<T>(data_, col_ind_, row_indx_, column, row);
         }
         /************************************************************************************/
             /////////////////////// Iteration solver methods  ///////////////////////////
@@ -437,6 +468,45 @@ namespace CSR_matrix_space {
             }
             return x;
         }
+
+        std::vector<T> BCG(const std::vector<T>& b,T tolerance0, const std::vector<T>& x0) const{
+            std::vector<T> r = discrepancy<CSR_matrix_space::CSR_matrix<T>, T>(*this, b, x0);
+            std::vector<T>x = x0;
+            CSR_matrix<T> A_T = (*this).transpose();
+            for(auto &it:r) it*=-1;
+            std::vector<T> p = r, r_T = r, p_T = r, z, z_T;
+            T r_scalar_next, r_scalar_prev, tetta, q;
+
+            r_scalar_prev = scalar_multiplication(r,r);
+            z = (*this)*p;
+            z_T = A_T*p;
+            q = r_scalar_prev/(scalar_multiplication(p_T, z));
+            for(std::size_t i = 0; i < r.size(); i++){
+                x[i]-=q*p[i];
+                r[i]-=q*z[i];
+                r_T[i]-=q*z_T[i];
+            }
+
+            while (euclid_norm(r) >= tolerance0){
+                r_scalar_next = scalar_multiplication(r_T,r);
+                tetta = r_scalar_next/r_scalar_prev;
+                for(std::size_t i = 0; i < r.size(); i++){
+                    p[i]=r[i] + tetta*p[i];
+                    p_T[i]=r_T[i] + tetta*p_T[i];
+                }
+                z = (*this)*p;
+                z_T = A_T*p;
+                q = r_scalar_next/(scalar_multiplication(p_T, z));
+                for(std::size_t i = 0; i < r.size(); i++){
+                    x[i]-=q*p[i];
+                    r[i]-=q*z[i];
+                    r_T[i]-=q*z_T[i];
+                }
+                r_scalar_prev = r_scalar_next;
+            }
+            return x;
+        }
+
         /************************************************************************************/
             /////////////////////// Test 08_04 ///////////////////////////
         /************************************************************************************/

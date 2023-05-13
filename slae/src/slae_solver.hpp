@@ -63,6 +63,29 @@ namespace solvers {
                 }
             }
         }
+
+        template<std::floating_point T>
+        Mrx::Matrix<T> IChol0(const Mrx::Matrix<T>& other){
+            Mrx::Matrix<T> K;
+            K.zeros(other.get_row_size(), other.get_column_size());
+            K(0,0) = other(0,0);
+            for(std::size_t i = 1; i < other.get_row_size(); i++){
+                for(std::size_t j = 0; j < i; j++){
+                    if(other(i,j) == 0) continue;
+                    T tmp = other(i, j);
+                    for(std::size_t k = 1; k < j; k++){
+                        tmp -=K(i, k)*K(i, j); //stupid
+                    }
+                    K(i, j) = tmp/K(j,j);
+                }
+                T tmp = other(i,i);
+                for(std::size_t k = 1; k < i; k++){
+                    tmp-= K(i,k)*K(i,k);
+                }
+                K(i,i) = std::sqrt(tmp);
+            }
+           return K;
+        }
     }
 
     //do not use please, for use this function you need save all ortoghonal vectors
@@ -142,6 +165,18 @@ namespace solvers {
         answ[0]/=A(0,0);
         return answ;
     }
+    template<std::floating_point T>
+    std::vector<T> forward_Gauss(const Mrx::Matrix<T> &A,const std::vector<T>& b) {
+        std::vector<T> answ = b;
+        for (long i = 0; i < static_cast<long>(b.size()); i++) {
+            answ[i] /= A(i, i);
+            for (long j = i; j < static_cast<long>(b.size()); j++) {
+                answ[j]-= answ[i]*A(j, i);
+            }
+        }
+        return answ;
+    }
+
 
     template<std::floating_point T>
     std::vector<T> GMRES(const Mrx::Matrix<T> &A, const std::vector<T> b, const std::vector<T> x0, std::size_t m) {
@@ -210,6 +245,36 @@ namespace solvers {
         }
         return x;
 
+    }
+
+    template<std::floating_point T>
+    std::vector<T> Conjugate_Gradient_Holetski(const Mrx::Matrix<T> &A, const std::vector<T> b, const std::vector<T> x0, T tolerance0) {
+        std::vector<T>r, d, w, x = x0;
+        r = discrepancy<Mrx::Matrix<T>, T>(A, b, x0);
+        Mrx::Matrix<T> K = solvers::_diny::IChol0(A);
+        for(auto& it: r) it*=-1;
+        w = solvers::forward_Gauss(K, r);
+        d = w;
+        T r_w_scalar = scalar_multiplication(r, w);
+        while(euclid_norm(r)>= tolerance0){
+            T alpha = r_w_scalar/ scalar_multiplication(d, A * d);
+
+            for(std::size_t i = 0; i < x.size(); i++){
+                x[i] -= alpha * d[i];
+            }
+
+            r = discrepancy<Mrx::Matrix<T>, T>(A, b,x);
+            for(auto& it: r) it*=-1;
+            w = solvers::forward_Gauss(K, r);
+
+            T r_w_next_scalar = scalar_multiplication(r,w);
+            T coef = r_w_next_scalar/r_w_scalar;
+            std::transform(d.begin(), d.end(), w.begin(), d.begin(), [&coef](auto&& a, auto&&b){
+                return b + coef * a;
+            });
+            r_w_scalar = r_w_next_scalar;
+        }
+        return x;
     }
     /*
     template<std::floating_point T>
